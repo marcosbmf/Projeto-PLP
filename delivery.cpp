@@ -1,10 +1,18 @@
 #include <stdio.h>
-#include <iostream>
+
+
+typedef struct {
+	int cpf;
+	int telefone;
+
+} Cliente;
 
 int main() {
+	
+	Cliente cliente;
 
-	for (int i = 0; i < 10; ++i) {
-		printf("xxxxxx\n");
-	}
+	cliente.cpf = 123;
+	cliente.telefone = 5555;
+	printf("%d\n", cliente.cpf);
 
 }
