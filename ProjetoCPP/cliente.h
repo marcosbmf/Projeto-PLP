@@ -21,7 +21,7 @@ Cliente newCliente() {
 	std::cout << "Digite seu numero de telefone: ";
 	std::cin >> C.telefone;
 	std::cin.get();
-	std::cout << "Digite seu endereço: ";
+	std::cout << "Digite seu endereï¿½o: ";
 	getline(std::cin, C.endereco);
 	std::cout << "Digite seu login: ";
 	getline(std::cin, C.login);
@@ -33,7 +33,7 @@ Cliente newCliente() {
 
 void clienteToString(Cliente cliente) {
 	std::cout << "\nNome: " << cliente.nome << "\n";
-	std::cout << "Endereço: " << cliente.endereco << "\n";
+	std::cout << "EndereÃ§o: " << cliente.endereco << "\n";
   	std::cout << "Telefone: " << cliente.telefone << "\n";
 	std::cout << "Cpf: " << cliente.cpf << "\n";
 	std::cout << "Login: " << cliente.login << "\n";

@@ -14,23 +14,23 @@ Item newItem(){
 
   std::cout << "Digite o nome do produto: ";
   getline(std::cin, item.nome);
-  std::cout << "Digite a descrição do produto: ";
+  std::cout << "Digite a descriÃ§Ã£o do produto: ";
   getline(std::cin, item.descricao);
-  std::cout << "Digite o preço: ";
+  std::cout << "Digite o preÃ§o: ";
   std::cin >> item.preco;
   std::cin.get();
 
   return item;
 }
 
-//Nome: nome - Preço R$ preço.
+//Nome: nome - PreÃ§o R$ preÃ§o.
 void listaItem(Item item)
 {
-  std::cout << "\nNome: " << item.nome << " - Preço R$ " << item.preco;
+  std::cout << "\nNome: " << item.nome << " - PreÃ§o R$ " << item.preco;
 }
 
-//Nome + descricao + preço.
+//Nome + descricao + preÃ§o.
 void itemToString(Item item){
   std::cout << "\nNome: " << item.nome << "\n";
-  std::cout << "Descrição: " << item.descricao << " - Preço: R$ " << item.preco;
+  std::cout << "DescriÃ§Ã£o: " << item.descricao << " - PreÃ§o: R$ " << item.preco;
 }
