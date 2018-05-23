@@ -1,37 +1,49 @@
 #include <iostream>
-#include <sstream>
 #include <string>
 #include <vector>
+#include "item.h"
 
-typedef struct {
+typedef struct Restaurante {
   std::string nome;
   std::string cnpj;
   std::string telefone;
   std::string horarioFuncionamento;
-  std::string tipo_de_cozinha;
+  std::string tipoCozinha;
   std::vector<Item> cardapio;
 } Restaurante;
 
-Restaurante newRestaurante(){
-  Restaurante R;
+Restaurante newRestaurante() {
+  Restaurante rest;
 
   std::cout << "Digite o nome do estabelecimento: ";
-	getline(std::cin, R.nome);
+  std::getline(std::cin, rest.nome);
   std::cout << "Digite o cnpj do estabelecimento: ";
-	getline(std::cin, R.cnpj);
+  std::getline(std::cin, rest.cnpj);
   std::cout << "Digite o telefone do estabelecimento: ";
-	getline(std::cin, R.telefone);
+  std::getline(std::cin, rest.telefone);
   std::cout << "Digite o horario de funcionamento (hh:mm hh:mm): ";
-	getline(std::cin, R.horarioFuncionamento);
+  std::getline(std::cin, rest.horarioFuncionamento);
   std::cout << "Digite o tipo de cozinha do estabelecimento: ";
-	getline(std::cin, R.tipo_de_cozinha);
+  std::getline(std::cin, rest.tipoCozinha);
+  
+  return rest;
 }
 
-void adicionaItem(Restaurante R){
+void adicionaItem(Restaurante rest) {
   Item item = newItem();
-  R.cardapio.push_back(item);
+  rest.cardapio.push_back(item);
 }
 
-void listaCardapio(Restaurante R){
-  listaItem(R.cardapio[0]);
+void removeItem(Restaurante rest, const_iterator indice) {
+  rest.cardapio.erase(indice);
+}
+
+void listaCardapio(Restaurante rest){
+  std::string saida = "";
+  
+  for(auto i = rest.cardapio.begin(); i + 1 != rest.cardapio.end(); ++it) {
+    saida << item::toString(rest.cardapio[i]) << '\n';
+  }
+  
+  saida << item::toString(rest.cardapio[rest.cardapio.end() - 1]);
 }

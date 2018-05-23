@@ -2,20 +2,22 @@
 #include <sstream>
 #include <string>
 
-typedef struct {
+typedef struct Item {
   std::string nome;
   std::string descricao;
   double preco;
 } Item;
 
-//Constroi novo item.
+/**
+  * "Constrói" novo Item.
+  */
 Item newItem(){
   Item item;
 
   std::cout << "Digite o nome do produto: ";
-  getline(std::cin, item.nome);
+  std::getline(std::cin, item.nome);
   std::cout << "Digite a descrição do produto: ";
-  getline(std::cin, item.descricao);
+  std::getline(std::cin, item.descricao);
   std::cout << "Digite o preço: ";
   std::cin >> item.preco;
   std::cin.get();
@@ -23,14 +25,20 @@ Item newItem(){
   return item;
 }
 
-//Nome: nome - Preço R$ preço.
-void listaItem(Item item)
-{
-  std::cout << "\nNome: " << item.nome << " - Preço R$ " << item.preco;
+/**
+  * Retorna descrição simplificada do item passado como argumento.
+  */
+std::string listaItem(Item item) {
+  std::string saida = item.nome << " - R$ " << item.preco;
+  return saida;
 }
 
-//Nome + descricao + preço.
-void itemToString(Item item){
-  std::cout << "\nNome: " << item.nome << "\n";
-  std::cout << "Descrição: " << item.descricao << " - Preço: R$ " << item.preco;
+/**
+  * Retorna descrição detalhada do item passado como argumento.
+  */
+std::string toString(Item item) {
+  std::string saida = "";
+  saida << item.nome << " - R$ " << item.preco << "\n";
+  saida << "Descrição: " << item.descricao;
+  return saida;
 }
