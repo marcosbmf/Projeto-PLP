@@ -54,7 +54,7 @@ namespace rst {
         rest.menu.erase(rest.menu.begin() + index);
     }
 
-    std::string showMenu(Restaurant &rest){
+/*     std::string showMenu(Restaurant &rest){
         std::ostringstream output;
 
         for (auto it = rest.menu.begin(); it != rest.menu.end() - 1; it++) {
@@ -63,10 +63,10 @@ namespace rst {
 
         output << item::toString(rest.menu.back());
         return output.str();
-    }
+    } */
 
 
-
+/* 
     bool isOpen(Restaurant &rest) {
         const std::time_t time = std::time(nullptr);
         std::tm cal = *std::localtime(&time);
@@ -89,5 +89,5 @@ namespace rst {
         }
 
         return open;
-    };
+    }; */
 }

@@ -13,7 +13,7 @@
     fazer login como cliente ou restaurante
 */
 
-void cadastrarNovoCliente(std::vector<clt::Client> clientes) {
+void cadastrarNovoCliente(std::vector<clt::Client> &clientes) {
 
     system("clear");
     bool cadastroValido = true;
@@ -21,17 +21,10 @@ void cadastrarNovoCliente(std::vector<clt::Client> clientes) {
     std::cout << "===> Cadastrar Novo Cliente <===\n";
     clt::Client cliente = clt::newCliente(); 
 
-    
-    // esse for vai apenas checar se ja existe alguem com o mesmo login
-    // se nao, nao sera adicionado e voltara pro menu principal
-
-    // NESSA PARTE da erro de segmentacao, nao sei  o q poha eh isso, so sei que eh
-    // no size, ai procurei na net e vi esse static_cast que resolve mas nao sei se funciona
-    for (int i = 0; i < static_cast<int>(clientes.size())-1; i++) {
-        if (clientes[i].login == cliente.login) {
+    for (auto it = clientes.begin(); it != clientes.end(); ++it) {
+        if (it->login == cliente.login) {
             cadastroValido = false;
         } 
-        std::cout << clientes[i].login;
     }
 
     if (cadastroValido) {
@@ -42,17 +35,17 @@ void cadastrarNovoCliente(std::vector<clt::Client> clientes) {
     }
 }
 
-void cadastrarNovoRestaurante(std::vector<rst::Restaurant> restaurantes) {
+void cadastrarNovoRestaurante(std::vector<rst::Restaurant> &restaurantes) {
 
     system("clear");
     std::cout << "===> Cadastrar Novo Restaurante <===\n";
     bool cadastroValido = true;
     rst::Restaurant r = rst::newRestaurant();
 
-    for (int i = 0; i < static_cast<int>(restaurantes.size())-1; i++) {
-        if (restaurantes[i].cnpj == r.cnpj) {
+    for (auto it = restaurantes.begin(); it != restaurantes.end(); ++it) {
+        if (it->cnpj == r.cnpj) {
             cadastroValido = false;
-        }
+        } 
     }
 
     if (cadastroValido) {
@@ -62,6 +55,23 @@ void cadastrarNovoRestaurante(std::vector<rst::Restaurant> restaurantes) {
         std::cout << "!!!!!!!!! ERRO NO CADASTRO: CNPJ JA EXISTE !!!!!!!!!";
     }
 
+}
+
+int loginCliente(std::vector<clt::Client> clientes, std::string login, std::string senha){
+
+    for (auto it = clientes.begin(); it != clientes.end(); it++) {
+        if (it->login == login) {
+            if (it->password == senha) {
+                return 1;
+            } else {
+                std::cout << "!!!!!!!!! ERRO NO LOGIN: SENHA INCORRETA !!!!!!!!!";
+                return 0;
+            }
+        }
+    }
+    
+    std::cout << "!!!!!!!!! ERRO NO LOGIN: USUARIO NAO EXISTE !!!!!!!!!";
+    return 0;
 }
 
 int main() {
@@ -83,7 +93,17 @@ int main() {
         std::cin >> opMenuInicial;
         
         if (opMenuInicial == "1") {
-
+            std::string login;
+            std::string senha;
+            
+            std::cout << "\n\n Insira seu login: ";
+            std::cin >> login;
+            std::cout << "\n\n Insira sua senha: ";
+            std::cin >> senha;
+            
+            if (loginCliente(clientes, login, senha)){
+                std::cout << "SUCESSO NO LOGIN";
+            }
         } else if (opMenuInicial == "2") {
 
         } else if (opMenuInicial == "3") {
