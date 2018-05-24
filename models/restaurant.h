@@ -55,11 +55,14 @@ namespace rst {
     }
 
     std::string listaRestaurantes(std::vector<rst::Restaurant> rests){
+        if (rests.size() == 0){
+            return "Nenhum estabelecimento cadastrado.";
+        }
         std::ostringstream output;
-        int i = -1;
+        int i = 0;
         for (auto it = rests.begin(); it != rests.end(); it++){
             i++;
-            output << "( " << i << " ) " << rst::toString(*it) << "\n";
+            output << i << " - " << rst::toString(*it) << "\n";
         }
 
         return output.str();

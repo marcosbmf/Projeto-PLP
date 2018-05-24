@@ -8,28 +8,46 @@
 #include <vector>
 #include <sstream>
 
+void cardapioRestaurante(rst::Restaurant &rest, clt::Client &cliente){
+    std::string choice = "0";
+    
+    while (choice != "2"){
+        std::cout << rst::showMenu(rest)
+                << "\n\n=====> Digite uma opcao para continuar <====="
+                <<   "\nRealizar Pedido ---->                   ( 1 )"
+                <<   "\nVoltar à lista de restaurates ---->     ( 2 )\n\n";
+
+        getline(std::cin, choice);
+
+        if (choice == "1"){
+            //realizarPedido(rest, cliente);
+        }
+    }
+}
+
 void exibirRestaurantes(std::vector<rst::Restaurant> &restaurantes, clt::Client &cliente){
     int escolheRestaurante;
-    std::string choice;
+    std::string choice = "0";
 
-    system("clear");
-    std::cout << "\n\nRestaurantes cadastrados no sistema:\n\n";
-    std::cout << rst::listaRestaurantes(restaurantes);
-
-    std::cout << "\n\n( 1 ) - Ver cardapio";
-    std::cout << "( 2 ) - Voltar ao menu\n\n";
-
-    std::cin >> choice;
-
-    if (choice == "1"){
+    while (choice != "2"){
         system("clear");
-        std::cout << "\n\nRestaurantes cadastrados no sistema:\n\n"
-                  << rst::listaRestaurantes(restaurantes)
-                  << "\n Escolha o restaurante: ";
-        std::cin >> escolheRestaurante;
-        //rst::showMenu(restaurantes[escolheRestaurante]);
-    } else {
-        return;
+        std::cout << "\n\n=====> Lista de Restaurantes Cadastrados <=====\n\n";
+        std::cout << rst::listaRestaurantes(restaurantes);
+
+        std::cout <<     "=====> Digite uma opcao para continuar <====="
+                  << "\n\nVer cardapio ---->                      ( 1 )"
+                  <<   "\nVoltar ao menu ---->                    ( 2 )\n\n";
+
+        getline(std::cin, choice);
+
+        if (choice == "1"){
+            system("clear");
+            std::cout << "\n\nRestaurantes cadastrados no sistema:\n\n"
+                    << rst::listaRestaurantes(restaurantes)
+                    << "\n Escolha o restaurante: ";
+            std::cin >> escolheRestaurante;
+            cardapioRestaurante(restaurantes[escolheRestaurante - 1], cliente);
+        }
     }
 }
 
