@@ -8,7 +8,6 @@
 #include <vector>
 #include <iomanip>
 #include <ctime>
-#include "item.h"
 
 namespace rst {
 
@@ -20,6 +19,7 @@ namespace rst {
         // Ramon // adicionei a senha, o login sera o cnpj
         std::string password;
         std::vector<item::Item> menu;
+        std::vector<ord::Order> orders;
         int opensAt[2];
         int closesAt[2];
     };
@@ -78,13 +78,17 @@ namespace rst {
     }
 
     std::string showMenu(Restaurant &rest){
+        int i = 0;
         std::ostringstream output;
 
+        output << "\n\n=====>Cardapio do " << rest.name << "<=====\n\n";
+
         for (auto it = rest.menu.begin(); it != rest.menu.end() - 1; it++) {
-            output << item::toString(*it) << std::endl;
+            i++;
+            output << i << " - " << item::toString(*it) << std::endl;
         }
 
-        output << item::toString(rest.menu.back());
+        output << item::toString(rest.menu.back()) << "\n\n";
         return output.str();
     }
 
@@ -113,4 +117,8 @@ namespace rst {
 
         return open;
     };
+
+    void addOrder(ord::Order &ord, Restaurant &rest){
+        rest.orders.push_back(ord);
+    }
 }

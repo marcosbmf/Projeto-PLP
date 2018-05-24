@@ -8,10 +8,53 @@
 #include <vector>
 #include <sstream>
 
+void confirmaPedido(ord::Order ord, rst::Restaurant &rest, clt::Client &cliente){
+    std::string choice;
+    std::string confirma;
+    system("clear");
+    std::cout << "Deseja confirmar esse pedido: ";
+            //IMpressão do pedido
+
+    while (choice != "1" && choice != "2"){
+        std::cout << "\n\n=====> Digite uma opcao para continuar <====="
+                  <<   "\nConfirmar pedido ---->                  ( 1 )"
+                  <<   "\nCancelar pedido ---->                   ( 2 )\n\n";
+
+        if (choice == "1"){
+            std::cout << "\n\nPedido confirmado com sucesso! Digite enter para continuar.";
+            clt::addOrder(ord, cliente);
+            rst::addOrder(ord, rest);
+            getline(std::cin, confirma);
+        } else if (choice == "2"){
+            std::cout << "Pedido cancelado com sucesso! Digite enter para continuar.";
+            getline(std::cin, confirma);
+        }
+    }
+}
+
+void realizarPedido(rst::Restaurant &rest, clt::Client &cliente){
+    ord::Order ord;
+    int selecionado = -1;
+    bool contemItem = false;
+    std::cout << rst::showMenu(rest);
+    while (selecionado != 0){
+            std::cout << "Digite o número do item a ser adicionado ao pedido ou digite 0 para ir para a página de confirmação: ";
+            std::cin >> selecionado;
+            std::cin.get();
+            if (selecionado == 0){
+                break;
+            } else if (selecionado <= rest.menu.size() && selecionado > 0){
+                ord::addItem(ord, rest.menu[selecionado-1]);
+            }
+    }
+    confirmaPedido(ord, rest, cliente);
+}
+
 void cardapioRestaurante(rst::Restaurant &rest, clt::Client &cliente){
     std::string choice = "0";
     
     while (choice != "2"){
+        system("clear");
         std::cout << rst::showMenu(rest)
                 << "\n\n=====> Digite uma opcao para continuar <====="
                 <<   "\nRealizar Pedido ---->                   ( 1 )"
@@ -20,7 +63,7 @@ void cardapioRestaurante(rst::Restaurant &rest, clt::Client &cliente){
         getline(std::cin, choice);
 
         if (choice == "1"){
-            //realizarPedido(rest, cliente);
+            realizarPedido(rest, cliente);
         }
     }
 }

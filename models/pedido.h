@@ -17,9 +17,7 @@ namespace ord {
      */
     struct Order {
         std::vector<item::Item> items;
-        clt::Client *client;
         int situation = 0;
-        rst::Restaurant *restaurant;
     };
 
     /**
@@ -85,21 +83,5 @@ namespace ord {
         }
 
         return price;
-    }
-
-    /**
-     * @param order
-     * @return Returns the client that made the order.
-     */
-    clt::Client getClient(Order &order) {
-        return *order.client;
-    }
-
-    /**
-     * @param order
-     * @return restaurant where the order was made.
-     */
-    rst::Restaurant getRestaurant(Order &order) {
-        return *order.restaurant;
     }
 }

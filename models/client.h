@@ -15,6 +15,7 @@ namespace clt {
         std::string cpf;
         std::string address;
         std::string phone;
+        std::vector<ord::Order> orders;
     };
 
     Client newCliente() {
@@ -45,4 +46,9 @@ namespace clt {
         std::cout << "CPF: " << cliente.cpf << "\n";
         std::cout << "Login: " << cliente.login << "\n";
     }
+
+    void addOrder(ord::Order &order, Client &cliente){
+        cliente.orders.push_back(order);
+    }
+    
 }
