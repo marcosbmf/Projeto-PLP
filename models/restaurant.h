@@ -26,23 +26,43 @@ namespace rst {
 
     Restaurant newRestaurant() {
         Restaurant rest;
-
+        std::cin.get();
         std::cout << "Insira o nome do restaurante: ";
-        std::cin >> rest.name;
+        getline(std::cin, rest.name);
         std::cout << "Insira o CNPJ(este sera o seu login): ";
-        std::cin >> rest.cnpj;
+        getline(std::cin, rest.cnpj);
         std::cout << "Insira o telefone: ";
-        std::cin >> rest.phone;
+        getline(std::cin, rest.phone);
         std::cout << "Qual o tipo de cozinha desse restaurante? ";
-        std::cin >> rest.cuisine;
+        getline(std::cin, rest.cuisine);
         std::cout << "Que horas o restaurante abre (hh:mm)? ";
         std::cin >> rest.opensAt[0] >> rest.opensAt[1];
         std::cout << "Que horas o restaurante fecha (hh:mm)? ";
         std::cin >> rest.closesAt[0] >> rest.closesAt[1];
         std::cout << "Pra finalizar, defina sua senha: ";
-        std::cin >> rest.password;
+        std::cin.get();
+        getline(std::cin, rest.password);
 
         return rest;
+    }
+
+    std::string toString(Restaurant &rest){
+        std::ostringstream output;
+
+        output << rest.name << " - " << rest.cuisine << " - " << rest.phone;
+
+        return output.str();
+    }
+
+    std::string listaRestaurantes(std::vector<rst::Restaurant> rests){
+        std::ostringstream output;
+        int i = -1;
+        for (auto it = rests.begin(); it != rests.end(); it++){
+            i++;
+            output << "( " << i << " ) " << rst::toString(*it) << "\n";
+        }
+
+        return output.str();
     }
 
     void addItem(Restaurant &rest) {

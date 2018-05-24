@@ -6,6 +6,7 @@
 #include "models/restaurant.h"
 #include "models/client.h"
 #include "models/pedido.h"
+#include "models/menuCliente.h"
 
 /*
     Este eh o menu principal com as funcoes de 
@@ -89,7 +90,7 @@ int loginRestaurante(std::vector<rst::Restaurant> restaurantes, std::string cnpj
     
     std::cout << "!!!!!!!!! ERRO NO LOGIN: USUARIO NAO EXISTE !!!!!!!!!";
     return 0;
-    }
+}
 
 clt::Client * getClient(std::string login, std::vector<clt::Client> &clientes){
     for (auto it = clientes.begin(); it != clientes.end(); it++) {
@@ -105,36 +106,6 @@ rst::Restaurant * getRestaurante(std::string cnpj, std::vector<rst::Restaurant> 
             return &*it;
         }
     }
-}
-
-void menuCliente(std::vector<rst::Restaurant> &restaurantes, clt::Client &cliente){
-    
-    system("clear");
-    std::string opMenuCliente;
-
-    while(opMenuCliente != "4") {
-
-        std::cout <<  "\n\nSeja bem vindo ao Sistema de Delivery."
-        << "\n\n=====> Digite uma opcao para continuar <====="
-        << "\n\n- Exibir todos restaurantes ---->         (  1  )"
-        << "\n- Pesquisar restaurantes ---->            (  2  )"
-        << "\n- Ver pedidos ---->                       (  3  )"
-        << "\n- Sair ---->                              (  4  )\n";
-        std::cin >> opMenuCliente;
-
-
-        if (opMenuCliente == "1!"){
-            //exibirRestaurantes(restaurantes, cliente);
-        } else if (opMenuCliente == "2"){
-            //pesquisarRestaurantes(restaurantes, cliente);
-        } else if (opMenuCliente == "3"){
-            //verMeusPedidos(cliente);
-        } else if (opMenuCliente == "4"){
-            break;
-        }
-    }
-    
-    system("clear");
 }
 
 int main() {
