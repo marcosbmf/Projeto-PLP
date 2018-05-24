@@ -17,6 +17,8 @@ namespace rst {
         std::string cnpj;
         std::string phone;
         std::string cuisine;
+        // Ramon // adicionei a senha, o login sera o cnpj
+        std::string senha;
         std::vector<item::Item> menu;
         int opensAt[2];
         int closesAt[2];
@@ -25,18 +27,20 @@ namespace rst {
     Restaurant newRestaurant() {
         Restaurant rest;
 
-        std::cout << "Insert restaurant's name: ";
-        std::getline(std::cin, rest.name);
-        std::cout << "Insert restaurant's CNPJ: ";
-        std::getline(std::cin, rest.cnpj);
-        std::cout << "Insert restaurant's phone number: ";
-        std::getline(std::cin, rest.phone);
-        std::cout << "What kind of cuisine this restaurant works with? ";
-        std::getline(std::cin, rest.cuisine);
-        std::cout << "When does the restaurant open (hh:mm)? ";
+        std::cout << "Insira o nome do restaurante: ";
+        std::cin >> rest.name;
+        std::cout << "Insira o CNPJ(este sera o seu login): ";
+        std::cin >> rest.cnpj;
+        std::cout << "Insira o telefone: ";
+        std::cin >> rest.phone;
+        std::cout << "Qual o tipo de cozinha desse restaurante? ";
+        std::cin >> rest.cuisine;
+        std::cout << "Que horas o restaurante abre (hh:mm)? ";
         std::cin >> rest.opensAt[0] >> rest.opensAt[1];
-        std::cout << "When does the restaurant close (hh:mm)? ";
+        std::cout << "Que horas o restaurante fecha (hh:mm)? ";
         std::cin >> rest.closesAt[0] >> rest.closesAt[1];
+        std::cout << "Pra finalizar, defina sua senha: ";
+        std::cin >> rest.senha;
 
         return rest;
     }

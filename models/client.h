@@ -14,33 +14,34 @@ namespace clt {
         std::string name;
         std::string cpf;
         std::string address;
-        int phone;
+        std::string phone;
     };
 
     Client newCliente() {
         Client c;
 
-        std::cout << "Insert your name: ";
-        std::getline(std::cin, c.name);
-        std::cout << "Insert your CPF: ";
-        std::getline(std::cin, c.cpf);
-        std::cout << "Insert your phone number: ";
+        std::cout << "Digite seu nome: ";
+        std::cin >> c.name;
+        std::cout << "Insira seu CPF: ";
+        std::cin >> c.cpf;
+        std::cout << "Seu numero de telefone: ";
         std::cin >> c.phone;
-        std::cin.get();
-        std::cout << "Insert your address: ";
-        std::getline(std::cin, c.address);
-        std::cout << "Choose a username: ";
-        std::getline(std::cin, c.login);
-        std::cout << "Choose your password: ";
-        std::getline(std::cin, c.password);
+        std::cout << "Seu endereco: ";
+        std::cin >> c.address;
+        std::cout << "=========================\n";
+        std::cout << "Escolha um nome de usuario: ";
+        std::cin >> c.login;
+        std::cout << "=========================\n";
+        std::cout << "Digite uma senha: ";
+        std::cin >> c.password;
 
         return c;
     }
 
     void toString(Client cliente) {
-        std::cout << "Name: " << cliente.name << "\n";
-        std::cout << "Address: " << cliente.address << "\n";
-        std::cout << "Phone number: " << cliente.phone << "\n";
+        std::cout << "Nome: " << cliente.name << "\n";
+        std::cout << "Endereco: " << cliente.address << "\n";
+        std::cout << "Numero de telefone: " << cliente.phone << "\n";
         std::cout << "CPF: " << cliente.cpf << "\n";
         std::cout << "Login: " << cliente.login << "\n";
     }
