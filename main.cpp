@@ -157,6 +157,8 @@ namespace menu {
 
         if (fn::loginRestaurante(restaurantes, cnpj, senha)) {
             ui::defFeedback(tela, ui::ICN_SUCESSO, "Sucesso ao fazer login de restaurante.");
+            // esse clientes abaixo esta dando erro, diz que esta fora do escopo,
+            // nao sei o q fazer
             menuRestaurante(*fn::getRestaurante(cnpj, restaurantes), clientes);
         }
     }
