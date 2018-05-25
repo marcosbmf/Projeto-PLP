@@ -18,7 +18,7 @@ void adicionarItem(rst::Restaurant &rest) {
     system("clear");
     std::cout <<  " ---------- ADICIONAR ITEM ---------- " << std::endl << std::endl;
     std::cout << item::toString(item) << std::endl << std::endl;
-    std::cout << "Digite 1 para confirmar a adição ou 0 para cancelar: ";
+    std::cout << "Digite 1 para confirmar a adicao ou 0 para cancelar: ";
     std::cin >> confirma;
     std::cin.get();
 

@@ -25,14 +25,14 @@ namespace item {
      */
     Item newItem() {
         Item n;
-
-        std::cout << "Insert new name: ";
+4
+        std::cout << "Insira um nome: ";
         std::getline(std::cin, n.name);
 
-        std::cout << "Write a description for \"" << n.name << "\": ";
+        std::cout << "Escreva uma descricao para \"" << n.name << "\": ";
         std::getline(std::cin, n.description);
 
-        std::cout << "Choose a price for \"" << n.name << "\": ";
+        std::cout << "Escolha um preco para \"" << n.name << "\": ";
         std::cin >> n.price;
         std::cin.get();
         std::cout << std::endl;
