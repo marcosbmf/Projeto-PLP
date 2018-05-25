@@ -16,9 +16,13 @@ const int PROSSEGUIR = 0;
 void confirmaPedido(ord::Order ord, rst::Restaurant &rest, clt::Client &cliente){
     system("clear");
     char choice;
-    char confirma;
+
     ord.estabelecimento = rest.name;
     ord.usuario = cliente.name;
+    ord.endereco = cliente.address;
+    ord.userPhone = cliente.phone;
+    ord.restPhone = rest.phone;
+
     std::cout << ord::orderToString(ord);
 
     while (choice != CONFIRMAR_ALTA && choice != CONFIRMAR_BAIXA && choice != CANCELAR_CHAR){
@@ -27,17 +31,21 @@ void confirmaPedido(ord::Order ord, rst::Restaurant &rest, clt::Client &cliente)
         std::cout << std::endl;
 
         switch (choice) {
-            case CONFIRMAR_ALTA || CONFIRMAR_BAIXA:
+            case CONFIRMAR_ALTA:
                 std::cout << "Pedido confirmado com sucesso! Pressione ENTER para continuar.";
                 clt::addOrder(ord, cliente);
                 rst::addOrder(ord, rest);
-                std::cin >> confirma;
-                break;
+                std::cin.ignore();
+
+            case CONFIRMAR_BAIXA:
+                std::cout << "Pedido confirmado com sucesso! Pressione ENTER para continuar.";
+                clt::addOrder(ord, cliente);
+                rst::addOrder(ord, rest);
+                std::cin.ignore();
 
             case CANCELAR_CHAR:
                 std::cout << "Pedido cancelado com sucesso! Pressione ENTER para continuar.";
-                std::cin >> confirma;
-                break;
+                std::cin.ignore();
 
             default:
                 std::cout << "Comando invalido.";
@@ -50,8 +58,8 @@ void realizarPedido(rst::Restaurant &rest, clt::Client &cliente){
     ord::Order ord;
     int selecionado = -1;
     int adicionar;
-    std::string enter;
     bool contemItem = false;
+
     while (selecionado != 0){
         system("clear");
         std::cout << rst::showMenu(rest) << std::endl;
@@ -69,18 +77,22 @@ void realizarPedido(rst::Restaurant &rest, clt::Client &cliente){
             std::cin.get();
             if (adicionar == 1){
                 ord::addItem(ord, rest.menu[selecionado-1]);
+                contemItem = true;
                 std::cout << "\n Produto adicionado ao carrinho, pressione enter para continuar.";
-                std::cin >> enter;
-                std::cin.get();
+                std::cin.ignore();
             } else {
                 std::cout << "\nCancelado. Pressione enter para continuar.";
-                std::cin >> enter;
-                std::cin.get();
+                std::cin.ignore();
             }
         }
     }
-
-    confirmaPedido(ord, rest, cliente);
+    if (contemItem){
+        confirmaPedido(ord, rest, cliente);
+    } else {
+        std::cout << "Pedido vazio. Pressione enter para continuar." << std::endl;
+        std::cin.ignore();
+    }
+    
 }
 
 void cardapioRestaurante(rst::Restaurant &rest, clt::Client &cliente){
@@ -162,7 +174,6 @@ void menuCliente(std::vector<rst::Restaurant> &restaurantes, clt::Client &client
                 break;
 
             case SAIR:
-                //pesquisarRestaurantes(restaurantes, cliente);
                 break;
 
             case VER_PEDIDOS:
@@ -170,6 +181,7 @@ void menuCliente(std::vector<rst::Restaurant> &restaurantes, clt::Client &client
                 break;
 
             case PESQUISAR:
+                //pesquisarRestaurantes(restaurantes, cliente);
                 break;
 
             default:

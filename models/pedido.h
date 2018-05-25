@@ -19,6 +19,9 @@ namespace ord {
         std::vector<item::Item> items;
         std::string usuario;
         std::string estabelecimento;
+        std::string endereco;
+        std::string userPhone;
+        std::string restPhone;
         int situation = 0;
     };
 
@@ -98,6 +101,11 @@ namespace ord {
         }
 
         output << "\nValor total: " << getTotalPrice(order) << std::endl << std::endl;
+
+        output << "Informações do pedido: " << std::endl
+               << "Endereço: " << order.endereco << std::endl
+               << "Telefone para contato: " << order.userPhone << std::endl
+               << "Telefone do estabelecimento: " << order.restPhone << std::endl << std::endl;
 
         return output.str();
 

@@ -45,6 +45,8 @@ void preCadastro(std::vector<rst::Restaurant> &rests, std::vector<clt::Client> &
     client.name = "Melina Mongiovi";
     client.login = "Melina";
     client.password = "Melina";
+    client.address = "Rua Rodrigues Alves, 1400";
+    client.phone = "(83) 9999-9999";
 
     clientes.push_back(client);
     rests.push_back(seuOlavo);
