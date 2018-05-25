@@ -81,14 +81,16 @@ namespace rst {
         int i = 0;
         std::ostringstream output;
 
-        output << "Cardapio de " << rest.name << ":" << std::endl;
+        output << "Cardapio de " << rest.name << ":" << std::endl << std::endl;
 
         for (auto it = rest.menu.begin(); it != rest.menu.end() - 1; it++) {
             i++;
-            output << i << " - " << item::toString(*it) << std::endl;
+            output << i << " - " << item::info(*it) << std::endl;
         }
 
-        output << item::toString(rest.menu.back()) << std::endl;
+        i++;
+
+        output << i << " - " << item::info(rest.menu.back()) << std::endl << std::endl;
         return output.str();
     }
 

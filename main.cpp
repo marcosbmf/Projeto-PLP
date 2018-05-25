@@ -8,6 +8,7 @@
 #include "models/restaurant.h"
 #include "models/client.h"
 #include "models/menuCliente.h"
+#include "models/pre.h"
 
 /*
     Este eh o menu principal com as funcoes de 
@@ -191,6 +192,9 @@ int main() {
     std::vector<clt::Client> clientes;
     std::vector<rst::Restaurant> restaurantes;
     int opMenuInicial = 6;
+
+    //Precadastro para testes.
+    preCadastro(restaurantes, clientes);
 
     while (opMenuInicial != SAIR) {
         std::string entrada;

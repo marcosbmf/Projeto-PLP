@@ -14,31 +14,29 @@ const char CANCELAR_CHAR = 'n';
 const int PROSSEGUIR = 0;
 
 void confirmaPedido(ord::Order ord, rst::Restaurant &rest, clt::Client &cliente){
+    system("clear");
     char choice;
     char confirma;
+    ord.estabelecimento = rest.name;
+    ord.usuario = cliente.name;
     std::cout << ord::orderToString(ord);
 
     while (choice != CONFIRMAR_ALTA && choice != CONFIRMAR_BAIXA && choice != CANCELAR_CHAR){
         std::cout << "Confirmar pedido (S/n)? ";
         std::cin >> choice;
-        std::cin.get();
         std::cout << std::endl;
 
         switch (choice) {
             case CONFIRMAR_ALTA || CONFIRMAR_BAIXA:
                 std::cout << "Pedido confirmado com sucesso! Pressione ENTER para continuar.";
-                ord.estabelecimento = rest.name;
-                ord.usuario = cliente.name;
                 clt::addOrder(ord, cliente);
                 rst::addOrder(ord, rest);
                 std::cin >> confirma;
-                std::cin.get();
                 break;
 
             case CANCELAR_CHAR:
                 std::cout << "Pedido cancelado com sucesso! Pressione ENTER para continuar.";
                 std::cin >> confirma;
-                std::cin.get();
                 break;
 
             default:
@@ -56,16 +54,17 @@ void realizarPedido(rst::Restaurant &rest, clt::Client &cliente){
     bool contemItem = false;
     while (selecionado != 0){
         system("clear");
-        std::cout << rst::showMenu(rest);
+        std::cout << rst::showMenu(rest) << std::endl;
         std::cout << "Digite o número do item a ser adicionado ao pedido ou 0 para ir para a página de confirmação: ";
         std::cin >> selecionado;
         std::cin.get();
         if (selecionado == 0){
             break;
         } else if (selecionado <= rest.menu.size() && selecionado > 0){
-            std::cout << item::toString(rest.menu[selecionado-1]) << "\n\n";
+            std::cout << "\n" << item::toString(rest.menu[selecionado-1]) << "\n\n";
             std::cout << "(1) Adicionar ao carrinho.\n";
-            std::cout << "(2) Cancelar.\n";
+            std::cout << "(2) Cancelar.\n\n";
+            std::cout << ">";
             std::cin >> adicionar;
             std::cin.get();
             if (adicionar == 1){
@@ -114,7 +113,7 @@ void exibirRestaurantes(std::vector<rst::Restaurant> &restaurantes, clt::Client 
     while (choice != CANCELAR) {
         system("clear");
         std::cout << "RESTAURANTES CADASTRADOS:" << std::endl << std::endl;
-        std::cout << rst::listaRestaurantes(restaurantes);
+        std::cout << rst::listaRestaurantes(restaurantes) << std::endl;
 
         std::cout << "Selecione uma opcao:" << std::endl
                   << "(1) Ver cardapio" << std::endl
@@ -125,8 +124,7 @@ void exibirRestaurantes(std::vector<rst::Restaurant> &restaurantes, clt::Client 
         if (choice == VER_CARDAPIO){
             system("clear");
 
-            std::cout << std::endl
-                      << "Restaurantes cadastrados no sistema:" << std::endl
+            std::cout << "Restaurantes cadastrados no sistema:" << std::endl << std::endl
                       << rst::listaRestaurantes(restaurantes) << std::endl
                       << "Escolha o restaurante: ";
 
@@ -143,12 +141,12 @@ void menuCliente(std::vector<rst::Restaurant> &restaurantes, clt::Client &client
     const char VER_PEDIDOS = '3';
     const char SAIR = '4';
 
-    system("clear");
+    
     char opMenuCliente;
 
     while(opMenuCliente != SAIR) {
-
-        std::cout <<  "Bem vindo, " << cliente.name << "." << std::endl
+        system("clear");
+        std::cout <<  "Bem vindo, " << cliente.name << "." << std::endl << std::endl
         << "MENU" << std::endl
         << "(1) Exibir todos restaurantes" << std::endl
         << "(2) Pesquisar restaurantes" << std::endl
