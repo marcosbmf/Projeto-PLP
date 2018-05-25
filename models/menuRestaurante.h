@@ -17,6 +17,33 @@ void adicionarItem(rst::Restaurant &rest) {
     std::cout <<  " =>       Item adicionado com sucesso! :D       <= " << std::endl;
 }
 
+void confirmaRemocao(rst::Restaurant &rest, int itemRemovido){
+    int confirma = -1;
+    while (confirma != 0){
+        system("clear");
+        std::cout <<  " ---------- REMOVER ITEM ---------- " << std::endl << std::endl
+        << "Lista de Pratos: ";
+        std::cout << rst::showMenu(rest);
+
+        std::cout << std::endl << std::endl << "Você deseja remover o seguinte item? Digite 1 para remover ou 0 para cancelar!";
+
+        std::cout<< std::endl << std::endl << item::toString(rest.menu[itemRemovido-1]) << std::endl << std::endl << ">";
+        std::cin >> confirma;
+        std::cin.get();
+        if (confirma == 1){
+            rest.menu.erase(rest.menu.begin() + itemRemovido - 1);
+            std::cout << " --- Removido com sucesso! --- " << std::endl;
+            std::cout << "Pressione enter para continuar!" << std::endl;
+            std::cin.ignore();
+            break;
+        } else if (confirma == 0){
+            std::cout << " --- Remoação cancelada! --- " << std::endl;
+            std::cout << "Pressione enter para continuar!" << std::endl;
+            std::cin.ignore();
+        }
+    }
+}
+
  void removerItem(rst::Restaurant &rest) {
      int itemRemovido = -1;
 
@@ -32,12 +59,13 @@ void adicionarItem(rst::Restaurant &rest) {
         std::cin.get();
 
         if(itemRemovido != 0) {
-            // verifica se o tamanho eh valido
             if(itemRemovido <= rest.menu.size() && itemRemovido > 0) {
-                rest.menu.erase(rest.menu.begin() + itemRemovido - 1);
-                std::cout << " --- Removido com sucesso! --- ";
+                confirmaRemocao(rest, itemRemovido);
+                itemRemovido = -1;
             } else {
                 std::cout << " --- ERRO: Numero do Prato invalido --- ";
+                std::cout << "Pressione enter para continuar!" << std::endl;
+                std::cin.ignore();
             }
         }
     }

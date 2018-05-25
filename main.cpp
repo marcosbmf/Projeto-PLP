@@ -89,7 +89,6 @@ namespace fn {
     int loginRestaurante(std::vector<rst::Restaurant> restaurantes, std::string cnpj, std::string senha){
 
         for (auto it = restaurantes.begin(); it != restaurantes.end(); it++) {
-            std::cout << it->cnpj << "\n";
             if (it->cnpj == cnpj) {
                 if (it->password == senha) {
                     return 1;  // SUCESSO DEVERIA SER 0!
