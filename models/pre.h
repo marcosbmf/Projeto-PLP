@@ -11,6 +11,10 @@
 
 void preCadastro(std::vector<rst::Restaurant> &rests, std::vector<clt::Client> &clientes){
 
+
+/*
+    CRIANDO ITENS DO RESTAURANTE SEU OLAVO
+*/
     item::Item coxinha;
     coxinha.name = "Coxinha";
     coxinha.price = 2.5;
@@ -45,7 +49,7 @@ void preCadastro(std::vector<rst::Restaurant> &rests, std::vector<clt::Client> &
     alfajor.name = "Misto no frances";
     alfajor.price = 3.5;
     alfajor.description = "Misto no frances muito bom";
-
+////////////////// CRIANDO RESTAURANTE SEU OLAVO ///////////////////////
     rst::Restaurant seuOlavo;
     seuOlavo.name = "Seu Olavo's";
     seuOlavo.cnpj = 1;
@@ -63,42 +67,46 @@ void preCadastro(std::vector<rst::Restaurant> &rests, std::vector<clt::Client> &
     seuOlavo.menu.push_back(hotdog);
     seuOlavo.menu.push_back(mistoCaixa);
     seuOlavo.menu.push_back(mistoFrances);
+ /*
 
+    CRIANDO ITENS DA PIZZARIA
+
+ */
     item::Item pizzabacon;
-    coxinha.name = "Pizza de Bacon";
-    coxinha.price = 20;
-    coxinha.description = "O melhor bacon do mundo";
+    pizzabacon.name = "Pizza de Bacon";
+    pizzabacon.price = 20;
+    pizzabacon.description = "O melhor bacon do mundo";
 
     item::Item pizza4queijos;
-    pastel.name = "Pizza 4 Queijos";
-    pastel.price = 17;
-    pastel.description = "Melhor selecao de queijos de campina grande";
+    pizza4queijos.name = "Pizza 4 Queijos";
+    pizza4queijos.price = 17;
+    pizza4queijos.description = "Melhor selecao de queijos de campina grande";
 
     item::Item pizzacalabresa;
-    alfajor.name = "Pizza de Calabresa";
-    alfajor.price = 20;
-    alfajor.description = "Calabresa Quentinha saindo do abatedouro";
+    pizzacalabresa.name = "Pizza de Calabresa";
+    pizzacalabresa.price = 20;
+    pizzacalabresa.description = "Calabresa Quentinha saindo do abatedouro";
 
     item::Item pizzamisto;
-    coxinha.name = "Pizza de Misto";
-    coxinha.price = 25;
-    coxinha.description = "Presunto. Queijo. Simples assim.";
+    pizzamisto.name = "Pizza de Misto";
+    pizzamisto.price = 25;
+    pizzamisto.description = "Presunto. Queijo. Simples assim.";
 
     item::Item pizzafrango;
-    pastel.name = "Pizza de Frango";
-    pastel.price = 20;
-    pastel.description = "Pizza de quem nao vai pra academia";
+    pizzafrango.name = "Pizza de Frango";
+    pizzafrango.price = 20;
+    pizzafrango.description = "Pizza de quem nao vai pra academia";
 
     item::Item pizzachocolate;
-    alfajor.name = "Pizza de Chocolate";
-    alfajor.price = 15;
-    alfajor.description = "Pra comer de sobremesa";
+    pizzachocolate.name = "Pizza de Chocolate";
+    pizzachocolate.price = 15;
+    pizzachocolate.description = "Pra comer de sobremesa";
 
     item::Item pizzafitness;
-    alfajor.name = "Pizza de Fitness";
-    alfajor.price = 10;
-    alfajor.description = "Pizza de salada pra quem nao quer ganhar calorias";
-    
+    pizzafitness.name = "Pizza de Fitness";
+    pizzafitness.price = 10;
+    pizzafitness.description = "Pizza de salada pra quem nao quer ganhar calorias";
+/////////////////////////// CRIANDO PIZZARIA /////////////////////////////
     rst::Restaurant pizzariaDoCarvalho;
     pizzariaDoCarvalho.name = "Pizzaria Nota 10";
     pizzariaDoCarvalho.cnpj = 2;
@@ -117,41 +125,47 @@ void preCadastro(std::vector<rst::Restaurant> &rests, std::vector<clt::Client> &
     pizzariaDoCarvalho.menu.push_back(pizzachocolate);
     pizzariaDoCarvalho.menu.push_back(pizzafitness);
 
+/*
+
+    CRIANDO ITENS DO LA SUISSA
+
+*/
+
     item::Item docedeleite;
-    coxinha.name = "Doce de Leite";
-    coxinha.price = 30;
-    coxinha.description = "O melhor doce de leite da terrinha";
+    docedeleite.name = "Doce de Leite";
+    docedeleite.price = 30;
+    docedeleite.description = "O melhor doce de leite da terrinha";
 
     item::Item goiabada;
-    pastel.name = "Goiabada";
-    pastel.price = 40;
-    pastel.description = "Pra comer com queijo coalho";
+    goiabada.name = "Goiabada";
+    goiabada.price = 40;
+    goiabada.description = "Pra comer com queijo coalho";
 
     item::Item petitgateau;
-    alfajor.name = "Petit Gateau";
-    alfajor.price = 50;
-    alfajor.description = "Petit Gateau do chef Jacquin";
+    petitgateau.name = "Petit Gateau";
+    petitgateau.price = 50;
+    petitgateau.description = "Petit Gateau do chef Jacquin";
 
     item::Item brigadeirogourmet;
-    coxinha.name = "Brigadeiro Gourmet";
-    coxinha.price = 5;
-    coxinha.description = "A melhor sobremesa brasileira";
+    brigadeirogourmet.name = "Brigadeiro Gourmet";
+    brigadeirogourmet.price = 5;
+    brigadeirogourmet.description = "A melhor sobremesa brasileira";
 
     item::Item suflair;
-    pastel.name = "Suflair";
-    pastel.price = 20;
-    pastel.description = "Sobremesa chique de rico";
+    suflair.name = "Suflair";
+    suflair.price = 20;
+    suflair.description = "Sobremesa chique de rico";
 
     item::Item trufaItaliana;
-    alfajor.name = "Trufa Italiana";
-    alfajor.price = 25;
-    alfajor.description = "Outra sobremesa de rico";
+    trufaItaliana.name = "Trufa Italiana";
+    trufaItaliana.price = 25;
+    trufaItaliana.description = "Outra sobremesa de rico";
 
     item::Item churrosGourmet;
-    alfajor.name = "Churros Gourmet";
-    alfajor.price = 30;
-    alfajor.description = "Sobremesa de pobre com o preco de rico";
-    
+    churrosGourmet.name = "Churros Gourmet";
+    churrosGourmet.price = 30;
+    churrosGourmet.description = "Sobremesa de pobre com o preco de rico";
+///////////////////////// CRIANDO LA SUISSA ///////////////////////////////// 
     rst::Restaurant lasuissa;
     lasuissa.name = "La Suissa";
     lasuissa.cnpj = 3;
@@ -170,8 +184,103 @@ void preCadastro(std::vector<rst::Restaurant> &rests, std::vector<clt::Client> &
     lasuissa.menu.push_back(trufaItaliana);
     lasuissa.menu.push_back(churrosGourmet);
 
+/*
+
+    CRIANDO ITENS DO YOI
+
+*/
+
+    item::Item sushi;
+    sushi.name = "Sushi";
+    sushi.price = 20;
+    sushi.description = "6 sushis simples";
+
+    item::Item hotroll;
+    hotroll.name = "Hot-Roll";
+    hotroll.price = 25;
+    hotroll.description = "6 Hot-Rolls com molho shoyu gratis";
+
+    item::Item temaki;
+    temaki.name = "Temaki";
+    temaki.price = 8;
+    temaki.description = "Temaki simples";
+
+    item::Item ramen;
+    ramen.name = "Ramen";
+    ramen.price = 15;
+    ramen.description = "Ramen apimentado acompanhado de molho shoyu";
+
+    item::Item tempura;
+    tempura.name = "Tempura";
+    tempura.price = 20;
+    tempura.description = "Tempura com shoyu e teriyaki";
+///////////////////////////// CRIANDO YOI /////////////////////////// 
+    rst::Restaurant YOI;
+    YOI.name = "YOI";
+    YOI.cnpj = 4;
+    YOI.cuisine = "Japones";
+    YOI.phone = "3333-3333";
+    YOI.password = "sushi";
+    YOI.opensAt[0] = 10;
+    YOI.opensAt[1] = 0;
+    YOI.closesAt[0] = 23;
+    YOI.closesAt[1] = 00;
+    YOI.menu.push_back(tempura);
+    YOI.menu.push_back(ramen);
+    YOI.menu.push_back(temaki);
+    YOI.menu.push_back(hotroll);
+    YOI.menu.push_back(sushi);
+
     std::cout << "Open? " << rst::isOpen(seuOlavo) << std::endl;
     std::cout << "Menu:" << std::endl << rst::showMenu(seuOlavo) << std::endl << std::endl;
+
+/*
+
+    CRIANDO ITENS DO MCDONALDS
+
+*/
+    item::Item bigmac;
+    bigmac.name = "Big-Mac";
+    bigmac.price = 20;
+    bigmac.description = "Sanduiche gigante cheio de gordura";
+
+    item::Item mclanchefeliz;
+    mclanchefeliz.name = "Hot-Roll";
+    mclanchefeliz.price = 25;
+    mclanchefeliz.description = "Hamburguer das criancas (vem com brinquedo aleatorio)";
+
+    item::Item milkshake;
+    milkshake.name = "Milk Shake";
+    milkshake.price = 8;
+    milkshake.description = "Bebida pra acompanhar os sanduiches";
+
+    item::Item whooper;
+    whooper.name = "Whooper";
+    whooper.price = 15;
+    whooper.description = "Hambuguer roubado do Burguer king";
+
+    item::Item mcweed;
+    mcweed.name = "McWeed";
+    mcweed.price = 20;
+    mcweed.description = "Hamburguer Natural feito de ervas";
+/////////////// CRIANDO O MC DONALDS ////////////////    
+    rst::Restaurant mcdonalds;
+    mcdonalds.name = "Mc Donalds";
+    mcdonalds.cnpj = 5;
+    mcdonalds.cuisine = "fast-food";
+    mcdonalds.phone = "666-666-666";
+    mcdonalds.password = "gordura";
+    mcdonalds.opensAt[0] = 6;
+    mcdonalds.opensAt[1] = 0;
+    mcdonalds.closesAt[0] = 22;
+    mcdonalds.closesAt[1] = 00;
+    mcdonalds.menu.push_back(bigmac);
+    mcdonalds.menu.push_back(mclanchefeliz);
+    mcdonalds.menu.push_back(milkshake);
+    mcdonalds.menu.push_back(whooper);
+    mcdonalds.menu.push_back(mcweed);
+
+// CRIANDO UM CLIENTE PROVISORIO
 
     clt::Client client;
     client.name = "Melina Mongiovi";
@@ -179,6 +288,8 @@ void preCadastro(std::vector<rst::Restaurant> &rests, std::vector<clt::Client> &
     client.password = "Melina";
     client.address = "Rua Rodrigues Alves, 1400";
     client.phone = "(83) 9999-9999";
+
+// ADICIONANDO RESTAURANTES EXISTENTES AO SISTEMA
 
     clientes.push_back(client);
     rests.push_back(seuOlavo);
