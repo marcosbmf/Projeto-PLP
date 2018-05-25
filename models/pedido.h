@@ -19,6 +19,9 @@ namespace ord {
         std::vector<item::Item> items;
         std::string usuario;
         std::string estabelecimento;
+        std::string endereco;
+        std::string userPhone;
+        std::string restPhone;
         int situation = 0;
     };
 
@@ -88,18 +91,27 @@ namespace ord {
         return price;
     }
 
-        std::string orderToString(Order &order){
+    std::string orderToString(Order &order){
         std::ostringstream output;
 
-        output << "\n\nPedido realizado por " << order.usuario << " no estabelecimento " << order.estabelecimento << ":\n";
+        output << "Pedido realizado por " << order.usuario << " no estabelecimento " << order.estabelecimento << std::endl << std::endl;
 
         for (auto it = order.items.begin(); it != order.items.end(); it++){
-            output << item::info(*it) << "\n";
+            output << item::info(*it) << std::endl;
         }
 
-        output << "\nValor total: " << getTotalPrice(order) << "\n";
+        output << "\nValor total: " << getTotalPrice(order) << std::endl << std::endl;
+
+        output << "Informações do pedido: " << std::endl
+               << "Endereço: " << order.endereco << std::endl
+               << "Telefone para contato: " << order.userPhone << std::endl
+               << "Telefone do estabelecimento: " << order.restPhone << std::endl << std::endl;
 
         return output.str();
 
+    }
+
+    std::string listOrder(Order &order){
+        return order.estabelecimento;
     }
 }

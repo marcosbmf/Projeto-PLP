@@ -16,10 +16,10 @@ namespace rst {
         std::string cnpj;
         std::string phone;
         std::string cuisine;
-        // Ramon // adicionei a senha, o login sera o cnpj
         std::string password;
         std::vector<item::Item> menu;
         std::vector<ord::Order> orders;
+        double lastReview;
         int opensAt[2];
         int closesAt[2];
     };
@@ -42,6 +42,7 @@ namespace rst {
         std::cout << "Senha: ";
         std::cin.get();
         getline(std::cin, rest.password);
+        rest.lastReview = 5; 
 
         return rest;
     }
@@ -81,14 +82,16 @@ namespace rst {
         int i = 0;
         std::ostringstream output;
 
-        output << "Cardapio de " << rest.name << ":" << std::endl;
+        output << "Cardapio de " << rest.name << ":" << std::endl << std::endl;
 
         for (auto it = rest.menu.begin(); it != rest.menu.end() - 1; it++) {
             i++;
-            output << i << " - " << item::toString(*it) << std::endl;
+            output << i << " - " << item::info(*it) << std::endl;
         }
 
-        output << item::toString(rest.menu.back()) << std::endl;
+        i++;
+
+        output << i << " - " << item::info(rest.menu.back()) << std::endl << std::endl;
         return output.str();
     }
 
