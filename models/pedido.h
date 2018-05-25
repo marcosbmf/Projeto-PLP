@@ -112,7 +112,23 @@ namespace ord {
     }
 
     std::string listOrder(Order &order){
-        return order.estabelecimento;
+        std::ostringstream output;
+        output << order.estabelecimento << " - ";
+        switch(order.situation){
+            case 0:
+            output << "PEDIDO REALIZADO";
+            break;
+
+            case 1:
+            output << "PEDIDO ESTÁ A CAMINHO";
+            break;
+
+            case 2:
+            output << "PEDIDO RECEBIDO";
+            break;
+
+        }
+        return output.str();
     }
 
     std::string listOrders(std::vector<Order> &orders){

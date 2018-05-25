@@ -28,6 +28,7 @@ void confirmaPedido(ord::Order ord, rst::Restaurant &rest, clt::Client &cliente)
     while (choice != CONFIRMAR_ALTA && choice != CONFIRMAR_BAIXA && choice != CANCELAR_CHAR){
         std::cout << "Confirmar pedido (S/n)? ";
         std::cin >> choice;
+        std::cin.get();
         std::cout << std::endl;
 
         switch (choice) {

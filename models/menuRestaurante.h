@@ -9,12 +9,27 @@
 #include <sstream>
 
 void adicionarItem(rst::Restaurant &rest) {
+    int confirma = -1;
 
 	system("clear");
     std::cout <<  " ---------- ADICIONAR ITEM ---------- " << std::endl << std::endl;
     item::Item item = item::newItem();
-    rest.menu.push_back(item);
-    std::cout <<  " =>       Item adicionado com sucesso! :D       <= " << std::endl;
+
+    system("clear");
+    std::cout <<  " ---------- ADICIONAR ITEM ---------- " << std::endl << std::endl;
+    std::cout << item::toString(item) << std::endl << std::endl;
+    std::cout << "Digite 1 para confirmar a adição ou 0 para cancelar: ";
+    std::cin >> confirma;
+    std::cin.get();
+
+    if (confirma == 1){
+        rest.menu.push_back(item);
+        std::cout <<  " =>       Item adicionado com sucesso! :D       <= " << std::endl << "Pressione enter para continuar!";
+        std::cin.ignore();
+    } else {
+        std::cout <<  " =>       Adição de item cancelada!      <= " << std::endl << "Pressione enter para continuar!";
+        std::cin.ignore();
+    }
 }
 
 void confirmaRemocao(rst::Restaurant &rest, int itemRemovido){
@@ -80,6 +95,7 @@ void verPedidos(rst::Restaurant &rest){
     }
 
     int choice = -1;
+    int confirma = -1;
     
     while (choice != 0){
         system("clear");
@@ -93,8 +109,24 @@ void verPedidos(rst::Restaurant &rest){
         } else if (choice <= rest.orders.size() && choice > 0){
             system("clear");
             std::cout << ord::orderToString(rest.orders[choice - 1]) << std::endl;
-            std::cout << "Pressione enter para voltar aos seus pedidos." << std::endl;
-            std::cin.ignore();
+            std::cout << "Pressione 1 para mudar o estado do pedido ou 0 para voltar aos seus pedidos: " << std::endl;
+            std::cin >> confirma;
+            std::cin.get();
+            if (confirma == 1){
+                system("clear");
+                std::cout << ord::orderToString(rest.orders[choice - 1]) << std::endl
+                << "Digite 1 para confirmar o envio do pedido ou 0 para voltar aos seus pedidos: ";
+                std::cin >> confirma;
+                std::cin.get();
+                if (confirma == 1){
+                    ord::changeSituation(rest.orders[choice - 1], 1);
+                    std::cout << std::endl << "Mudança realizada com sucesso! Pressione enter para voltar aos seus pedidos";
+                    std::cin.ignore();
+                } else {
+                    std::cout << std::endl << "Mudança Cancelada! Pressione enter para voltar aos seus pedidos";
+                    std::cin.ignore();
+                }
+            }
         }
     }
 
