@@ -154,9 +154,10 @@ void exibirRestaurantes(std::vector<rst::Restaurant> &restaurantes, clt::Client 
 void verMeusPedidos(clt::Client &cliente){
     
     if (cliente.orders.size() == 0){
-        std::cout << "Nenhum pedido foi realizado ainda!" << std::endl << std::endl
+        std::cout << std::endl << std::endl << "Nenhum pedido foi realizado ainda!" << std::endl << std::endl
         << "Pressione enter para voltar ao menu.";
         std::cin.ignore();
+        return;
     }
 
     int choice = -1;

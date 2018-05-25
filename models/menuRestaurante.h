@@ -89,9 +89,10 @@ void confirmaRemocao(rst::Restaurant &rest, int itemRemovido){
 void verPedidos(rst::Restaurant &rest){
     
     if (rest.orders.size() == 0){
-        std::cout << "Nenhum pedido foi realizado ainda!" << std::endl << std::endl
+        std::cout << std::endl << std::endl << "Nenhum pedido foi realizado ainda!" << std::endl << std::endl
         << "Pressione enter para voltar ao menu.";
         std::cin.ignore();
+        return;
     }
 
     int choice = -1;
