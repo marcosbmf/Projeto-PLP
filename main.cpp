@@ -30,10 +30,6 @@ void limpaTela() {
 
 }
 
-void titulo(std::string titulo) {
-
-}
-
 namespace fn {
     void cadastrarNovoCliente(std::vector<clt::Client> &clientes) {
         icnSistema = SUCESSO;
@@ -203,6 +199,7 @@ int main() {
         menu::printMenu();
         std::cout << "> ";
         std::cin >> entrada;
+        std::cin.get();
         opMenuInicial = std::stoi(entrada);
 
         switch (opMenuInicial) {
@@ -227,8 +224,9 @@ int main() {
                 msgSistema = "Comando invalido.";
                 break;
         }
-
     }
+
+    system("clear");
 
     return 0;
 }

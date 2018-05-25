@@ -27,19 +27,19 @@ namespace rst {
     Restaurant newRestaurant() {
         Restaurant rest;
         std::cin.get();
-        std::cout << "Insira o nome do restaurante: ";
+        std::cout << "Nome: ";
         getline(std::cin, rest.name);
-        std::cout << "Insira o CNPJ(este sera o seu login): ";
+        std::cout << "CNPJ (este sera o seu login): ";
         getline(std::cin, rest.cnpj);
-        std::cout << "Insira o telefone: ";
+        std::cout << "Telefone: ";
         getline(std::cin, rest.phone);
-        std::cout << "Qual o tipo de cozinha desse restaurante? ";
+        std::cout << "Estilo de cozinha: ";
         getline(std::cin, rest.cuisine);
-        std::cout << "Que horas o restaurante abre (hh:mm)? ";
+        std::cout << "Aberto as (hh mm)? ";
         std::cin >> rest.opensAt[0] >> rest.opensAt[1];
-        std::cout << "Que horas o restaurante fecha (hh:mm)? ";
+        std::cout << "Fecha as (hh mm)? ";
         std::cin >> rest.closesAt[0] >> rest.closesAt[1];
-        std::cout << "Pra finalizar, defina sua senha: ";
+        std::cout << "Senha: ";
         std::cin.get();
         getline(std::cin, rest.password);
 
@@ -49,7 +49,7 @@ namespace rst {
     std::string toString(Restaurant &rest){
         std::ostringstream output;
 
-        output << rest.name << " - " << rest.cuisine << " - " << rest.phone;
+        output << rest.name << " #" << rest.cuisine << " - tel.:" << rest.phone;
 
         return output.str();
     }
@@ -62,7 +62,7 @@ namespace rst {
         int i = 0;
         for (auto it = rests.begin(); it != rests.end(); it++){
             i++;
-            output << i << " - " << rst::toString(*it) << "\n";
+            output << i << " - " << rst::toString(*it) << std::endl;
         }
 
         return output.str();
@@ -81,14 +81,14 @@ namespace rst {
         int i = 0;
         std::ostringstream output;
 
-        output << "\n\n=====>Cardapio do " << rest.name << "<=====\n\n";
+        output << "Cardapio de " << rest.name << ":" << std::endl;
 
         for (auto it = rest.menu.begin(); it != rest.menu.end() - 1; it++) {
             i++;
             output << i << " - " << item::toString(*it) << std::endl;
         }
 
-        output << item::toString(rest.menu.back()) << "\n\n";
+        output << item::toString(rest.menu.back()) << std::endl;
         return output.str();
     }
 
