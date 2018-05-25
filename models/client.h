@@ -22,7 +22,7 @@ namespace clt {
         Client c;
 
         std::cout << "Digite seu nome: ";
-        getline(std::cin, c.nome);
+        getline(std::cin, c.name);
         std::cout << "Insira seu CPF: ";
         getline(std::cin, c.cpf);
         std::cout << "Seu numero de telefone: ";

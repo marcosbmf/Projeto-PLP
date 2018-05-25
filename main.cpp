@@ -10,6 +10,7 @@
 #include "models/client.h"
 #include "models/menuCliente.h"
 #include "models/pre.h"
+#include "models/menuRestaurante.h"
 
 /*
     Este eh o menu principal com as funcoes de 
