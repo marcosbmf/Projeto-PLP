@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include <sstream>
+#include "models/user_interface.h"
 #include "models/item.h"
 #include "models/pedido.h"
 #include "models/restaurant.h"
@@ -15,27 +16,13 @@
     fazer login como cliente ou restaurante
 */
 
-std::string msgSistema = "";
-std::string icnSistema = "_";
-std::string tituloSessao = "SISTEMA DE DELIVERY";
-const std::string SUCESSO = "_";
-const std::string ERRO = "!";
-
-void limpaTela() {
-    system("clear");
-    std::cout << "[" << icnSistema << "] " << msgSistema << std::endl;
-    std::cout << "----------------------------------------------------------------" << std::endl;
-    std::cout << tituloSessao << std::endl;
-    std::cout << "----------------------------------------------------------------" << std::endl << std::endl;
-
-}
+ui::UserInterface tela;
 
 namespace fn {
     void cadastrarNovoCliente(std::vector<clt::Client> &clientes) {
-        icnSistema = SUCESSO;
-        msgSistema = "";
-        tituloSessao = "CADASTRAR NOVO CLIENTE";
-        limpaTela();
+        ui::defTitulo(tela, "CADASTRAR NOVO CLIENTE");
+        ui::blankFeedback(tela);
+        ui::limpaTela(tela);
 
         bool cadastroValido = true;
         clt::Client cliente = clt::newCliente();
@@ -48,20 +35,17 @@ namespace fn {
 
         if (cadastroValido) {
             clientes.push_back(cliente);
-            icnSistema = SUCESSO;
-            msgSistema = "Cadastro efetuado com sucesso.";
+            ui::defFeedback(tela, ui::ICN_SUCESSO, "Cadastro efetuado com sucesso.");
 
         } else {
-            icnSistema = ERRO;
-            msgSistema = "Erro ao cadastrar: login ja existe.";
+            ui::defFeedback(tela, ui::ICN_ERRO, "Erro ao cadastrar: login ja existente");
         }
     }
 
     void cadastrarNovoRestaurante(std::vector<rst::Restaurant> &restaurantes) {
-        icnSistema = SUCESSO;
-        msgSistema = "";
-        tituloSessao = "CADASTRAR NOVO RESTAURANTE";
-        limpaTela();
+        ui::blankFeedback(tela);
+        ui::defTitulo(tela, "CADASTRAR NOVO RESTAURANTE");
+        ui::limpaTela(tela);
 
         bool cadastroValido = true;
         rst::Restaurant r = rst::newRestaurant();
@@ -74,11 +58,10 @@ namespace fn {
 
         if (cadastroValido) {
             restaurantes.push_back(r);
-            icnSistema = SUCESSO;
-            msgSistema = "Cadastro efetuado com sucesso.";
+            ui::defFeedback(tela, ui::ICN_SUCESSO, "Cadastro efetuado com sucesso.");
+
         } else {
-            icnSistema = ERRO;
-            msgSistema = "Erro no cadastro: CNPJ ja existe.";
+            ui::defFeedback(tela, ui::ICN_ERRO, "Erro ao cadastrar: CNPJ ja existe");
         }
 
     }
@@ -88,17 +71,16 @@ namespace fn {
         for (auto it = clientes.begin(); it != clientes.end(); it++) {
             if (it->login == login) {
                 if (it->password == senha) {
-                    return 1;
+                    return 1;  // SUCESSO DEVIA SER 0!
+
                 } else {
-                    icnSistema = ERRO;
-                    msgSistema = "Erro no login: senha incorreta.";
-                    return 0;
+                    ui::defFeedback(tela, ui::ICN_ERRO, "Erro ao fazer login: senha incorreta");
+                    return 0;  // ERRO DEVIA SER 1!
                 }
             }
         }
 
-        icnSistema = ERRO;
-        msgSistema = "Erro no login: usuario nao existe.";
+        ui::defFeedback(tela, ui::ICN_ERRO, "Erro ao fazer login: usuario inexistente");
         return 0;
     }
 
@@ -107,17 +89,16 @@ namespace fn {
         for (auto it = restaurantes.begin(); it != restaurantes.end(); it++) {
             if (it->cnpj == cnpj) {
                 if (it->password == senha) {
-                    return 1;
+                    return 1;  // SUCESSO DEVERIA SER 0!
+
                 } else {
-                    icnSistema = ERRO;
-                    msgSistema = "Erro no login: senha incorreta.";
-                    return 0;
+                    ui::defFeedback(tela, ui::ICN_ERRO, "Erro ao fazer login: senha incorreta");
+                    return 0;  // ERRO DEVIA SER 1!
                 }
             }
         }
 
-        icnSistema = ERRO;
-        msgSistema = "Erro no login: usuario nao encontrado.";
+        ui::defFeedback(tela, ui::ICN_ERRO, "Erro ao fazer login: usuario inexistente");
         return 0;
     }
 
@@ -149,7 +130,7 @@ namespace menu {
     }
 
     void loginClt(std::vector<clt::Client> &clientes, std::vector<rst::Restaurant> &restaurantes) {
-        limpaTela();
+        ui::limpaTela(tela);
         std::string login, senha;
 
         std::cout << "Nome de usuario: ";
@@ -158,14 +139,13 @@ namespace menu {
         std::getline(std::cin, senha);
 
         if (fn::loginCliente(clientes, login, senha)){
-            icnSistema = SUCESSO;
-            msgSistema = "Sucesso no login.";
+            ui::defFeedback(tela, ui::ICN_SUCESSO, "Sucesso ao fazer login de cliente");
             menuCliente(restaurantes, *fn::getClient(login, clientes));
         }
     }
 
     void loginRst(std::vector<rst::Restaurant> &restaurantes) {
-        limpaTela();
+        ui::limpaTela(tela);
         std::string cnpj;
         std::string senha;
         std::cout << "CNPJ: ";
@@ -174,8 +154,7 @@ namespace menu {
         std::getline(std::cin, senha);
 
         if (fn::loginRestaurante(restaurantes, cnpj, senha)) {
-            icnSistema = SUCESSO;
-            msgSistema = "Sucesso no login";
+            ui::defFeedback(tela, ui::ICN_SUCESSO, "Sucesso ao fazer login de restaurante.");
             //menuRestaurante(cnpj);
         }
     }
@@ -194,10 +173,9 @@ int main() {
 
     while (opMenuInicial != SAIR) {
         std::string entrada;
-        tituloSessao = "SISTEMA DE DELIVERY";
-        limpaTela();
+        ui::limpaTela(tela);
         menu::printMenu();
-        std::cout << "> ";
+        ui::imprimePrompt();
         std::cin >> entrada;
         std::cin.get();
         opMenuInicial = std::stoi(entrada);
@@ -220,13 +198,11 @@ int main() {
                 break;
 
             default:
-                icnSistema = ERRO;
-                msgSistema = "Comando invalido.";
+                ui::defFeedback(tela, ui::ICN_ERRO, "Comando invalido.");
                 break;
         }
     }
 
-    system("clear");
-
+    ui::sair();
     return 0;
 }
