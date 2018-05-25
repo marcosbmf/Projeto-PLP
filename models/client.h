@@ -22,19 +22,19 @@ namespace clt {
         Client c;
 
         std::cout << "Digite seu nome: ";
-        std::cin >> c.name;
+        getline(std::cin, c.nome);
         std::cout << "Insira seu CPF: ";
-        std::cin >> c.cpf;
+        getline(std::cin, c.cpf);
         std::cout << "Seu numero de telefone: ";
-        std::cin >> c.phone;
+        getline(std::cin, c.phone);
         std::cout << "Seu endereco: ";
-        std::cin >> c.address;
+        getline(std::cin, c.address);
         std::cout << "=========================\n";
         std::cout << "Escolha um nome de usuario: ";
-        std::cin >> c.login;
+        getline(std::cin, c.login);
         std::cout << "=========================\n";
         std::cout << "Digite uma senha: ";
-        std::cin >> c.password;
+        getline(std::cin, c.password);
 
         return c;
     }
