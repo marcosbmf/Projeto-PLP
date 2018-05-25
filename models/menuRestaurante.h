@@ -65,6 +65,9 @@ void confirmaRemocao(rst::Restaurant &rest, int itemRemovido){
     if(rest.menu.size() == 0){
         std::cout << std::endl << std::endl << " ---------- CARDAPIO VAZIO ---------- " << std::endl;
         std::cout << " ---------- ADICIONE PRATOS OU ESCOLHA OUTRA OPCAO ---------- " << std::endl << std::endl;
+        std::cout << "Pressione enter para voltar ao menu.";
+        std::cin.ignore();
+        return;
     }
     while (rest.menu.size() > 0){
         system("clear");
