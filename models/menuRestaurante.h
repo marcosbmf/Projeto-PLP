@@ -40,7 +40,7 @@ void confirmaRemocao(rst::Restaurant &rest, int itemRemovido){
         << "Lista de Pratos: ";
         std::cout << rst::showMenu(rest);
 
-        std::cout << std::endl << std::endl << "Você deseja remover o seguinte item? Digite 1 para remover ou 0 para cancelar!";
+        std::cout << std::endl << std::endl << "Voce deseja remover o seguinte item? Digite 1 para remover ou 0 para cancelar!";
 
         std::cout<< std::endl << std::endl << item::toString(rest.menu[itemRemovido-1]) << std::endl << std::endl << ">";
         std::cin >> confirma;
@@ -52,7 +52,7 @@ void confirmaRemocao(rst::Restaurant &rest, int itemRemovido){
             std::cin.ignore();
             break;
         } else if (confirma == 0){
-            std::cout << " --- Remoação cancelada! --- " << std::endl;
+            std::cout << " --- Remoacao cancelada! --- " << std::endl;
             std::cout << "Pressione enter para continuar!" << std::endl;
             std::cin.ignore();
         }
@@ -62,7 +62,11 @@ void confirmaRemocao(rst::Restaurant &rest, int itemRemovido){
  void removerItem(rst::Restaurant &rest) {
      int itemRemovido = -1;
 
-    while (itemRemovido != 0){
+    if(rest.menu.size() == 0){
+        std::cout << std::endl << std::endl << " ---------- CARDAPIO VAZIO ---------- " << std::endl;
+        std::cout << " ---------- ADICIONE PRATOS OU ESCOLHA OUTRA OPCAO ---------- " << std::endl << std::endl;
+    }
+    while (rest.menu.size() > 0){
         system("clear");
         std::cout <<  " ---------- REMOVER ITEM ---------- " << std::endl << std::endl
         << "Lista de Pratos: ";

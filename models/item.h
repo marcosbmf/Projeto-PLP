@@ -25,7 +25,7 @@ namespace item {
      */
     Item newItem() {
         Item n;
-4
+
         std::cout << "Insira um nome: ";
         std::getline(std::cin, n.name);
 
