@@ -160,6 +160,7 @@ void verMeusPedidos(clt::Client &cliente){
     }
 
     int choice = -1;
+    int confirma = -1;
     
     while (choice != 0){
         system("clear");
@@ -173,8 +174,16 @@ void verMeusPedidos(clt::Client &cliente){
         } else if (choice <= cliente.orders.size() && choice > 0){
             system("clear");
             std::cout << ord::orderToString(cliente.orders[choice - 1]) << std::endl;
-            std::cout << "Pressione enter para voltar aos seus pedidos." << std::endl;
-            std::cin.ignore();
+            std::cout << "Digite 1 para confirmar o recebimento do pedido ou 0 para voltar aos pedidos: ";
+            std::cin >> confirma;
+            std::cin.get();
+            std::cout << std::endl;
+
+            if (confirma == 1){
+                ord::changeSituation(cliente.orders[choice - 1], 2);
+                std::cout << "Entrega do pedido confirmada com sucesso! Pressione enter para voltar aos seus pedidos.";
+                std::cin.ignore();
+            }
         }
     }
 
