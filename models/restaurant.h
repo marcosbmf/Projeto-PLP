@@ -19,7 +19,7 @@ namespace rst {
         std::string password;
         std::vector<item::Item> menu;
         std::vector<ord::Order> orders;
-        double lastReview;
+        int lastReview;
         int opensAt[2];
         int closesAt[2];
     };
@@ -42,15 +42,14 @@ namespace rst {
         std::cout << "Senha: ";
         std::cin.get();
         getline(std::cin, rest.password);
-        rest.lastReview = 5; 
-
+        rest.lastReview = 5;
         return rest;
     }
 
     std::string toString(Restaurant &rest){
         std::ostringstream output;
 
-        output << rest.name << " #" << rest.cuisine << " - tel.:" << rest.phone;
+        output << rest.name << " #" << rest.cuisine << " - tel.:" << rest.phone << " - " << rest.lastReview << " estrelas.";
 
         return output.str();
     }

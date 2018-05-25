@@ -56,6 +56,7 @@ void preCadastro(std::vector<rst::Restaurant> &rests, std::vector<clt::Client> &
     seuOlavo.cuisine = "Fast-food";
     seuOlavo.phone = "1234-5678";
     seuOlavo.password = "Olavo";
+    seuOlavo.lastReview = 5;
     seuOlavo.opensAt[0] = 8;
     seuOlavo.opensAt[1] = 0;
     seuOlavo.closesAt[0] = 19;
@@ -113,6 +114,7 @@ void preCadastro(std::vector<rst::Restaurant> &rests, std::vector<clt::Client> &
     pizzariaDoCarvalho.cuisine = "Pizzaria";
     pizzariaDoCarvalho.phone = "4002-8922";
     pizzariaDoCarvalho.password = "carvalho";
+    pizzariaDoCarvalho.lastReview = 3; 
     pizzariaDoCarvalho.opensAt[0] = 16;
     pizzariaDoCarvalho.opensAt[1] = 0;
     pizzariaDoCarvalho.closesAt[0] = 23;
@@ -172,6 +174,7 @@ void preCadastro(std::vector<rst::Restaurant> &rests, std::vector<clt::Client> &
     lasuissa.cuisine = "Sobremesas";
     lasuissa.phone = "1234-1234";
     lasuissa.password = "suissa";
+    lasuissa.lastReview = 2;
     lasuissa.opensAt[0] = 07;
     lasuissa.opensAt[1] = 0;
     lasuissa.closesAt[0] = 20;

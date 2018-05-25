@@ -193,7 +193,7 @@ void verMeusPedidos(clt::Client &cliente){
 
 void avaliar(std::vector<rst::Restaurant> &rest){
     int choice = -1;
-    double nota;
+    int nota;
     while (choice != 0){
         system("clear");    
         std::cout << rst::listaRestaurantes(rest) << std::endl << std::endl;
