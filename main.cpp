@@ -156,7 +156,7 @@ namespace menu {
 
         if (fn::loginRestaurante(restaurantes, cnpj, senha)) {
             ui::defFeedback(tela, ui::ICN_SUCESSO, "Sucesso ao fazer login de restaurante.");
-            //menuRestaurante(cnpj);
+            menuRestaurante(*fn::getRestaurante(cnpj, restaurantes), clientes);
         }
     }
 }
