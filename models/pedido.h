@@ -17,8 +17,11 @@ namespace ord {
      */
     struct Order {
         std::vector<item::Item> items;
+        std::string usuario;
+        std::string estabelecimento;
         int situation = 0;
     };
+
 
     /**
      * Checks if order was already sent.
@@ -83,5 +86,20 @@ namespace ord {
         }
 
         return price;
+    }
+
+        std::string orderToString(Order &order){
+        std::ostringstream output;
+
+        output << "\n\nPedido realizado por " << order.usuario << " no estabelecimento " << order.estabelecimento << ":\n";
+
+        for (auto it = order.items.begin(); it != order.items.end(); it++){
+            output << item::info(*it) << "\n";
+        }
+
+        output << "\nValor total: " << getTotalPrice(order) << "\n";
+
+        return output.str();
+
     }
 }

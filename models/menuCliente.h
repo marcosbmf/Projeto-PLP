@@ -8,12 +8,12 @@
 #include <vector>
 #include <sstream>
 
-void confirmaPedido(ord::Order ord, rst::Restaurant &rest, clt::Client &cliente){
+void confirmaPedido(ord::Order &ord, rst::Restaurant &rest, clt::Client &cliente){
     std::string choice;
     std::string confirma;
     system("clear");
     std::cout << "Deseja confirmar esse pedido: ";
-            //IMpressão do pedido
+    std::cout << ord::orderToString(ord);
 
     while (choice != "1" && choice != "2"){
         std::cout << "\n\n=====> Digite uma opcao para continuar <====="
@@ -22,6 +22,8 @@ void confirmaPedido(ord::Order ord, rst::Restaurant &rest, clt::Client &cliente)
 
         if (choice == "1"){
             std::cout << "\n\nPedido confirmado com sucesso! Digite enter para continuar.";
+            ord.usuario = cliente.login;
+            ord.estabelecimento = rest.name;
             clt::addOrder(ord, cliente);
             rst::addOrder(ord, rest);
             getline(std::cin, confirma);
@@ -35,17 +37,34 @@ void confirmaPedido(ord::Order ord, rst::Restaurant &rest, clt::Client &cliente)
 void realizarPedido(rst::Restaurant &rest, clt::Client &cliente){
     ord::Order ord;
     int selecionado = -1;
+    int adicionar;
+    std::string enter;
     bool contemItem = false;
-    std::cout << rst::showMenu(rest);
     while (selecionado != 0){
-            std::cout << "Digite o número do item a ser adicionado ao pedido ou digite 0 para ir para a página de confirmação: ";
-            std::cin >> selecionado;
+        system("clear");
+        std::cout << rst::showMenu(rest);
+        std::cout << "Digite o número do item a ser adicionado ao pedido ou 0 para ir para a página de confirmação: ";
+        std::cin >> selecionado;
+        std::cin.get();
+        if (selecionado == 0){
+            break;
+        } else if (selecionado <= rest.menu.size() && selecionado > 0){
+            std::cout << item::toString(rest.menu[selecionado-1]) << "\n\n";
+            std::cout << "(1) Adicionar ao carrinho.\n";
+            std::cout << "(2) Cancelar.\n";
+            std::cin >> adicionar;
             std::cin.get();
-            if (selecionado == 0){
-                break;
-            } else if (selecionado <= rest.menu.size() && selecionado > 0){
+            if (adicionar == 1){
                 ord::addItem(ord, rest.menu[selecionado-1]);
+                std::cout << "\n Produto adicionado ao carrinho, pressione enter para continuar.";
+                std::cin >> enter;
+                std::cin.get();
+            } else {
+                std::cout << "\nCancelado. Pressione enter para continuar.";
+                std::cin >> enter;
+                std::cin.get();
             }
+        }
     }
     confirmaPedido(ord, rest, cliente);
 }
@@ -57,8 +76,8 @@ void cardapioRestaurante(rst::Restaurant &rest, clt::Client &cliente){
         system("clear");
         std::cout << rst::showMenu(rest)
                 << "\n\n=====> Digite uma opcao para continuar <====="
-                <<   "\nRealizar Pedido ---->                   ( 1 )"
-                <<   "\nVoltar à lista de restaurates ---->     ( 2 )\n\n";
+                <<   "\n(1) Realizar Pedido"
+                <<   "\n(2) Voltar à lista de restaurates\n\n";
 
         getline(std::cin, choice);
 
@@ -78,8 +97,8 @@ void exibirRestaurantes(std::vector<rst::Restaurant> &restaurantes, clt::Client 
         std::cout << rst::listaRestaurantes(restaurantes);
 
         std::cout <<     "=====> Digite uma opcao para continuar <====="
-                  << "\n\nVer cardapio ---->                      ( 1 )"
-                  <<   "\nVoltar ao menu ---->                    ( 2 )\n\n";
+                  << "\n\n(1) Ver cardapio"
+                  <<   "\n(2) Voltar ao menu\n\n";
 
         getline(std::cin, choice);
 
@@ -103,10 +122,10 @@ void menuCliente(std::vector<rst::Restaurant> &restaurantes, clt::Client &client
 
         std::cout <<  "\n\nSeja bem vindo ao Sistema de Delivery, " << cliente.name << "."
         << "\n\n=====> Digite uma opcao para continuar <====="
-        << "\n\n- Exibir todos restaurantes ---->         (  1  )"
-        << "\n- Pesquisar restaurantes ---->            (  2  )"
-        << "\n- Ver pedidos ---->                       (  3  )"
-        << "\n- Sair ---->                              (  4  )\n";
+        << "\n\n(1) Exibir todos restaurantes"
+        << "\n(2) Pesquisar restaurantes"
+        << "\n(3) Ver pedidos"
+        << "\n(4) Sair\n";
         std::cin >> opMenuCliente;
 
 
