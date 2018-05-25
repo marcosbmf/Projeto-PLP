@@ -110,4 +110,8 @@ namespace ord {
         return output.str();
 
     }
+
+    std::string listOrder(Order &order){
+        return order.estabelecimento;
+    }
 }

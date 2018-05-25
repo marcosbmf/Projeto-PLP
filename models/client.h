@@ -50,5 +50,25 @@ namespace clt {
     void addOrder(ord::Order &order, Client &cliente){
         cliente.orders.push_back(order);
     }
+
+    std::string listOrders(Client &cliente){
+        std::ostringstream output;
+        if (cliente.orders.size() == 0){
+            output << "Nenhum pedido realizado!" << std::endl;
+            return output.str();
+        }
+
+        int i = 0;
+        output << "Meus pedidos: " << std::endl << std::endl;
+        
+        for (auto it = cliente.orders.begin(); it != cliente.orders.end(); it++){
+            i++;
+            output << i << " - " << ord::listOrder(*it) << std::endl; 
+        }
+
+        output << std::endl;
+
+        return output.str();
+    }
     
 }

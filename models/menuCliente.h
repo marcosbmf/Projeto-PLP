@@ -147,6 +147,36 @@ void exibirRestaurantes(std::vector<rst::Restaurant> &restaurantes, clt::Client 
     }
 }
 
+void verMeusPedidos(clt::Client &cliente){
+    
+    if (cliente.orders.size() == 0){
+        std::cout << "Nenhum pedido foi realizado ainda!" << std::endl << std::endl
+        << "Pressione enter para voltar ao menu.";
+        std::cin.ignore();
+    }
+
+    int choice = -1;
+    
+    while (choice != 0){
+        system("clear");
+        std::cout<< clt::listOrders(cliente) << std::endl;
+
+        std::cout << "Digite o número do pedido que deseja acessar ou 0 para voltar ao menu: ";
+        std::cin >> choice;
+        std::cin.get();
+        if (choice == 0){
+            break;
+        } else if (choice <= cliente.orders.size() && choice > 0){
+            system("clear");
+            std::cout << ord::orderToString(cliente.orders[choice - 1]) << std::endl;
+            std::cout << "Pressione enter para voltar aos seus pedidos." << std::endl;
+            std::cin.ignore();
+        }
+    }
+
+
+}
+
 void menuCliente(std::vector<rst::Restaurant> &restaurantes, clt::Client &cliente){
     const char EXIBIR = '1';
     const char PESQUISAR = '2';
@@ -177,7 +207,7 @@ void menuCliente(std::vector<rst::Restaurant> &restaurantes, clt::Client &client
                 break;
 
             case VER_PEDIDOS:
-                //verMeusPedidos(cliente);
+                verMeusPedidos(cliente);
                 break;
 
             case PESQUISAR:
