@@ -36,16 +36,19 @@ void confirmaPedido(ord::Order ord, rst::Restaurant &rest, clt::Client &cliente)
                 clt::addOrder(ord, cliente);
                 rst::addOrder(ord, rest);
                 std::cin.ignore();
+                break;
 
             case CONFIRMAR_BAIXA:
                 std::cout << "Pedido confirmado com sucesso! Pressione ENTER para continuar.";
                 clt::addOrder(ord, cliente);
                 rst::addOrder(ord, rest);
                 std::cin.ignore();
+                break;
 
             case CANCELAR_CHAR:
                 std::cout << "Pedido cancelado com sucesso! Pressione ENTER para continuar.";
                 std::cin.ignore();
+                break;
 
             default:
                 std::cout << "Comando invalido.";
@@ -188,7 +191,7 @@ void avaliar(std::vector<rst::Restaurant> &rest){
         std::cin.get();
 
         if (choice <= rest.size() && choice > 0){
-            std::cout << "Qual nota gostaria de dar ao restaurante " << rest[choice - 1].name << "? (Nota entre 0 e 5)" << std::endl
+            std::cout << "Qual nota gostaria de dar ao restaurante " << res[choice - 1].name << "? (Nota entre 0 e 5)" << std::endl
             << "> ";
             std::cin >> nota;
             if (nota >= 0 && nota <= 5){
