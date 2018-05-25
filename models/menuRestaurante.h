@@ -52,7 +52,7 @@ void confirmaRemocao(rst::Restaurant &rest, int itemRemovido){
             std::cin.ignore();
             break;
         } else if (confirma == 0){
-            std::cout << " --- Remoacao cancelada! --- " << std::endl;
+            std::cout << " --- Remocao cancelada! --- " << std::endl;
             std::cout << "Pressione enter para continuar!" << std::endl;
             std::cin.ignore();
         }
@@ -68,30 +68,33 @@ void confirmaRemocao(rst::Restaurant &rest, int itemRemovido){
         std::cout << "Pressione enter para voltar ao menu.";
         std::cin.ignore();
         return;
-    }
-    while (rest.menu.size() > 0){
-        system("clear");
-        std::cout <<  " ---------- REMOVER ITEM ---------- " << std::endl << std::endl
-        << "Lista de Pratos: ";
+    }else {
+        while (itemRemovido != 0) {
+            system("clear");
+            std::cout << " ---------- REMOVER ITEM ---------- " << std::endl << std::endl
+                      << "Lista de Pratos: ";
 
-        std::cout << rst::showMenu(rest);
+            std::cout << rst::showMenu(rest);
 
-        std::cout << std::endl << std::endl << "Digite o numero do prato que voce deseja deletar, ou 0 para Cancelar:";
-        std::cin >> itemRemovido;
-        std::cin.get();
+            std::cout << std::endl << std::endl
+                      << "Digite o numero do prato que voce deseja deletar, ou 0 para Cancelar:";
+            std::cin >> itemRemovido;
+            std::cin.get();
 
-        if(itemRemovido != 0) {
-            if(itemRemovido <= rest.menu.size() && itemRemovido > 0) {
-                confirmaRemocao(rest, itemRemovido);
-                itemRemovido = -1;
-            } else {
-                std::cout << " --- ERRO: Numero do Prato invalido --- ";
-                std::cout << "Pressione enter para continuar!" << std::endl;
-                std::cin.ignore();
+            if (itemRemovido != 0) {
+                if (itemRemovido <= rest.menu.size() && itemRemovido > 0) {
+                    confirmaRemocao(rest, itemRemovido);
+                    itemRemovido = -1;
+                } else {
+                    std::cout << " --- ERRO: Numero do Prato invalido --- ";
+                    std::cout << "Pressione enter para continuar!" << std::endl;
+                    std::cin.ignore();
+                }
             }
         }
     }
  }
+
 
 void verPedidos(rst::Restaurant &rest){
     
@@ -154,7 +157,7 @@ void menuRestaurante (rst::Restaurant &rest) {
 
     	system("clear");
         std::cout <<  "Bem vindo, " << rest.name << "." << std::endl << std::endl
-        << "OPCOES PARA RESTAURANT" << std::endl
+        << "OPCOES PARA RESTAURANTE0" << std::endl
         << "(1) Adicionar Prato ao seu cardapio" << std::endl
         << "(2) Remover Prato do seu cardapio" << std::endl
         << "(3) Ver Pedidos Feitos por Clientes" << std::endl

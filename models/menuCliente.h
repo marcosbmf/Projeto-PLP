@@ -206,7 +206,7 @@ void avaliar(std::vector<rst::Restaurant> &rest){
                 std::cin.ignore();
                 break;
             } else {
-                std::cout << "Nota inválida, pressione enter para voltar ao menu." << std::endl;
+                std::cout << "Nota invalida, pressione enter para voltar ao menu." << std::endl;
             }
         }
     }
