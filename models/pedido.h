@@ -102,8 +102,8 @@ namespace ord {
 
         output << "\nValor total: " << getTotalPrice(order) << std::endl << std::endl;
 
-        output << "Informações do pedido: " << std::endl
-               << "Endereço: " << order.endereco << std::endl
+        output << "Informacoes do pedido: " << std::endl
+               << "Endereco: " << order.endereco << std::endl
                << "Telefone para contato: " << order.userPhone << std::endl
                << "Telefone do estabelecimento: " << order.restPhone << std::endl << std::endl;
 

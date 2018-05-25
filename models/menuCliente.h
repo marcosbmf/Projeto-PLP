@@ -7,10 +7,10 @@
 #include <string>
 #include <vector>
 #include <sstream>
+#include <ctype.h>
 
 const char CONFIRMAR_ALTA = 'S';
-const char CONFIRMAR_BAIXA = 's';
-const char CANCELAR_CHAR = 'n';
+const char CANCELAR_CHAR = 'N';
 const int PROSSEGUIR = 0;
 
 void confirmaPedido(ord::Order ord, rst::Restaurant &rest, clt::Client &cliente){
@@ -25,21 +25,16 @@ void confirmaPedido(ord::Order ord, rst::Restaurant &rest, clt::Client &cliente)
 
     std::cout << ord::orderToString(ord);
 
-    while (choice != CONFIRMAR_ALTA && choice != CONFIRMAR_BAIXA && choice != CANCELAR_CHAR){
-        std::cout << "Confirmar pedido (S/n)? ";
+    while (choice != CONFIRMAR_ALTA  && choice != CANCELAR_CHAR){
+        std::cout << "Confirmar pedido (s/n)? ";
         std::cin >> choice;
         std::cin.get();
         std::cout << std::endl;
 
+        choice = toupper(choice);
+
         switch (choice) {
             case CONFIRMAR_ALTA:
-                std::cout << "Pedido confirmado com sucesso! Pressione ENTER para continuar.";
-                clt::addOrder(ord, cliente);
-                rst::addOrder(ord, rest);
-                std::cin.ignore();
-                break;
-
-            case CONFIRMAR_BAIXA:
                 std::cout << "Pedido confirmado com sucesso! Pressione ENTER para continuar.";
                 clt::addOrder(ord, cliente);
                 rst::addOrder(ord, rest);
@@ -67,7 +62,7 @@ void realizarPedido(rst::Restaurant &rest, clt::Client &cliente){
     while (selecionado != 0){
         system("clear");
         std::cout << rst::showMenu(rest) << std::endl;
-        std::cout << "Digite o número do item a ser adicionado ao pedido ou 0 para ir para a página de confirmação: ";
+        std::cout << "Digite o numero do item a ser adicionado ao pedido ou 0 para ir para a pagina de confirmacao: ";
         std::cin >> selecionado;
         std::cin.get();
         if (selecionado == 0){
@@ -167,7 +162,7 @@ void verMeusPedidos(clt::Client &cliente){
         system("clear");
         std::cout<< ord::listOrders(cliente.orders) << std::endl;
 
-        std::cout << "Digite o número do pedido que deseja acessar ou 0 para voltar ao menu: ";
+        std::cout << "Digite o numero do pedido que deseja acessar ou 0 para voltar ao menu: ";
         std::cin >> choice;
         std::cin.get();
         if (choice == 0){
