@@ -177,10 +177,37 @@ void verMeusPedidos(clt::Client &cliente){
 
 }
 
+void avaliar(std::vector<rst::Restaurant> &rest){
+    int choice = -1;
+    double nota;
+    while (choice != 0){
+        system("clear");    
+        std::cout << rst::listaRestaurantes(rest) << std::endl << std::endl;
+        std::cout << "Selecione o restaurante que deseja avaliar ou digite 0 para voltar ao menu: " << std::endl << std::endl;
+        std::cin >> choice;
+        std::cin.get();
+
+        if (choice <= rest.size() && choice > 0){
+            std::cout << "Qual nota gostaria de dar ao restaurante " << rest[choice - 1].name << "? (Nota entre 0 e 5)" << std::endl
+            << "> ";
+            std::cin >> nota;
+            if (nota >= 0 && nota <= 5){
+                rest[choice - 1].lastReview = nota;
+                std::cout << "Restaurante avaliado com sucesso. Pressione enter para voltar ao menu." << std::endl;
+                std::cin.ignore();
+                break;
+            } else {
+                std::cout << "Nota inválida, pressione enter para voltar ao menu." << std::endl;
+            }
+        }
+    }
+
+}
+
 void menuCliente(std::vector<rst::Restaurant> &restaurantes, clt::Client &cliente){
     const char EXIBIR = '1';
-    const char PESQUISAR = '2';
-    const char VER_PEDIDOS = '3';
+    const char VER_PEDIDOS = '2';
+    const char AVALIAR = '3';
     const char SAIR = '4';
 
     
@@ -191,8 +218,8 @@ void menuCliente(std::vector<rst::Restaurant> &restaurantes, clt::Client &client
         std::cout <<  "Bem vindo, " << cliente.name << "." << std::endl << std::endl
         << "MENU" << std::endl
         << "(1) Exibir todos restaurantes" << std::endl
-        << "(2) Pesquisar restaurantes" << std::endl
-        << "(3) Ver pedidos" << std::endl
+        << "(2) Ver pedidos" << std::endl
+        << "(3) Avaliar restaurante" << std::endl
         << "(4) Sair" << std::endl << std::endl
         << "> ";
         std::cin >> opMenuCliente;
@@ -210,8 +237,8 @@ void menuCliente(std::vector<rst::Restaurant> &restaurantes, clt::Client &client
                 verMeusPedidos(cliente);
                 break;
 
-            case PESQUISAR:
-                //pesquisarRestaurantes(restaurantes, cliente);
+            case AVALIAR:
+                avaliar(restaurantes);
                 break;
 
             default:

@@ -16,10 +16,10 @@ namespace rst {
         std::string cnpj;
         std::string phone;
         std::string cuisine;
-        // Ramon // adicionei a senha, o login sera o cnpj
         std::string password;
         std::vector<item::Item> menu;
         std::vector<ord::Order> orders;
+        double lastReview;
         int opensAt[2];
         int closesAt[2];
     };
@@ -42,6 +42,7 @@ namespace rst {
         std::cout << "Senha: ";
         std::cin.get();
         getline(std::cin, rest.password);
+        rest.lastReview = 5; 
 
         return rest;
     }
