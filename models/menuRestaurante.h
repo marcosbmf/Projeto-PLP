@@ -1,14 +1,14 @@
-#ifndef PLP_MENUCLIENTE_H
-#define PLP_MENUCLIENTE_H
+#ifndef PLP_MENURESTAURANTE_H
+#define PLP_MENURESTAURANTE_H
 
-#endif //PLP_MENUCLIENTE_H
+#endif //PLP_MENURESTAURANTE_H
 
 #include <iostream>
 #include <string>
 #include <vector>
 #include <sstream>
 
-void adicionarItem(rst::Restaurant rest) {
+void adicionarItem(rst::Restaurant &rest) {
 
 	system("clear");
     std::cout <<  " ---------- ADICIONAR ITEM ---------- " << std::endl << std::endl;
@@ -17,54 +17,63 @@ void adicionarItem(rst::Restaurant rest) {
     std::cout <<  " =>       Item adicionado com sucesso! :D       <= " << std::endl;
 }
 
- void removerItem(rst::Restaurant rest) {
+ void removerItem(rst::Restaurant &rest) {
+     int itemRemovido = -1;
 
-	system("clear");
-    std::cout <<  " ---------- REMOVER ITEM ---------- " << std::endl << std::endl
-    << "Lista de Pratos: ";
+    while (itemRemovido != 0){
+        system("clear");
+        std::cout <<  " ---------- REMOVER ITEM ---------- " << std::endl << std::endl
+        << "Lista de Pratos: ";
 
-    std::cout << rst::showMenu(rest);
+        std::cout << rst::showMenu(rest);
 
-    int itemRemovido;
+        std::cout << std::endl << std::endl << "Digite o numero do prato que voce deseja deletar, ou 0 para Cancelar:";
+        std::cin >> itemRemovido;
+        std::cin.get();
 
-    std::cout << std::endl << std::endl << "Digite o numero do prato que voce deseja deletar, ou 0 para Cancelar:";
-    std::cin >> itemRemovido;
-
-    if(itemRemovido != 0) {
-    	// verifica se o tamanho eh valido
-    	if(itemRemovido <= rest.menu.size()) {
-			rest.menu.erase(rest.menu.begin() + itemRemovido - 1);
-			std::cout << " --- Removido com sucesso! --- ";
-    	} else {
-    		std::cout << " --- ERRO: Numero do Prato invalido --- ";
-    	}
+        if(itemRemovido != 0) {
+            // verifica se o tamanho eh valido
+            if(itemRemovido <= rest.menu.size() && itemRemovido > 0) {
+                rest.menu.erase(rest.menu.begin() + itemRemovido - 1);
+                std::cout << " --- Removido com sucesso! --- ";
+            } else {
+                std::cout << " --- ERRO: Numero do Prato invalido --- ";
+            }
+        }
     }
  }
 
-void verPedidos(rst::Restaurant &restaurante, std::vector<clt::Client> clientes) {
+void verPedidos(rst::Restaurant &rest){
+    
+    if (rest.orders.size() == 0){
+        std::cout << "Nenhum pedido foi realizado ainda!" << std::endl << std::endl
+        << "Pressione enter para voltar ao menu.";
+        std::cin.ignore();
+    }
 
-	// vector usado pra guardar pedidos em comum entre clientes e restaurante
-	
- 	std::vector<item::Item> pedidos;
+    int choice = -1;
+    
+    while (choice != 0){
+        system("clear");
+        std::cout<< ord::listOrders(rest.orders) << std::endl;
 
- 	// esse for itera sobre todos os pedidos de todos os clientes, e coloca em pedidos os que tem o mesmo restaurante
+        std::cout << "Digite o número do pedido que deseja acessar ou 0 para voltar ao menu: ";
+        std::cin >> choice;
+        std::cin.get();
+        if (choice == 0){
+            break;
+        } else if (choice <= rest.orders.size() && choice > 0){
+            system("clear");
+            std::cout << ord::orderToString(rest.orders[choice - 1]) << std::endl;
+            std::cout << "Pressione enter para voltar aos seus pedidos." << std::endl;
+            std::cin.ignore();
+        }
+    }
 
-    for (auto it = clientes.begin(); it != clientes.end(); it++){
-	    for (auto at = it.orders.begin(); at != it.orders.end(); at++){
-	    	if (at->estabelecimento == restaurante.name) {
-	    		pedidos.push_back(it);
-	    	} 
-	    }
-	}
 
-	int i = 1;
-	// imprime os pedidos, nao sei se esta correto pois nao testei
-	for (auto it = pedidos.begin(); it != pedidos.end(); it++) {
-		std::cout << i << " - " << it->name;
-	}
 }
 
-void menuRestaurante (rst::Restaurant rest, std::vector<clt::Client> clientes) {
+void menuRestaurante (rst::Restaurant &rest) {
 
     const char ADICIONAR_ITEM = '1';
     const char REMOVER_ITEM = '2';
@@ -95,9 +104,9 @@ void menuRestaurante (rst::Restaurant rest, std::vector<clt::Client> clientes) {
             	removerItem(rest);
                 break; 
 
-            // case VER_PEDIDOS:
-            //     verPedidos(rest, clientes);
-            //     break;
+            case VER_PEDIDOS:
+                verPedidos(rest);
+                break;
 
             case SAIR:
                 break;
@@ -106,5 +115,3 @@ void menuRestaurante (rst::Restaurant rest, std::vector<clt::Client> clientes) {
     }
 
 }
-
-

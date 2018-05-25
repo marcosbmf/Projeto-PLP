@@ -52,7 +52,7 @@ void preCadastro(std::vector<rst::Restaurant> &rests, std::vector<clt::Client> &
 ////////////////// CRIANDO RESTAURANTE SEU OLAVO ///////////////////////
     rst::Restaurant seuOlavo;
     seuOlavo.name = "Seu Olavo's";
-    seuOlavo.cnpj = 1;
+    seuOlavo.cnpj = "1";
     seuOlavo.cuisine = "Fast-food";
     seuOlavo.phone = "1234-5678";
     seuOlavo.password = "Olavo";

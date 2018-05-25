@@ -114,4 +114,24 @@ namespace ord {
     std::string listOrder(Order &order){
         return order.estabelecimento;
     }
+
+    std::string listOrders(std::vector<Order> &orders){
+        std::ostringstream output;
+        if (orders.size() == 0){
+            output << "Nenhum pedido realizado!" << std::endl;
+            return output.str();
+        }
+
+        int i = 0;
+        output << "Meus pedidos: " << std::endl << std::endl;
+        
+        for (auto it = orders.begin(); it != orders.end(); it++){
+            i++;
+            output << i << " - " << ord::listOrder(*it) << std::endl; 
+        }
+
+        output << std::endl;
+
+        return output.str();
+    }
 }

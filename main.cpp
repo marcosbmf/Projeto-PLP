@@ -89,10 +89,10 @@ namespace fn {
     int loginRestaurante(std::vector<rst::Restaurant> restaurantes, std::string cnpj, std::string senha){
 
         for (auto it = restaurantes.begin(); it != restaurantes.end(); it++) {
+            std::cout << it->cnpj << "\n";
             if (it->cnpj == cnpj) {
                 if (it->password == senha) {
                     return 1;  // SUCESSO DEVERIA SER 0!
-
                 } else {
                     ui::defFeedback(tela, ui::ICN_ERRO, "Erro ao fazer login: senha incorreta");
                     return 0;  // ERRO DEVIA SER 1!
@@ -157,9 +157,7 @@ namespace menu {
 
         if (fn::loginRestaurante(restaurantes, cnpj, senha)) {
             ui::defFeedback(tela, ui::ICN_SUCESSO, "Sucesso ao fazer login de restaurante.");
-            // esse clientes abaixo esta dando erro, diz que esta fora do escopo,
-            // nao sei o q fazer
-            menuRestaurante(*fn::getRestaurante(cnpj, restaurantes), clientes);
+            menuRestaurante(*fn::getRestaurante(cnpj, restaurantes));
         }
     }
 }

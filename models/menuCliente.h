@@ -162,7 +162,7 @@ void verMeusPedidos(clt::Client &cliente){
     
     while (choice != 0){
         system("clear");
-        std::cout<< clt::listOrders(cliente) << std::endl;
+        std::cout<< ord::listOrders(cliente.orders) << std::endl;
 
         std::cout << "Digite o número do pedido que deseja acessar ou 0 para voltar ao menu: ";
         std::cin >> choice;
