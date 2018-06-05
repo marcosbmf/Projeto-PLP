@@ -110,7 +110,7 @@ void preCadastro(std::vector<rst::Restaurant> &rests, std::vector<clt::Client> &
 /////////////////////////// CRIANDO PIZZARIA /////////////////////////////
     rst::Restaurant pizzariaDoCarvalho;
     pizzariaDoCarvalho.name = "Pizzaria Nota 10";
-    pizzariaDoCarvalho.cnpj = 2;
+    pizzariaDoCarvalho.cnpj = "2";
     pizzariaDoCarvalho.cuisine = "Pizzaria";
     pizzariaDoCarvalho.phone = "4002-8922";
     pizzariaDoCarvalho.password = "carvalho";
@@ -170,7 +170,7 @@ void preCadastro(std::vector<rst::Restaurant> &rests, std::vector<clt::Client> &
 ///////////////////////// CRIANDO LA SUISSA ///////////////////////////////// 
     rst::Restaurant lasuissa;
     lasuissa.name = "La Suissa";
-    lasuissa.cnpj = 3;
+    lasuissa.cnpj = "3";
     lasuissa.cuisine = "Sobremesas";
     lasuissa.phone = "1234-1234";
     lasuissa.password = "suissa";
@@ -220,7 +220,7 @@ void preCadastro(std::vector<rst::Restaurant> &rests, std::vector<clt::Client> &
 ///////////////////////////// CRIANDO YOI /////////////////////////// 
     rst::Restaurant YOI;
     YOI.name = "YOI";
-    YOI.cnpj = 4;
+    YOI.cnpj = "4";
     YOI.cuisine = "Japones";
     YOI.phone = "3333-3333";
     YOI.password = "sushi";
@@ -269,7 +269,7 @@ void preCadastro(std::vector<rst::Restaurant> &rests, std::vector<clt::Client> &
 /////////////// CRIANDO O MC DONALDS ////////////////    
     rst::Restaurant mcdonalds;
     mcdonalds.name = "Mc Donalds";
-    mcdonalds.cnpj = 5;
+    mcdonalds.cnpj = "5";
     mcdonalds.cuisine = "fast-food";
     mcdonalds.phone = "666-666-666";
     mcdonalds.password = "gordura";
