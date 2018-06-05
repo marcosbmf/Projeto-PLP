@@ -297,6 +297,8 @@ void preCadastro(std::vector<rst::Restaurant> &rests, std::vector<clt::Client> &
     clientes.push_back(client);
     rests.push_back(seuOlavo);
     rests.push_back(pizzariaDoCarvalho);
-    rests.push_back(lasuissa);
+    rests.push_back(YOI);
+    rests.push_back(mcdonalds);
+
 
 }
