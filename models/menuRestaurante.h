@@ -8,15 +8,14 @@
 #include <vector>
 #include <sstream>
 
+extern ui::UserInterface tela;
+
 void adicionarItem(rst::Restaurant &rest) {
     int confirma = -1;
-
-	system("clear");
-    std::cout <<  " ---------- ADICIONAR ITEM ---------- " << std::endl << std::endl;
+    ui::defTitulo(tela, "ADICIONAR ITEM");
+    ui::limpaTela(tela);
     item::Item item = item::newItem();
-
-    system("clear");
-    std::cout <<  " ---------- ADICIONAR ITEM ---------- " << std::endl << std::endl;
+    ui::limpaTela(tela);
     std::cout << item::toString(item) << std::endl << std::endl;
     std::cout << "Digite 1 para confirmar a adicao ou 0 para cancelar: ";
     std::cin >> confirma;
@@ -24,10 +23,10 @@ void adicionarItem(rst::Restaurant &rest) {
 
     if (confirma == 1){
         rest.menu.push_back(item);
-        std::cout <<  " =>       Item adicionado com sucesso! :D       <= " << std::endl << "Pressione enter para continuar!";
+        std::cout <<  "Item adicionado com sucesso." << std::endl << "Pressione ENTER para continuar:";
         std::cin.ignore();
     } else {
-        std::cout <<  " =>       Adição de item cancelada!      <= " << std::endl << "Pressione enter para continuar!";
+        std::cout <<  "Adicao de item cancelada." << std::endl << "Pressione ENTER para continuar:";
         std::cin.ignore();
     }
 }
@@ -35,25 +34,25 @@ void adicionarItem(rst::Restaurant &rest) {
 void confirmaRemocao(rst::Restaurant &rest, int itemRemovido){
     int confirma = -1;
     while (confirma != 0){
-        system("clear");
-        std::cout <<  " ---------- REMOVER ITEM ---------- " << std::endl << std::endl
-        << "Lista de Pratos: ";
+        ui::defTitulo(tela, "REMOVER ITEM");
+        ui::limpaTela(tela);
+        std::cout << "Lista de Pratos: ";
         std::cout << rst::showMenu(rest);
 
-        std::cout << std::endl << std::endl << "Voce deseja remover o seguinte item? Digite 1 para remover ou 0 para cancelar!";
+        std::cout << std::endl << std::endl << "Voce deseja remover o seguinte item? Digite 1 para remover ou 0 para cancelar: ";
 
         std::cout<< std::endl << std::endl << item::toString(rest.menu[itemRemovido-1]) << std::endl << std::endl << ">";
         std::cin >> confirma;
         std::cin.get();
         if (confirma == 1){
             rest.menu.erase(rest.menu.begin() + itemRemovido - 1);
-            std::cout << " --- Removido com sucesso! --- " << std::endl;
-            std::cout << "Pressione enter para continuar!" << std::endl;
+            std::cout << "Removido com sucesso!" << std::endl;
+            std::cout << "Pressione ENTER para continuar: " << std::endl;
             std::cin.ignore();
             break;
         } else if (confirma == 0){
-            std::cout << " --- Remocao cancelada! --- " << std::endl;
-            std::cout << "Pressione enter para continuar!" << std::endl;
+            std::cout << "Remocao cancelada!" << std::endl;
+            std::cout << "Pressione ENTER para continuar: " << std::endl;
             std::cin.ignore();
         }
     }
@@ -63,21 +62,20 @@ void confirmaRemocao(rst::Restaurant &rest, int itemRemovido){
      int itemRemovido = -1;
 
     if(rest.menu.size() == 0){
-        std::cout << std::endl << std::endl << " ---------- CARDAPIO VAZIO ---------- " << std::endl;
-        std::cout << " ---------- ADICIONE PRATOS OU ESCOLHA OUTRA OPCAO ---------- " << std::endl << std::endl;
-        std::cout << "Pressione enter para voltar ao menu.";
+        std::cout << std::endl << std::endl << "CARDAPIO VAZIO" << std::endl;
+        std::cout << "ADICIONE PRATOS OU ESCOLHA OUTRA OPCAO" << std::endl << std::endl;
+        std::cout << "Pressione ENTER para voltar ao menu.";
         std::cin.ignore();
         return;
     }else {
         while (itemRemovido != 0) {
-            system("clear");
-            std::cout << " ---------- REMOVER ITEM ---------- " << std::endl << std::endl
-                      << "Lista de Pratos: ";
+            ui::defTitulo(tela, "REMOVER ITEM");
+            ui::limpaTela(tela);
 
+            std::cout << "Lista de Pratos: ";
             std::cout << rst::showMenu(rest);
-
             std::cout << std::endl << std::endl
-                      << "Digite o numero do prato que voce deseja deletar, ou 0 para Cancelar:";
+                      << "Digite o numero do prato que voce deseja deletar, ou 0 para cancelar:";
             std::cin >> itemRemovido;
             std::cin.get();
 
@@ -86,8 +84,9 @@ void confirmaRemocao(rst::Restaurant &rest, int itemRemovido){
                     confirmaRemocao(rest, itemRemovido);
                     itemRemovido = -1;
                 } else {
-                    std::cout << " --- ERRO: Numero do Prato invalido --- ";
-                    std::cout << "Pressione enter para continuar!" << std::endl;
+                    ui::defFeedback(tela, ui::ICN_ERRO, "Numero do prato invalido");
+                    std::cout << "ERRO: Numero do prato invalido";
+                    std::cout << "Pressione ENTER para continuar:" << std::endl;
                     std::cin.ignore();
                 }
             }
@@ -100,7 +99,7 @@ void verPedidos(rst::Restaurant &rest){
     
     if (rest.orders.size() == 0){
         std::cout << std::endl << std::endl << "Nenhum pedido foi realizado ainda!" << std::endl << std::endl
-        << "Pressione enter para voltar ao menu.";
+        << "Pressione ENTER para voltar ao menu.";
         std::cin.ignore();
         return;
     }
@@ -109,7 +108,7 @@ void verPedidos(rst::Restaurant &rest){
     int confirma = -1;
     
     while (choice != 0){
-        system("clear");
+        ui::limpaTela(tela);
         std::cout<< ord::listOrders(rest.orders) << std::endl;
 
         std::cout << "Digite o número do pedido que deseja acessar ou 0 para voltar ao menu: ";
@@ -117,24 +116,30 @@ void verPedidos(rst::Restaurant &rest){
         std::cin.get();
         if (choice == 0){
             break;
+
         } else if (choice <= rest.orders.size() && choice > 0){
-            system("clear");
+            ui::limpaTela(tela);
             std::cout << ord::orderToString(rest.orders[choice - 1]) << std::endl;
             std::cout << "Pressione 1 para mudar o estado do pedido ou 0 para voltar aos seus pedidos: " << std::endl;
             std::cin >> confirma;
             std::cin.get();
+
             if (confirma == 1){
-                system("clear");
+                ui::limpaTela(tela);
                 std::cout << ord::orderToString(rest.orders[choice - 1]) << std::endl
                 << "Digite 1 para confirmar o envio do pedido ou 0 para voltar aos seus pedidos: ";
                 std::cin >> confirma;
                 std::cin.get();
+
                 if (confirma == 1){
                     ord::changeSituation(rest.orders[choice - 1], 1);
-                    std::cout << std::endl << "Mudança realizada com sucesso! Pressione enter para voltar aos seus pedidos";
+                    ui::defFeedback(tela, ui::ICN_SUCESSO, "Mudanca realizada com sucesso");
+                    std::cout << std::endl << "Mudança realizada com sucesso! Pressione ENTER para voltar aos seus pedidos";
                     std::cin.ignore();
+
                 } else {
-                    std::cout << std::endl << "Mudança Cancelada! Pressione enter para voltar aos seus pedidos";
+                    ui::defFeedback(tela, ui::ICN_NADA, "Mudanca cancelada");
+                    std::cout << std::endl << "Mudança Cancelada! Pressione ENTER para voltar aos seus pedidos";
                     std::cin.ignore();
                 }
             }
@@ -152,12 +157,12 @@ void menuRestaurante (rst::Restaurant &rest) {
     const char SAIR = '4';
 
     char opMenuRestaurante;
+    ui::defTitulo(tela, "SISTEMA DE DELIVERY - Menu Restaurante");
 
     while(opMenuRestaurante != SAIR) {
-
-    	system("clear");
+        ui::limpaTela(tela);
         std::cout <<  "Bem vindo, " << rest.name << "." << std::endl << std::endl
-        << "OPCOES PARA RESTAURANTE0" << std::endl
+        << "OPCOES PARA RESTAURANTE:" << std::endl
         << "(1) Adicionar Prato ao seu cardapio" << std::endl
         << "(2) Remover Prato do seu cardapio" << std::endl
         << "(3) Ver Pedidos Feitos por Clientes" << std::endl
@@ -180,6 +185,7 @@ void menuRestaurante (rst::Restaurant &rest) {
                 break;
 
             case SAIR:
+                ui::defFeedback(tela, ui::ICN_SUCESSO, "Logout realizado com sucesso");
                 break;
         }
 

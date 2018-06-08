@@ -9,12 +9,14 @@
 #include <sstream>
 #include <ctype.h>
 
+extern ui::UserInterface tela;
 const char CONFIRMAR_ALTA = 'S';
 const char CANCELAR_CHAR = 'N';
 const int PROSSEGUIR = 0;
 
 void confirmaPedido(ord::Order ord, rst::Restaurant &rest, clt::Client &cliente){
-    system("clear");
+    ui::defTitulo(tela, "CONFIRMAR PEDIDO");
+    ui::limpaTela(tela);
     char choice;
 
     ord.estabelecimento = rest.name;
@@ -26,7 +28,7 @@ void confirmaPedido(ord::Order ord, rst::Restaurant &rest, clt::Client &cliente)
     std::cout << ord::orderToString(ord);
 
     while (choice != CONFIRMAR_ALTA  && choice != CANCELAR_CHAR){
-        std::cout << "Confirmar pedido (s/n)? ";
+        std::cout << "Confirmar pedido (S/n)? ";
         std::cin >> choice;
         std::cin.get();
         std::cout << std::endl;
@@ -60,7 +62,7 @@ void realizarPedido(rst::Restaurant &rest, clt::Client &cliente){
     bool contemItem = false;
 
     while (selecionado != 0){
-        system("clear");
+        ui::limpaTela(tela);
         std::cout << rst::showMenu(rest) << std::endl;
         std::cout << "Digite o numero do item a ser adicionado ao pedido ou 0 para ir para a pagina de confirmacao: ";
         std::cin >> selecionado;
@@ -68,6 +70,7 @@ void realizarPedido(rst::Restaurant &rest, clt::Client &cliente){
         if (selecionado == 0){
             break;
         } else if (selecionado <= rest.menu.size() && selecionado > 0){
+            ui::limpaTela(tela);
             std::cout << "\n" << item::toString(rest.menu[selecionado-1]) << "\n\n";
             std::cout << "(1) Adicionar ao carrinho.\n";
             std::cout << "(2) Cancelar.\n\n";
@@ -77,10 +80,10 @@ void realizarPedido(rst::Restaurant &rest, clt::Client &cliente){
             if (adicionar == 1){
                 ord::addItem(ord, rest.menu[selecionado-1]);
                 contemItem = true;
-                std::cout << "\n Produto adicionado ao carrinho, pressione enter para continuar.";
+                std::cout << "\n Produto adicionado ao carrinho, pressione ENTER para continuar.";
                 std::cin.ignore();
             } else {
-                std::cout << "\nCancelado. Pressione enter para continuar.";
+                std::cout << "\nCancelado. Pressione ENTER para continuar.";
                 std::cin.ignore();
             }
         }
@@ -88,7 +91,7 @@ void realizarPedido(rst::Restaurant &rest, clt::Client &cliente){
     if (contemItem){
         confirmaPedido(ord, rest, cliente);
     } else {
-        std::cout << "Pedido vazio. Pressione enter para continuar." << std::endl;
+        std::cout << "Pedido vazio. Pressione ENTER para continuar." << std::endl;
         std::cin.ignore();
     }
     
@@ -100,7 +103,8 @@ void cardapioRestaurante(rst::Restaurant &rest, clt::Client &cliente){
     char choice = '0';
     
     while (choice != CANCELAR_PEDIDO){
-        system("clear");
+        ui::defTitulo(tela, "CARDAPIOS");
+        ui::limpaTela(tela);
         std::cout << rst::showMenu(rest)
                   << "Selecione uma opcao" << std::endl
                   << "(1) Realizar Pedido" << std::endl
@@ -122,7 +126,9 @@ void exibirRestaurantes(std::vector<rst::Restaurant> &restaurantes, clt::Client 
     int escolheRestaurante;
 
     while (choice != CANCELAR) {
-        system("clear");
+        ui::defTitulo(tela, "FAZER PEDIDO");
+        ui::limpaTela(tela);
+
         std::cout << "RESTAURANTES CADASTRADOS:" << std::endl << std::endl;
         std::cout << rst::listaRestaurantes(restaurantes) << std::endl;
 
@@ -133,7 +139,7 @@ void exibirRestaurantes(std::vector<rst::Restaurant> &restaurantes, clt::Client 
         std::cin >> choice;
         std::cin.get();
         if (choice == VER_CARDAPIO){
-            system("clear");
+            ui::limpaTela(tela);
 
             std::cout << "Restaurantes cadastrados no sistema:" << std::endl << std::endl
                       << rst::listaRestaurantes(restaurantes) << std::endl
@@ -150,7 +156,7 @@ void verMeusPedidos(clt::Client &cliente){
     
     if (cliente.orders.size() == 0){
         std::cout << std::endl << std::endl << "Nenhum pedido foi realizado ainda!" << std::endl << std::endl
-        << "Pressione enter para voltar ao menu.";
+        << "Pressione ENTER para voltar ao menu.";
         std::cin.ignore();
         return;
     }
@@ -159,7 +165,7 @@ void verMeusPedidos(clt::Client &cliente){
     int confirma = -1;
     
     while (choice != 0){
-        system("clear");
+        ui::limpaTela(tela);
         std::cout<< ord::listOrders(cliente.orders) << std::endl;
 
         std::cout << "Digite o numero do pedido que deseja acessar ou 0 para voltar ao menu: ";
@@ -168,7 +174,7 @@ void verMeusPedidos(clt::Client &cliente){
         if (choice == 0){
             break;
         } else if (choice <= cliente.orders.size() && choice > 0){
-            system("clear");
+            ui::limpaTela(tela);
             std::cout << ord::orderToString(cliente.orders[choice - 1]) << std::endl;
             std::cout << "Digite 1 para confirmar o recebimento do pedido ou 0 para voltar aos pedidos: ";
             std::cin >> confirma;
@@ -190,7 +196,8 @@ void avaliar(std::vector<rst::Restaurant> &rest){
     int choice = -1;
     int nota;
     while (choice != 0){
-        system("clear");    
+        ui::defTitulo(tela, "AVALIAR RESTAURANTE");
+        ui::limpaTela(tela);
         std::cout << rst::listaRestaurantes(rest) << std::endl << std::endl;
         std::cout << "Selecione o restaurante que deseja avaliar ou digite 0 para voltar ao menu: " << std::endl << std::endl;
         std::cin >> choice;
@@ -202,12 +209,15 @@ void avaliar(std::vector<rst::Restaurant> &rest){
             std::cin >> nota;
             if (nota >= 0 && nota <= 5){
                 rest[choice - 1].lastReview = nota;
-                std::cout << "Restaurante avaliado com sucesso. Pressione enter para voltar ao menu." << std::endl;
+                ui::defFeedback(tela, ui::ICN_SUCESSO, "Restaurante avaliado com sucesso.");
                 std::cin.ignore();
                 break;
             } else {
-                std::cout << "Nota invalida, pressione enter para voltar ao menu." << std::endl;
+                ui::defFeedback(tela, ui::ICN_ERRO, "Nota invalida");
             }
+
+            std::cin;
+            std::cin.ignore();
         }
     }
 
@@ -221,9 +231,12 @@ void menuCliente(std::vector<rst::Restaurant> &restaurantes, clt::Client &client
 
     
     char opMenuCliente;
+    ui::defFeedback(tela, ui::ICN_SUCESSO, "Login realizado com sucesso.");
 
     while(opMenuCliente != SAIR) {
-        system("clear");
+        ui::defTitulo(tela, "SISTEMA DE DELIVERY ONLINE");
+        ui::limpaTela(tela);
+
         std::cout <<  "Bem vindo, " << cliente.name << "." << std::endl << std::endl
         << "MENU" << std::endl
         << "(1) Exibir todos restaurantes" << std::endl
@@ -240,6 +253,7 @@ void menuCliente(std::vector<rst::Restaurant> &restaurantes, clt::Client &client
                 break;
 
             case SAIR:
+                ui::defFeedback(tela, ui::ICN_NADA, "logout realizado com sucesso");
                 break;
 
             case VER_PEDIDOS:
@@ -251,11 +265,9 @@ void menuCliente(std::vector<rst::Restaurant> &restaurantes, clt::Client &client
                 break;
 
             default:
-                std::cout << "Comando invalido.";
+                ui::defFeedback(tela, ui::ICN_ERRO, "Comando invalido");
                 break;
 
         }
     }
-
-    system("clear");
 }

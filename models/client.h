@@ -29,10 +29,8 @@ namespace clt {
         getline(std::cin, c.phone);
         std::cout << "Seu endereco: ";
         getline(std::cin, c.address);
-        std::cout << "=========================\n";
         std::cout << "Escolha um nome de usuario: ";
         getline(std::cin, c.login);
-        std::cout << "=========================\n";
         std::cout << "Digite uma senha: ";
         getline(std::cin, c.password);
 

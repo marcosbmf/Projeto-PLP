@@ -13,7 +13,7 @@ namespace ord {
     const int ARRIVED = 2;
 
     /**
-     * Constructs an Order made by a Client.
+     * Constroi o pedido feito por um cliente.
      */
     struct Order {
         std::vector<item::Item> items;
@@ -27,10 +27,10 @@ namespace ord {
 
 
     /**
-     * Checks if order was already sent.
+     * Checa se o pedido ja foi feito.
      *
-     * @param order Order to be checked
-     * @return true if different than received
+     * @param order Pedido
+     * @return true se foi enviado
      */
     bool isSent(Order &order) {
         if (order.situation != RECEIVED) {
@@ -41,7 +41,7 @@ namespace ord {
     }
 
     /**
-     * Adds item to specified order.
+     * Adiciona item a pedido especifico.
      * @param order
      * @param item
      */
@@ -50,16 +50,16 @@ namespace ord {
     }
 
     /**
-     * Remove item from Order.
+     * Remove item do pedido.
      * @param order
-     * @param index index of the item in the order summary.
+     * @param index index do item item no resumo do pedido.
      */
     void removeItem(Order &order, int index) {
         order.items.erase(order.items.begin() + index);
     }
 
     /**
-     * Changes the order actual situation.
+     * Muda situacao atual do pedido.
      * @param order
      * @param situation RECEIVED, SENT or ARRIVED.
      */
@@ -68,7 +68,7 @@ namespace ord {
     }
 
     /**
-     * Gets order situation.
+     * Recebe situacao do pedido.
      * @param order
      * @return order situation
      */
@@ -77,7 +77,7 @@ namespace ord {
     }
 
     /**
-     * Gets order total price.
+     * Recebe preco total do pedido.
      * @param order
      * @return
      */
@@ -115,15 +115,15 @@ namespace ord {
         std::ostringstream output;
         output << order.estabelecimento << " - ";
         switch(order.situation){
-            case 0:
+            case RECEIVED:
             output << "PEDIDO REALIZADO";
             break;
 
-            case 1:
+            case SENT:
             output << "PEDIDO ESTÁ A CAMINHO";
             break;
 
-            case 2:
+            case ARRIVED:
             output << "PEDIDO RECEBIDO";
             break;
 

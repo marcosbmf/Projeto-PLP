@@ -11,7 +11,7 @@
 namespace item {
 
     /**
-     * An item. It has a name, a description and a price.
+     * Um item. Possui um nome, descrição e preco.
      */
     struct Item {
         std::string name;
@@ -20,8 +20,8 @@ namespace item {
     };
 
     /**
-     * Create a new item.
-     * @return item new item.
+     * Cria um novo item.
+     * @return item novo item.
      */
     Item newItem() {
         Item n;
@@ -41,9 +41,9 @@ namespace item {
     }
 
     /**
-     * Resumed representation of an item showing its name and price.
-     * @param obj an item.
-     * @return string showing item's name and price.
+     * Representacao resumida de um item, mostrando seu nome e preco.
+     * @param obj um item.
+     * @return string nome e preco de um item.
      */
     std::string info(Item obj) {
         std::ostringstream output;
@@ -52,10 +52,10 @@ namespace item {
     }
 
     /**
-     * Full textual representation of an item.
+     * Representacao textual completa de um item.
      *
-     * @param obj an item.
-     * @return string representing an item.
+     * @param obj um item.
+     * @return string representando um item.
      */
     std::string toString(Item obj) {
         std::ostringstream output;
