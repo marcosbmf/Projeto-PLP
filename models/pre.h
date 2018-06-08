@@ -31,24 +31,24 @@ void preCadastro(std::vector<rst::Restaurant> &rests, std::vector<clt::Client> &
     alfajor.description = "Tasty Argentinian cookies";
 
     item::Item hotdog;
-    coxinha.name = "Hot-Dog";
-    coxinha.price = 2.5;
-    coxinha.description = "Melhor Cachorro-Quente da regiao";
+    hotdog.name = "Hot-Dog";
+    hotdog.price = 2.5;
+    hotdog.description = "Melhor Cachorro-Quente da regiao";
 
     item::Item minipizza;
-    pastel.name = "MiniPizza";
-    pastel.price = 3.0;
-    pastel.description = "Pizza quentinha saindo do forno";
+    minipizza.name = "MiniPizza";
+    minipizza.price = 3.0;
+    minipizza.description = "Pizza quentinha saindo do forno";
 
     item::Item mistoCaixa;
-    alfajor.name = "Misto no Caixa";
-    alfajor.price = 3.5;
-    alfajor.description = "Misto no caixa muito bom";
+    mistoCaixa.name = "Misto no Caixa";
+    mistoCaixa.price = 3.5;
+    mistoCaixa.description = "Misto no caixa muito bom";
 
     item::Item mistoFrances;
-    alfajor.name = "Misto no frances";
-    alfajor.price = 3.5;
-    alfajor.description = "Misto no frances muito bom";
+    mistoFrances.name = "Misto no frances";
+    mistoFrances.price = 3.5;
+    mistoFrances.description = "Misto no frances muito bom";
 ////////////////// CRIANDO RESTAURANTE SEU OLAVO ///////////////////////
     rst::Restaurant seuOlavo;
     seuOlavo.name = "Seu Olavo's";
