@@ -56,7 +56,8 @@ void preCadastro(std::vector<rst::Restaurant> &rests, std::vector<clt::Client> &
     seuOlavo.cuisine = "Fast-food";
     seuOlavo.phone = "1234-5678";
     seuOlavo.password = "Olavo";
-    seuOlavo.lastReview = 5;
+    seuOlavo.reviewSum = 5;
+    seuOlavo.numReviews = 1;
     seuOlavo.opensAt[0] = 8;
     seuOlavo.opensAt[1] = 0;
     seuOlavo.closesAt[0] = 19;
@@ -114,7 +115,8 @@ void preCadastro(std::vector<rst::Restaurant> &rests, std::vector<clt::Client> &
     pizzariaDoCarvalho.cuisine = "Pizzaria";
     pizzariaDoCarvalho.phone = "4002-8922";
     pizzariaDoCarvalho.password = "carvalho";
-    pizzariaDoCarvalho.lastReview = 3; 
+    pizzariaDoCarvalho.reviewSum = 3;
+    pizzariaDoCarvalho.numReviews = 1;
     pizzariaDoCarvalho.opensAt[0] = 16;
     pizzariaDoCarvalho.opensAt[1] = 0;
     pizzariaDoCarvalho.closesAt[0] = 23;
@@ -174,7 +176,8 @@ void preCadastro(std::vector<rst::Restaurant> &rests, std::vector<clt::Client> &
     lasuissa.cuisine = "Sobremesas";
     lasuissa.phone = "1234-1234";
     lasuissa.password = "suissa";
-    lasuissa.lastReview = 2;
+    lasuissa.reviewSum = 4;
+    lasuissa.numReviews = 1;
     lasuissa.opensAt[0] = 07;
     lasuissa.opensAt[1] = 0;
     lasuissa.closesAt[0] = 20;
@@ -224,6 +227,8 @@ void preCadastro(std::vector<rst::Restaurant> &rests, std::vector<clt::Client> &
     YOI.cuisine = "Japones";
     YOI.phone = "3333-3333";
     YOI.password = "sushi";
+    YOI.reviewSum = 3;
+    YOI.numReviews = 1;
     YOI.opensAt[0] = 10;
     YOI.opensAt[1] = 0;
     YOI.closesAt[0] = 23;
@@ -263,9 +268,9 @@ void preCadastro(std::vector<rst::Restaurant> &rests, std::vector<clt::Client> &
     whooper.description = "Hambuguer roubado do Burguer king";
 
     item::Item mcweed;
-    mcweed.name = "McWeed";
+    mcweed.name = "McBurguer Hervas Finas";
     mcweed.price = 20;
-    mcweed.description = "Hamburguer Natural feito de ervas";
+    mcweed.description = "Hamburguer Natural feito de ervas finas.";
 /////////////// CRIANDO O MC DONALDS ////////////////    
     rst::Restaurant mcdonalds;
     mcdonalds.name = "Mc Donalds";
@@ -273,6 +278,8 @@ void preCadastro(std::vector<rst::Restaurant> &rests, std::vector<clt::Client> &
     mcdonalds.cuisine = "fast-food";
     mcdonalds.phone = "666-666-666";
     mcdonalds.password = "gordura";
+    mcdonalds.numReviews = 1;
+    mcdonalds.reviewSum = 4;
     mcdonalds.opensAt[0] = 6;
     mcdonalds.opensAt[1] = 0;
     mcdonalds.closesAt[0] = 22;

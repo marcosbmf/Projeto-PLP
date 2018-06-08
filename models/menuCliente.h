@@ -90,6 +90,7 @@ void realizarPedido(rst::Restaurant &rest, clt::Client &cliente){
     }
     if (contemItem){
         confirmaPedido(ord, rest, cliente);
+        return;
     } else {
         std::cout << "Pedido vazio. Pressione ENTER para continuar." << std::endl;
         std::cin.ignore();
@@ -115,6 +116,7 @@ void cardapioRestaurante(rst::Restaurant &rest, clt::Client &cliente){
 
         if (choice == REALIZAR_PEDIDO){
             realizarPedido(rest, cliente);
+            return;
         }
     }
 }
@@ -148,6 +150,7 @@ void exibirRestaurantes(std::vector<rst::Restaurant> &restaurantes, clt::Client 
             std::cin >> escolheRestaurante;
             std::cin.get();
             cardapioRestaurante(restaurantes[escolheRestaurante - 1], cliente);
+            return;
         }
     }
 }
@@ -208,7 +211,8 @@ void avaliar(std::vector<rst::Restaurant> &rest){
             << "> ";
             std::cin >> nota;
             if (nota >= 0 && nota <= 5){
-                rest[choice - 1].lastReview = nota;
+                rest[choice - 1].reviewSum += nota;
+                rest[choice - 1].numReviews += 1;
                 ui::defFeedback(tela, ui::ICN_SUCESSO, "Restaurante avaliado com sucesso.");
                 std::cin.ignore();
                 break;
