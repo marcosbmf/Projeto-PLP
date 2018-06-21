@@ -9,15 +9,32 @@
 -- 			Gustavo - 
 -----------------------------------------------------
 
+-- printMenuHeader :: IO ()
+-- printMenuHeader = do
+-- 	putStr "\n|--------------------------------------------------------------------|\n|--------------------    SISTEMA DE DELIVERY    ---------------------|\n|--------------------------------------------------------------------|\nMENU\n\n"
 
-menuInicial::Int
-menuInicial = putStr "ola"
+-- printMainMenu :: IO ()
+-- printMainMenu = do
+-- 	putStr "(1) Login (cliente)\n(2) Login (restaurante)\n(3) Cadastrar-se (cliente)\n(4) Cadastrar-se (restaurante)\n(5) Sair\n\n"
 
--- menuRestaurante::Int
--- menuRestaurante = 
+-- printMenuCadastroCliente :: IO()
+-- printMenuCadastroCliente = do
+-- 	putStr "------------------------------------------------\n| CADASTRAR NOVO CLIENTE ------------------------------------------------"
 
--- menuCliente::
--- menuCliente = 
+-- printMenuCadastroRestaurante :: IO()
+-- printMenuCadastroRestaurante = do
+-- 	putStr "------------------------------------------------\n| CADASTRAR NOVO RESTAURANTE ------------------------------------------------"
 
+mainMenu :: Int -> IO()
+mainMenu 3 = "dsa3"
+mainMenu op = mainMenu op
+	-- printMenuHeader
+	-- printMainMenu
+
+
+
+
+
+main :: IO()
 main = do
-	menuInicial
+	mainMenu 4
