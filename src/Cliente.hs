@@ -26,7 +26,6 @@ data Cliente = Cliente { login :: String
                        , cpf :: String
                        , endereco :: String
                        , telefone :: String
-                       , pedidos :: [String]
                        } deriving (Show)
                
 {- Representação textual de um cliente.
@@ -61,7 +60,7 @@ novoCliente = do putStrLn("Insira o seu nome:")
                  login <- getLine
                  putStrLn("Insira a sua senha:")
                  senha <- getLine
-                 let cliente = Cliente login senha nome cpf endereco telefone []
+                 let cliente = Cliente login senha nome cpf endereco telefone
                  return cliente
 
 

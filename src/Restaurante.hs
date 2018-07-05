@@ -1,3 +1,6 @@
+{-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE OverloadedStrings #-}
+
 {- Módulo responsável por definir o que é um restaurante e as funções
    relacionadas a ele.
    
@@ -5,13 +8,15 @@
 -}
 module Restaurante
 ( Restaurante(..)
-, Horario(..)
-, vaiProMenu
-, removeDoMenu
 ) where
 
-import Item
-import Data.List
+--Generics e CSV
+import GHC.Generics
+import Data.Csv
+
+-- text
+import Data.Text
+import qualified Data.Text as Text
 
 {- Construtor de um restaurante.
 
@@ -25,22 +30,20 @@ import Data.List
    horario: horário de funcionamento do restaurante
    telefone: número de telefone do estabelecimento
 -}
-data Restaurante = Restaurante { nomeRst :: String
-                               , cnpjRst :: String
-                               , senhaRst :: String
-                               , culinariaRst :: String
-                               , menuRst :: [String]
-                               , pedidosRst :: [String]
-                               , horarioRst :: Horario
-                               , telefoneRst :: String
-                               } deriving (Show)
+data Restaurante = Restaurante { nomeRst :: Text
+                               , cnpjRst :: Text
+                               , senhaRst :: Text
+                               , culinariaRst :: Text
+                               , telefoneRst :: Text
+                               , horario :: Text
+                               } deriving (Show, Generic)
 
-{- Construtor de um horário de funcionamento
--}
-data Horario = Horario { abre :: (Int, Int)
-                       , fecha :: (Int, Int)
-                       } deriving (Show)
 
+instance FromNamedRecord Restaurante
+instance ToNamedRecord Restaurante
+instance DefaultOrdered Restaurante
+
+{-
 {- Adiciona item ao menu de um restaurante.
    
    it: Item a ser adicionado
@@ -71,3 +74,5 @@ removeDoMenu it (Restaurante n c s l menu p h t) = Restaurante n c s l (delete (
 recebePedido :: Restaurante -> Item -> Restaurante
 (Restaurante n c s l m p h t) `recebePedido` ped | toString ped `elem` menu = = Restaurante n c s l m (p ++ [toString ped]) h t
                                                  | otherwise = (Restaurante n c s l m p h t)
+
+-}
