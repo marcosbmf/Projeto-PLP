@@ -46,10 +46,10 @@ data Situacao = Recebido | Enviado | Entregue deriving (Bounded)
 -}
 adicionar :: Pedido -> Item -> IO Pedido
 ped `adicionar` x = Pedido (newItens, est, clt, sit)
-                    where newItens = itens x ++ [x]
-                          est = estabelecimento x
-                          clt = cliente x
-                          sit = situacao x
+                    where newItens = itens ped ++ [x]
+                          est = estabelecimento ped
+                          clt = cliente ped
+                          sit = situacao ped
 
 {- Remove um item do pedido.
 
@@ -58,10 +58,10 @@ ped `adicionar` x = Pedido (newItens, est, clt, sit)
 -}
 remover :: Pedido -> Item -> IO Pedido
 ped `remover` x = Pedido (newItens, est, clt, sit)
-                  where newItens = delete x $ itens x
-                        est = estabelecimento x
-                        clt = cliente x
-                        sit = situacao x
+                  where newItens = delete x $ itens ped
+                        est = estabelecimento ped
+                        clt = cliente ped
+                        sit = situacao ped
 
 {- Retorna o preço total do pedido.
 
