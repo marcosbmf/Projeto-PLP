@@ -27,10 +27,10 @@ import qualified Data.Text as Text
 -}
 toString :: Cliente -> String
 toString clt = name ++ address ++ ssn ++ lgin
-               where name = "Nome: " ++ nome clt ++ "\n"
-                     address = "Endereço: " ++ endereco clt ++ "\n"
-                     ssn = "CPF: " ++ cpf clt ++ "\n"
-                     lgin = "Login: " ++ login clt ++ "\n"
+               where name = "Nome: " ++ show (nome clt) ++ "\n"
+                     address = "Endereço: " ++ show (endereco clt) ++ "\n"
+                     ssn = "CPF: " ++ show (cpf clt) ++ "\n"
+                     lgin = "Login: " ++ show (login clt) ++ "\n"
 
 
 {- Cria um novo cliente a partir das entradas do usuário.
@@ -38,17 +38,17 @@ Retorna IO(Cliente)
 -}
 novoCliente :: IO(Cliente)
 novoCliente = do putStrLn("Insira o seu nome:")
-                 nome <- getLine
+                 nome <- getTextLine
                  putStrLn("Insira o seu endereço:")
-                 endereco <- getLine
+                 endereco <- getTextLine
                  putStrLn("Insira o seu telefone:")
-                 telefone <- getLine
+                 telefone <- getTextLine
                  putStrLn("Insira o seu CPF:")
-                 cpf <- getLine
+                 cpf <- getTextLine
                  putStrLn("Insira o seu login:")
-                 login <- getLine
+                 login <- getTextLine
                  putStrLn("Insira a sua senha:")
-                 senha <- getLine
+                 senha <- getTextLine
                  let cliente = Cliente login senha nome cpf endereco telefone
                  return cliente
 
@@ -61,7 +61,7 @@ Caso não exista, o cadastro é válido, retorna True.
 verificaCadastro :: Cliente -> [Cliente] -> Bool
 verificaCadastro cliente [] = True
 verificaCadastro cliente [a] = False
-verificaCadastro cliente clientes = verificaCadastro cliente [y | y <- clientes, login y == (login cliente)]
+verificaCadastro cliente clientes = verificaCadastro cliente [y | y <- clientes, show(login y) == show(login cliente)]
 
 {-
       Função auxiliar para o cadastro dos clientes.
@@ -101,4 +101,4 @@ cadastraCliente clientes = do eitherClientes <- cadastraClienteAux clientes
 loginCliente :: String -> String -> [Cliente] -> Either String Cliente
 loginCliente loginUser senhaUser [] = Left "Login e senha inválidos."
 loginCliente loginUser senhaUser [a] = Right a
-loginCliente loginUser senhaUser clientes = loginCliente (loginUser) (senhaUser) [y | y <- clientes, (login y) == (loginUser), (senha y) == (senhaUser)]
+loginCliente loginUser senhaUser clientes = loginCliente (loginUser) (senhaUser) [y | y <- clientes, show (login y) == (loginUser), show (senha y) == (senhaUser)]

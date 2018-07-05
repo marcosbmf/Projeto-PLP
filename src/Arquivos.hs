@@ -9,7 +9,9 @@ module Arquivos (
     getRestaurantes,
     getMenu,
     saveRestaurants,
-    saveItems
+    saveItems,
+    saveClientes,
+    getClientes
 ) where
 
 -- base
@@ -104,8 +106,59 @@ getRestaurantes = do eitherRestaurants <- loadRestaurants
                         Right restaurants -> do return (V.toList(restaurants))
 
 
+{-
+    Funções relativas ao cliente.
+-}
+
+decodeClients :: ByteString -> Either String (Vector Cliente)
+decodeClients =
+  fmap snd . decodeByName
+
+loadClients :: IO(Either String (Vector Cliente))
+loadClients = catchShowIO (BL.readFile "Data/Clients.csv")
+                                >>= return . either Left decodeClients
+
+{-
+   Adiciona um cliente à lista.
+-}
+saveClientes :: Cliente -> IO()
+saveClientes cliente = do let fileName = "Data/Clients.csv"
+                          eitherClientes <- loadClients
+                          case eitherClientes of 
+                            Left reason -> do BL.writeFile (fileName) $ (encodeDefaultOrderedByName [cliente])
+                            Right clientes -> do BL.writeFile (fileName) $ (encodeDefaultOrderedByName (V.toList(clientes) ++ [cliente]))
+
+getClientes :: IO([Cliente])
+getClientes = do eitherClientes <- loadClients
+                 case eitherClientes of
+                  Left reason -> return []
+                  Right clientes -> return (V.toList(clientes))
 
 
+{-
+  Funções referentes aos pedidos
+-}
+
+decodeOrders :: ByteString -> Either String (Vector Pedido)
+decodeOrders =
+  fmap snd . decodeByName
+
+loadOrders :: IO(Either String (Vector Pedido))
+loadOrders = catchShowIO (BL.readFile "Data/Orders.csv")
+                                >>= return . either Left decodeOrders
+
+savePedidos :: Pedido -> IO()
+savePedidos order = do let fileName = "Data/Orders.csv" 
+                       eitherOrders <- loadOrders
+                       case eitherOrders of 
+                            Left reason -> do BL.writeFile (fileName) $ (encodeDefaultOrderedByName [order])
+                            Right orders -> do BL.writeFile (fileName) $ (encodeDefaultOrderedByName (V.toList(orders) ++ [order]))
+
+getPedidos :: IO([Pedido])
+getPedidos = do eitherPedidos <- loadOrders
+                case eitherPedidos of
+                  Left reason -> return []
+                  Right pedidos -> return (V.toList(pedidos))
 
 {-
     Exceção.

@@ -4,7 +4,8 @@
 module Estruturas (
   Item(..),
   Restaurante(..),
-  Cliente(..)
+  Cliente(..),
+  Pedido(..)
 ) where
 
 --Generics e CSV

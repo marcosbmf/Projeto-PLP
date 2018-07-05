@@ -11,6 +11,7 @@ Csv, Text, Vector
 cabal install text
 cabal install vector
 cabal install csv
+cabal install cassava
 
 (caso necessario, instalar o cabal)
 sudo apt-get install cabal
