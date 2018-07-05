@@ -9,30 +9,22 @@ import Data.List
 -}
 
 module Pedido
-( Pedido(..)
-, adicionar
+( adicionar
 , remover
 , precoTotal
 , toString
-)
+) where
 
-{- Construtor de um pedido.
+import Estruturas
+import Arquivos
+import Util
 
-   Um pedido feito por um cliente em um restaurante possui um ou mais itens.
-   Além disto, nas informações do pedido temos algumas informações sobre o
-   estabelecimento e o cliente.
-   
-   itens: lista dos itens incluídos no pedido
-   estabelecimento: estabelecimento em que o pedido foi feito
-   cliente: cliente que fez o pedido
-   situacao: situação do pedido
--}
-data Pedido = Pedido { itens :: [Item]
-                     , estabelecimento :: Restaurante
-                     , cliente :: Cliente
-                     , situacao :: Situacao
-                     } deriving (Show)
+-- text
+import Data.Text
+import qualified Data.Text as Text
 
+
+{-
 {- Definição da situação em que um pedido pode estar.
 
    Um pedido pode estar como recebido (pelo restaurante), enviado ou entregue. 
@@ -90,3 +82,4 @@ pedido x = "Pedido:\n" ++ it ++ est ++ clt ++ end
                  est = "Estabelecimento: " ++ toString . estabelecimento x ++ "\n"
                  clt = "Cliente: " ++ toString . cliente x ++ "\n"
                  end = "Endereço: " ++ endereco . cliente x
+-}

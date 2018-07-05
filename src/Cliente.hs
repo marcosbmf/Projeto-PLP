@@ -3,31 +3,20 @@
    @author Gustavo, Marcos Barros
 -}
 module Cliente
-( Cliente(..)
-, toString
+( toString
 , novoCliente
-, cadastraPedido
 , loginCliente
 , cadastraCliente
 ) where
 
-{- Construtor do tipo Cliente.
-   
-   login: login do Cliente no sistema de delivery
-   senha: a senha do Cliente para acessar o sistema de delivery
-   nome: nome do cliente
-   cpf: cadastro de pessoa física
-   endereco: endereço para entrega
-   pedidos: lista de pedidos realizados pelo cliente 
--}
-data Cliente = Cliente { login :: String
-                       , senha :: String
-                       , nome :: String
-                       , cpf :: String
-                       , endereco :: String
-                       , telefone :: String
-                       } deriving (Show)
-               
+import Estruturas
+import Arquivos
+import Util
+
+-- text
+import Data.Text
+import qualified Data.Text as Text
+
 {- Representação textual de um cliente.
 
    ex.:
@@ -101,13 +90,6 @@ cadastraCliente clientes = do eitherClientes <- cadastraClienteAux clientes
                                     Right novoClientes -> return novoClientes
                                     Left reason -> do putStrLn("Um cliente com o mesmo login foi detectado, cadastro não realizado.")
                                                       return clientes
-
-
-{-
-      Recebe a string que representa o pedido e o cliente, retorna o cliente atualizado com o novo pedido.
--}
-cadastraPedido :: String -> Cliente -> Cliente
-cadastraPedido pedido cliente = Cliente (login cliente) (senha cliente) (nome cliente) (cpf cliente) (endereco cliente) (telefone cliente) ((pedidos cliente) ++ [pedido])
 
 {-
       Recebe uma tentativa de login representada pelas strings de loginUser e senhaUser e o array atual de clientes.

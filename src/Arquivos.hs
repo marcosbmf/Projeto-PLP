@@ -1,6 +1,10 @@
 {-# LANGUAGE ScopedTypeVariables, DeriveGeneric #-}
 {-# LANGUAGE OverloadedStrings #-}
 
+{- Módulo que gerencia os arquivos do programa.
+ 
+   @author Marcos Barros
+-}
 module Arquivos (
     getRestaurantes,
     getMenu,
@@ -31,8 +35,7 @@ import Data.Vector (Vector)
 import qualified Data.Vector as V
 
 import GHC.Generics
-import Item
-import Restaurante
+import Estruturas
 
 {-
     Funções referentes a item.

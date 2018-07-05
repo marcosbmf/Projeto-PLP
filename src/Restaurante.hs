@@ -7,7 +7,7 @@
    @author Gustavo
 -}
 module Restaurante
-( Restaurante(..)
+( 
 ) where
 
 --Generics e CSV
@@ -18,30 +18,7 @@ import Data.Csv
 import Data.Text
 import qualified Data.Text as Text
 
-{- Construtor de um restaurante.
 
-   nome: nome do restaurante
-   cnpj: CNPJ do restaurante
-   senha: senha do restaurante
-   culinaria: tipo de cozinha que o restaurante trabalha (ex.: mexicana)
-   menu: os pratos que o restaurante vende
-   pedidos: uma lista de pedidos feitos pelo restaurante
-   resenha: a nota do restaurante dada pelos seus frequentadores
-   horario: horário de funcionamento do restaurante
-   telefone: número de telefone do estabelecimento
--}
-data Restaurante = Restaurante { nomeRst :: Text
-                               , cnpjRst :: Text
-                               , senhaRst :: Text
-                               , culinariaRst :: Text
-                               , telefoneRst :: Text
-                               , horario :: Text
-                               } deriving (Show, Generic)
-
-
-instance FromNamedRecord Restaurante
-instance ToNamedRecord Restaurante
-instance DefaultOrdered Restaurante
 
 {-
 {- Adiciona item ao menu de um restaurante.
