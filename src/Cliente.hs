@@ -70,11 +70,12 @@ verificaCadastro cliente clientes = verificaCadastro cliente [y | y <- clientes,
 
       Retorna o array de clientes atualizado ou uma mensagem de erro caso já exista cliente com o mesmo login.
 -}
-cadastraClienteAux :: [Cliente] -> IO(Either String [Cliente])
+cadastraClienteAux :: [Cliente] -> IO(Bool)
 cadastraClienteAux clientes = do cliente <- novoCliente
                                  if verificaCadastro cliente clientes
-                                    then return (Right (clientes ++ [cliente]))
-                                    else return (Left "Login já existe, cadastro não realizado.")
+                                    then do saveClientes cliente
+                                            return True
+                                    else return False
 
 
 {-
@@ -84,13 +85,10 @@ cadastraClienteAux clientes = do cliente <- novoCliente
 
       Retorna o array de clientes atualizado ou o anterior caso o cadastro tenha falhado.
 -}
-cadastraCliente :: [Cliente] -> IO([Cliente])
-cadastraCliente clientes = do eitherClientes <- cadastraClienteAux clientes
-                              case eitherClientes of
-                                    Right novoClientes -> return novoClientes
-                                    Left reason -> do putStrLn("Um cliente com o mesmo login foi detectado, cadastro não realizado.")
-                                                      return clientes
-
+cadastraCliente :: IO()
+cadastraCliente = do clientes <- getClientes
+                     cadastro <- cadastraClienteAux clientes
+                     if cadastro then putStrLn("\nCadastro realizado com sucesso!\n") else putStrLn("\nErro no cadastro. Login já existe.\n")
 {-
       Recebe uma tentativa de login representada pelas strings de loginUser e senhaUser e o array atual de clientes.
 
