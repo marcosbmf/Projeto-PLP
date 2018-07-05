@@ -1,71 +1,144 @@
+import System.IO
+import System.Exit
+
+import Control.Monad
+
 main:: IO ()
 main = do
-    putStr "\n|--------------------------------------------------------------------|\n|--------------------    SISTEMA DE DELIVERY    ---------------------|\n|--------------------------------------------------------------------|\nMENU\n\n"
-    putStr "(1) Login (cliente)\n(2) Login (restaurante)\n(3) Cadastrar-se (cliente)\n(4) Cadastrar-se (restaurante)\n(5) Sair\n\n"
+    putStrLn "\n|--------------------------------------------------------------------|\n|--------------------    SISTEMA DE DELIVERY    ---------------------|\n|--------------------------------------------------------------------|\nMENU\n\n"
+    putStrLn "(1) Login (cliente)\n(2) Login (restaurante)\n(3) Cadastrar-se (cliente)\n(4) Cadastrar-se (restaurante)\n(5) Sair\n\n"
     op <- getLine
-    if (op == "1") then menuCliente
-    else if (op == "2") then menuRestaurante
+    if (op == "1") then loginCliente
+    else if (op == "2") then loginRestaurante
     else if (op == "3") then cadastrarCliente
     else if (op == "4") then cadastrarRestaurante
-    else putStr "ADEUS MEU ANJO"
+    else exitSuccess
 
+---------------------------------------------------------------------
+---------------------------------------------------------------------
+----------------------- FUNCOES DO CLIENTE --------------------------
+---------------------------------------------------------------------
+---------------------------------------------------------------------
 
-menuCliente:: IO ()
-menuCliente = do
-    putStr "----- LOGIN CLIENTE -----"
-    putStr "Nome de usuario: "
+loginCliente:: IO ()
+loginCliente = do
+    putStrLn "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n----- LOGIN CLIENTE -----"
+    putStrLn "Nome de usuario: "
     usuarioLogin <- getLine
-    putStr "Senha: "
-    senhaLogin <- getLine
-    putStr "\nSeja bem vindo" 
+    putStrLn "Senha: "
+    usuarioLogin <- getLine
+    -- VERIFICA SE USUARIO EXISTE E SE SENHA ESTA CORRETA
+    -- if (verificaUsuario USUARIO) then menuCliente
+    -- else main
+    menuCliente
 
-menuRestaurante::IO()
-menuRestaurante = do
-    putStr "----- LOGIN RESTAURANTE -----"
-    putStr "CNPJ: "
+menuCliente::IO ()
+menuCliente = do
+    putStrLn "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n---------- Bem Vindo ----------\n"
+    putStrLn "MENU"
+    putStrLn "(1) EXIBIR TODOS OS RESTAURANTES"
+    putStrLn "(2) VER PEDIDOS"
+    putStrLn "(3) AVALIAR RESTAURANTE"
+    putStrLn "(4) SAIR"
+    op <- getLine
+    if (op == "1") then fazerPedido
+    -- else if (op == "2") then verPedidos
+    -- else if (op == "3") then avaliarRestaurante
+    else main
+
+fazerPedido::IO()
+fazerPedido = do
+    putStrLn "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n-------- FAZER UM PEDIDO --------"
+    putStrLn "|=|=|=| RESTAURANTES CADASTRADOS |=|=|=|"
+    -- aqui vema lista de restaurantes
+    putStrLn "1\n2\n3\n4\n"
+    putStrLn "Selecione uma opcao"
+    putStrLn "(1) VER CARDAPIO"
+    putStrLn "(2) VOLTAR AO MENU\n"
+    op <- getLine
+    if (op == "2") then main
+    else verCardapio
+
+verCardapio::IO()
+verCardapio = do
+    putStrLn "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n------ Restaurantes Cadastrados -------"
+    -- novamente a lista de restaurantes
+    putStrLn "1\n2\n3\n4"
+    putStrLn "Escolha o Restaurante: "
+    -- AQUI SERA VERIFICADO SE A OPCAO EXISTE
+    -- logo apos isso ira pro menu de escolha da compra
+    -- o metodo devera receber o restaurante escolhido
+    -- porem este eh so um metodo provisorio ja que nao
+    -- estao implementados os restaurantes
+    rest <- getLine
+    -- AQUI VEM O METODO DA FORMA CORRETA
+    confirmarPedido
+
+confirmarPedido::IO() -- A FUNCAO DEVE RECEBER O RESTAURANTE
+confirmarPedido = do
+    putStrLn "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nCardapio de RESTAURANTE TAL\n\n" -- AQUI VEM O NOME
+    putStrLn "Selecione uma opcao: "
+    putStrLn "(1) Realizar Pedido"
+    putStrLn "(2)Voltar a lista de restaurantes"
+    op <- getLine
+    if (op == "1") then main
+    else verCardapio
+
+
+---------------------------------------------------------------------
+---------------------------------------------------------------------
+----------------------- FUNCOES DO RESTAURANTE ----------------------
+---------------------------------------------------------------------
+---------------------------------------------------------------------
+
+
+loginRestaurante::IO()
+loginRestaurante = do
+    putStrLn "----- LOGIN RESTAURANTE -----"
+    putStrLn "CNPJ: "
     -- VERIFICA CPNJ CADASTRADO
     cnpjLogin <- getLine
-    putStr "Senha: "
+    putStrLn "Senha: "
     -- VERIFICA SENHA CORRETA
     senhaLogin <- getLine
-    put "Ola restaurante tal" -- CONCATENA A STRING
+    putStrLn "Ola restaurante tal" -- CONCATENA A STRING
     -- AI ENTAO VAI PRA O MENU DO RESTAURANTE
 
 cadastrarCliente::IO()
 cadastrarCliente = do
-    putStr "----- CADASTRAR CLIENTE -----"
-    putStr "Digite seu nome: "
+    putStrLn "----- CADASTRAR CLIENTE -----"
+    putStrLn "Digite seu nome: "
     nomeCadastro <- getLine
-    putStr "Insira seu CPF: "
+    putStrLn "Insira seu CPF: "
     cpfCadastro <- getLine
-    putStr "Insira seu telefone: "
+    putStrLn "Insira seu telefone: "
     telefoneCadastro <- getLine
-    putStr "Digite seu endereco: "
+    putStrLn "Digite seu endereco: "
     enderecoCadastro <- getLine
-    putStr "Escolha um nome de usuario: "
+    putStrLn "Escolha um nome de usuario: "
     usuarioCadastro <- getLine
     -- NESSA PARTE DEVE SE VERIFICAR SE JA EXISTE, CASO SIM RETORNA AO MENU INICIAL
-    putStr "Escolha uma senha: "
+    putStrLn "Escolha uma senha: "
     senhaCadastro <- getLine
-    putStr "-------- Usuario Cadastrado ----------"
-
-
+    putStrLn "-------- Usuario Cadastrado ----------"
+    main
 
 cadastrarRestaurante::IO()
 cadastrarRestaurante = do
-    putStr "----- CADASTRAR RESTAURANTE -----"
-    putStr "Nome do restaurante: "
+    putStrLn "----- CADASTRAR RESTAURANTE -----"
+    putStrLn "Nome do restaurante: "
     loginRestCadastro <- getLine
-    putStr "CNPJ (este sera seu login!!!): "
+    putStrLn "CNPJ (este sera seu login!!!): "
     cpnjCadastro <- getLine
-    putStr "Telefone: "
+    putStrLn "Telefone: "
     telefoneRestCadastro <- getLine
-    putStr "Estilo de cozinha: "
+    putStrLn "Estilo de cozinha: "
     cozinhaCadastro <- getLine
-    putStr "Aberto a partir de "
+    putStrLn "Aberto a partir de "
     horarioAbre <- getLine
-    putStr "Fecha as: "
+    putStrLn "Fecha as: "
     horarioFecha <- getLine
-    putStr "Senha: "
+    putStrLn "Senha: "
     senhaRestCadastro <- getLine
-    putStr "CADASTROU MENINOOOO"
+    putStrLn "CADASTROU MENINOOOO"
+    main
