@@ -75,7 +75,13 @@ verificaCadastro cliente [] = True
 verificaCadastro cliente [a] = False
 verificaCadastro cliente clientes = verificaCadastro cliente [y | y <- clientes, login y == (login cliente)]
 
+{-
+      Função auxiliar para o cadastro dos clientes.
 
+      clientes = o array de clientes atual.
+
+      Retorna o array de clientes atualizado ou uma mensagem de erro caso já exista cliente com o mesmo login.
+-}
 cadastraClienteAux :: [Cliente] -> IO(Either String [Cliente])
 cadastraClienteAux clientes = do cliente <- novoCliente
                                  if verificaCadastro cliente clientes
@@ -83,6 +89,13 @@ cadastraClienteAux clientes = do cliente <- novoCliente
                                     else return (Left "Login já existe, cadastro não realizado.")
 
 
+{-
+      Função para cadastro de clientes. Usa cadastraCLienteAux.
+
+      clientes = o array de clientes atual.
+
+      Retorna o array de clientes atualizado ou o anterior caso o cadastro tenha falhado.
+-}
 cadastraCliente :: [Cliente] -> IO([Cliente])
 cadastraCliente clientes = do eitherClientes <- cadastraClienteAux clientes
                               case eitherClientes of
@@ -90,9 +103,20 @@ cadastraCliente clientes = do eitherClientes <- cadastraClienteAux clientes
                                     Left reason -> do putStrLn("Um cliente com o mesmo login foi detectado, cadastro não realizado.")
                                                       return clientes
 
+
+{-
+      Recebe a string que representa o pedido e o cliente, retorna o cliente atualizado com o novo pedido.
+-}
 cadastraPedido :: String -> Cliente -> Cliente
 cadastraPedido pedido cliente = Cliente (login cliente) (senha cliente) (nome cliente) (cpf cliente) (endereco cliente) (telefone cliente) ((pedidos cliente) ++ [pedido])
 
+{-
+      Recebe uma tentativa de login representada pelas strings de loginUser e senhaUser e o array atual de clientes.
+
+      Retorna
+      Left: mensagem de erro, login não teve sucesso.
+      Right: Cliente com login e senha repassados, login teve sucesso.
+-}
 loginCliente :: String -> String -> [Cliente] -> Either String Cliente
 loginCliente loginUser senhaUser [] = Left "Login e senha inválidos."
 loginCliente loginUser senhaUser [a] = Right a
