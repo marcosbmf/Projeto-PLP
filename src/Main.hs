@@ -79,10 +79,13 @@ menuCliente [a] = do
     putStrLn "(3) AVALIAR RESTAURANTE"
     putStrLn "(4) SAIR"
     op <- getLine
-    if (op == "1") then exibirRestaurantes a
-    -- else if (op == "2") then verPedidos
-    -- else if (op == "3") then avaliarRestaurante
-    else main
+    if (op == "1") 
+        then exibirRestaurantes a
+        else if (op == "2") 
+            then verPedidosCliente a
+            else main{-if (op == "3") 
+                then avaliarRestaurante
+                else main-}
 
 exibirRestaurantes :: Cliente -> IO()
 exibirRestaurantes clt = do
@@ -161,6 +164,25 @@ confirmarPedido clt rst items = do
         else do putStrLn ("\nPedido cancelado com sucesso!")
                 pressEnter
                 menuCliente [clt]
+
+verPedidosCliente :: Cliente -> IO()
+verPedidosCliente clt = do 
+    clearScreen
+    putStrLn("------ Pedidos de " ++ Text.unpack(nome clt) ++ " -------\n\n")
+    pedidos <- getPedidosCliente clt
+    putStrLn(listaPedidos pedidos 1)
+    putStrLn("\n\n------ Digite o numero do pedido que deseja visualizar ou 0 para voltar ao menu: ")
+    choice <- getLine
+    if choice == "0"
+        then do menuCliente [clt]
+        else do if (L.length pedidos) > ((read choice) - 1)
+                    then do clearScreen
+                            putStrLn(exibePedidoCompleto (pedidos!!((read choice) - 1)))
+                            pressEnter
+                            verPedidosCliente clt
+                    else do putStrLn("\n\nOpção inválida!")
+                            pressEnter
+                            menuCliente [clt]
 
 
 ---------------------------------------------------------------------

@@ -8,7 +8,8 @@
 module Pedido
 ( criaPedido,
   listaPedidos,
-  pedidoToString
+  pedidoToString,
+  exibePedidoCompleto
 ) where
 
 import Estruturas
@@ -33,8 +34,14 @@ getPrecoTotal (x:xs) = (itemPreco x) + getPrecoTotal xs
 pedidoToString :: Pedido -> String
 pedidoToString x = "\n" ++ Text.unpack(estabelecimentoId x) ++ " - " ++ Text.unpack(clienteId x) ++ " - R$" ++ show (preco x)
 
+exibePedidoCompleto :: Pedido -> String
+exibePedidoCompleto x = clt ++ rst ++ items
+                        where clt = Text.unpack(cliente x)
+                              rst = Text.unpack(estabelecimento x)
+                              items = Text.unpack(itens x)
+
 
 listaPedidos :: [Pedido] -> Int -> String
-listaPedido [] _= ""
-listaPedido [x] indice =  show(indice) ++ ". " ++ pedidoToString x  ++ "\n"
-listaPedidos (x:xs) indice =  show(indice) ++ ". " ++ pedidoToString x  ++ "\n" ++ listaPedidos xs (indice+1)
+listaPedidos [] indice = "\n\nNenhum Pedido Cadastrado."
+listaPedidos [a] indice =  show(indice) ++ ". " ++ pedidoToString a  ++ "\n"
+listaPedidos (y:ys) indice =  show(indice) ++ ". " ++ pedidoToString y  ++ "\n" ++ (listaPedidos ys (indice+1))
