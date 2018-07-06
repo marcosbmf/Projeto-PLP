@@ -232,5 +232,7 @@ menuRestaurante [a] = do clearScreen
                                                                                   pedidos <- getPedidosRestaurante a
                                                                                   putStrLn $ listaPedidos pedidos 1
                                                                                
-                                                                          else if op == "4" then putStrLn "TODO"
-                                                                                            else putStrLn "TODO"
+                                                                          else if op == "4" then menuRestaurante [a]
+                                                                                            else do putStrLn "Comando inválido!"
+                                                                                                    pressEnter
+                                                                                                    menuRestaurante[a]
