@@ -45,6 +45,15 @@ cadastrarCliente = do
     pressEnter
     main
 
+cadastrarRestaurante::IO()
+cadastrarRestaurante = do
+    clearScreen
+    putStrLn "----- CADASTRAR RESTAURANTE -----"
+    cadastraRestaurante
+    pressEnter
+    main
+
+
 loginCliente:: IO ()
 loginCliente = do
     clearScreen
@@ -146,11 +155,3 @@ loginRestaurante = do
     senhaLogin <- getLine
     putStrLn "Ola restaurante tal" -- CONCATENA A STRING
     -- AI ENTAO VAI PRA O MENU DO RESTAURANTE
-
-cadastrarRestaurante::IO()
-cadastrarRestaurante = do
-    clearScreen
-    putStrLn "----- CADASTRAR RESTAURANTE -----"
-    cadastraRestaurante
-    pressEnter
-    main

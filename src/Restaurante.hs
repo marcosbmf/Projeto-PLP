@@ -104,3 +104,12 @@ listaRestaurantes [] _ = "\n\n\nNenhum restaurante cadastrado!\n\n\n"
 listaRestaurantes [a] indice = "\n" ++ show(indice) ++ " - " ++ show (rstToString a)
 listaRestaurantes (x:xs) indice = "\n" ++ show(indice) ++ " - " ++ show (rstToString x) ++ listaRestaurantes xs (indice+1)
 
+getPedidosRestaurante :: Restaurante -> IO([Pedido])
+getPedidosRestaurante rst = do ords <- getPedidos
+                               return [y | y <- ords, Text.unpack(estabelecimentoId y) == Text.unpack(nomeRst rst)]
+
+
+rstLoginRestaurante :: String -> String -> [Restaurante] -> [Restaurante]
+rstLoginRestaurante loginUser senhaUser [] = []
+rstLoginRestaurante loginUser senhaUser [a] = [a]
+rstLoginRestaurante loginUser senhaUser xs = rstLoginRestaurante loginUser senhaUser [y | y <- xs, loginUser == Text.unpack(cnpjRst y), senhaUser == Text.unpack(senhaRst y)]
