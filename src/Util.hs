@@ -3,7 +3,8 @@
 module Util (
     getTextLine,
     clearScreen,
-    pressEnter
+    pressEnter,
+    deleteNth
 ) where
 
 -- text
@@ -23,3 +24,10 @@ clearScreen = do _ <- SP.system "reset"
 getTextLine :: IO(Text)
 getTextLine = do line <- getLine
                  return (Text.pack(line))
+
+
+deleteNth :: Int -> [a] -> [a]
+deleteNth _ [] = []
+deleteNth y (x:xs) = if (y == 0)
+                        then xs
+                        else x : deleteNth (y-1) xs

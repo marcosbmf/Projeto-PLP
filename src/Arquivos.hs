@@ -40,6 +40,7 @@ import qualified Data.Vector as V
 
 import GHC.Generics
 import Estruturas
+import Util
 
 {-
     Funções referentes a item.
@@ -62,6 +63,20 @@ saveItems item restaurante = do let fileName = "Data/Items" ++ Text.unpack(nomeR
                                 case eitherItems of
                                     Left reason -> do BL.writeFile (fileName) $ (encodeDefaultOrderedByName [item])
                                     Right items -> do BL.writeFile (fileName) $ (encodeDefaultOrderedByName (V.toList(items) ++ [item]))
+
+
+{-
+
+    Deleta item pelo indice a partir de 1
+
+-}
+deletaItem :: Int -> Restaurante -> IO()
+deletaItem x rst = do let fileName = "Data/Items" ++ Text.unpack(nomeRst rst) ++ ".csv"
+                      eitherItems <- loadItems fileName
+                      case eitherItems of
+                        Left reason -> do return()
+                        Right items -> do BL.writeFile (fileName) $ (encodeDefaultOrderedByName (deleteNth (x-1) (V.toList(items))))
+
 
 {-
     Retorna o array de items do restaurante.
