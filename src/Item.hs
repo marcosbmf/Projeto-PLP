@@ -45,5 +45,5 @@ toString x = name ++ dsc ++ price
 
 listaItems :: [Item] -> Int -> String
 listaItems [] x = ""
-listaItems [a] indice = show(indice) ++ " - " ++ info a ++ "\n"
-listaItems (x:xs) indice = show(indice) ++ " - " ++ info x  ++ "\n" ++ listaItems xs (indice+1)
+listaItems [a] indice = show(indice) ++ ". " ++ info a ++ "\n"
+listaItems (x:xs) indice = show(indice) ++ ". " ++ info x  ++ "\n" ++ listaItems xs (indice+1)

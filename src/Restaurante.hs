@@ -15,6 +15,7 @@ module Restaurante
 
 -- Estruturas
 import Estruturas
+import Item
 
 -- Utilidades
 import Util
@@ -70,3 +71,17 @@ rstToString x = Text.pack(nm ++ cz ++ tel ++ hr)
                       cz = "Tipo de cozinha: " ++ show (culinariaRst x) ++ "\n"
                       tel = "Telefone: " ++ show (telefoneRst x) ++ "\n"
                       hr =  "Aberto entre " ++ show (horario x) ++ "\n"
+
+{- Representação textual de um cardápio de um restaurante
+   
+   ex.:
+        Cardápio de Seu Olavo
+        ---
+        1. Coxinha - R$ 2.0
+        2. Franburguer - R$ 4.0
+        3. Biscoito Treloso - R$ 2.0
+        ---
+-}
+exibeCardapio :: Restaurante -> IO()
+exibeCardapio rst = do menu <- getMenu rst
+                       putStrLn ("Cardápio de " ++ show (nomeRst rst) ++ "\n---\n" ++ listaItems menu 0 ++ "---")
