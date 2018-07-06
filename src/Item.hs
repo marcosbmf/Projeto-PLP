@@ -25,7 +25,7 @@ import qualified Data.Text as Text
    ex.: "Bolovo - R$ 3.5"
 -}
 info :: Item -> String
-info x = show (itemNome x) ++ " - R$ " ++  show (itemPreco x)
+info x = Text.unpack (itemNome x) ++ " - R$ " ++  show (itemPreco x)
 
 {- Representação textual completa de um item.
    
@@ -38,8 +38,8 @@ info x = show (itemNome x) ++ " - R$ " ++  show (itemPreco x)
 -}
 toString :: Item -> String
 toString x = name ++ dsc ++ price
-             where name = "Nome: " ++ show (itemNome x) ++ "\n"
-                   dsc = "Descricao: " ++ show (itemDescricao x) ++ "\n"
+             where name = "Nome: " ++ Text.unpack (itemNome x) ++ "\n"
+                   dsc = "Descricao: " ++ Text.unpack (itemDescricao x) ++ "\n"
                    price = "Preco: R$ " ++ show (itemPreco x) ++ "\n"
 
 

@@ -6,7 +6,9 @@
 -}
 
 module Pedido
-( cadastraPedido
+( criaPedido,
+  listaPedidos,
+  pedidoToString
 ) where
 
 import Estruturas
@@ -23,23 +25,6 @@ import qualified Data.Text as Text
 
 criaPedido :: Cliente -> Restaurante -> [Item] -> Pedido
 criaPedido clt rst items = Pedido (Text.pack(listaItems items 1)) (nomeRst rst) (rstToString rst) (nome clt) (Text.pack(cltToString clt)) (getPrecoTotal items)
-
-{-
-  Verifica se já existe um pedido daquele cliente para o restaurante.
--}
-verificaPedidoValido :: Cliente -> Restaurante -> [Pedido] -> Bool
-verificaPedidoValido clt rst [] = True
-verificaPedidoValido clt rst [a] = False
-verificaPedidoValido clt rst xs = verificaPedidoValido clt rst [y | y <- xs, show(clienteId y) == show(nome clt), show(estabelecimentoId y) == show(nomeRst rst)]
-
-cadastraPedido :: Cliente -> Restaurante -> [Item] -> IO()
-cadastraPedido cliente restaurante [] = putStrLn("\n\nNenhum item no pedido. Pedido cancelado\n")
-cadastraPedido clt rst items = do pedidos <- getPedidos
-                                  if verificaPedidoValido clt rst pedidos
-                                    then do savePedidos (criaPedido clt rst items)
-                                            putStrLn ("Pedido realizado com sucesso!")
-                                    else putStrLn ("Já existe um pedido deste cliente para o mesmo restaurante.")
-
 
 getPrecoTotal :: [Item] -> Float
 getPrecoTotal [] = 0
