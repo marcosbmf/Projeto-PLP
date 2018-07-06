@@ -230,13 +230,29 @@ menuRestaurante [a] = do clearScreen
                                                                 deletaItem (read i) a
                                                                 menuRestaurante [a]
                                                         else if op == "3" then do clearScreen
-                                                                                  putStrLn $ "Lista de pedidos de " ++ Text.unpack(nomeRst a) ++ ":\n"
-                                                                                  pedidos <- getPedidosRestaurante a
-                                                                                  putStrLn $ listaPedidos pedidos 1
-                                                                                  pressEnter
-                                                                                  menuRestaurante [a]
-                                                                               
+                                                                                  verPedidosRestaurante a
                                                                           else if op == "4" then main
                                                                                             else do putStrLn "Comando inválido!"
                                                                                                     pressEnter
                                                                                                     menuRestaurante[a]
+
+                                                                                                    
+
+verPedidosRestaurante :: Restaurante -> IO()
+verPedidosRestaurante clt = do 
+    clearScreen
+    putStrLn("------ Pedidos de " ++ Text.unpack(nomeRst clt) ++ " -------\n\n")
+    pedidos <- getPedidosRestaurante clt
+    putStrLn(listaPedidos pedidos 1)
+    putStrLn("\n\n------ Digite o numero do pedido que deseja visualizar ou 0 para voltar ao menu: ")
+    choice <- getLine
+    if choice == "0"
+        then do menuRestaurante [clt]
+        else do if (L.length pedidos) > ((read choice) - 1)
+                    then do clearScreen
+                            putStrLn(exibePedidoCompleto (pedidos!!((read choice) - 1)))
+                            pressEnter
+                            verPedidosRestaurante clt
+                    else do putStrLn("\n\nOpção inválida!")
+                            pressEnter
+                            menuRestaurante [clt]
