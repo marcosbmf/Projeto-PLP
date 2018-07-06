@@ -10,7 +10,8 @@ module Restaurante
 (
     rstToString,
     cadastraRestaurante,
-    cadastraItem
+    cadastraItem,
+    listaRestaurantes
 ) where
 
 -- Estruturas
@@ -85,3 +86,9 @@ rstToString x = Text.pack(nm ++ cz ++ tel ++ hr)
 exibeCardapio :: Restaurante -> IO()
 exibeCardapio rst = do menu <- getMenu rst
                        putStrLn ("Cardápio de " ++ show (nomeRst rst) ++ "\n---\n" ++ listaItems menu 0 ++ "---")
+
+listaRestaurantes :: [Restaurante] -> Int -> String
+listaRestaurantes [] _ = "\n\n\nNenhum restaurante cadastrado!\n\n\n"
+listaRestaurantes [a] indice = "\n" ++ show(indice) ++ " - " ++ show (rstToString a)
+listaRestaurantes (x:xs) indice = "\n" ++ show(indice) ++ " - " ++ show (rstToString x) ++ listaRestaurantes xs (indice+1)
+

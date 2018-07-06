@@ -1,3 +1,5 @@
+{-# LANGUAGE OverloadedStrings #-}
+
 {- Módulo com a definição do tipo Cliente e funções relacionadas a ele.
  
    @author Gustavo, Marcos Barros
@@ -5,8 +7,9 @@
 module Cliente
 ( cltToString
 , novoCliente
-, loginCliente
+, cltLoginCliente
 , cadastraCliente
+, getPedidosCliente
 ) where
 
 import Estruturas
@@ -95,10 +98,10 @@ cadastraCliente = do clientes <- getClientes
       Left: mensagem de erro, login não teve sucesso.
       Right: Cliente com login e senha repassados, login teve sucesso.
 -}
-loginCliente :: String -> String -> [Cliente] -> [Cliente]
-loginCliente loginUser senhaUser [] = []
-loginCliente loginUser senhaUser [a] = [a]
-loginCliente loginUser senhaUser clientes = loginCliente (loginUser) (senhaUser) [y | y <- clientes, show (login y) == (loginUser), show (senha y) == (senhaUser)]
+cltLoginCliente :: String -> String -> [Cliente] -> [Cliente]
+cltLoginCliente loginUser senhaUser [] = []
+cltLoginCliente loginUser senhaUser [a] = [a]
+cltLoginCliente loginUser senhaUser clientes = cltLoginCliente (loginUser) (senhaUser) [y | y <- clientes, show (login y) == (loginUser), show (senha y) == (senhaUser)]
 
 getPedidosCliente :: Cliente -> IO([Pedido])
 getPedidosCliente clt = do pedidos <- getPedidos
