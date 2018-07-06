@@ -95,8 +95,8 @@ exibeCardapio rst = do menu <- getMenu rst
 
 listaRestaurantes :: [Restaurante] -> Int -> String
 listaRestaurantes [] _ = "\n\n\nNenhum restaurante cadastrado!\n\n\n"
-listaRestaurantes [a] indice = "\n" ++ show(indice) ++ " - " ++ show (rstToString a)
-listaRestaurantes (x:xs) indice = "\n" ++ show(indice) ++ " - " ++ show (rstToString x) ++ listaRestaurantes xs (indice+1)
+listaRestaurantes [a] indice = "\n" ++ show(indice) ++ " - " + Text.unpack(rstToString a)
+listaRestaurantes (x:xs) indice = "\n" ++ show(indice) ++ " - " ++ Text.unpack(rstToString x) ++ listaRestaurantes xs (indice+1)
 
 getPedidosRestaurante :: Restaurante -> IO([Pedido])
 getPedidosRestaurante rst = do ords <- getPedidos

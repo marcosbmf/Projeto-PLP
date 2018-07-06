@@ -155,7 +155,6 @@ confirmarPedido clt rst items = do
     putStrLn (pedidoToString pedido)
     putStrLn "Digite 1 para confirmar ou 0 para cancelar!"
     choice <- getLine
-    op <- getLine
     if (choice == "1")
         then do savePedidos pedido
                 putStrLn("\nPedido realizado com sucesso!")
