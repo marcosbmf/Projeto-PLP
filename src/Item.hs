@@ -53,5 +53,10 @@ novoItem = do putStrLn("Insira o nome do item:")
               preco <- getLine
               return (Item (Text.pack(nome)) (Text.pack(descricao)) (read preco))
 
-listaItems :: [Item] -> String
-listaItems items = ""
+
+
+
+listaItems :: [Item] -> Int -> String
+listaItems [] x = ""
+listaItems [a] indice = show(indice) ++ " - " ++ info a ++ "\n"
+listaItems (x:xs) indice = show(indice) ++ " - " ++ info x  ++ "\n" ++ listaItems xs
