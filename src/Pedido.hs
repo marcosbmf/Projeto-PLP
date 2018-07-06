@@ -32,7 +32,7 @@ getPrecoTotal [] = 0
 getPrecoTotal (x:xs) = (itemPreco x) + getPrecoTotal xs
 
 pedidoToString :: Pedido -> String
-pedidoToString x = "\n" ++ Text.unpack(estabelecimentoId x) ++ " - " ++ Text.unpack(clienteId x) ++ " - R$" ++ show (preco x)
+pedidoToString x = Text.unpack(estabelecimentoId x) ++ " - " ++ Text.unpack(clienteId x) ++ " - R$" ++ show (preco x) ++ "\n"
 
 exibePedidoCompleto :: Pedido -> String
 exibePedidoCompleto x = clt ++ rst ++ items
@@ -44,4 +44,4 @@ exibePedidoCompleto x = clt ++ rst ++ items
 listaPedidos :: [Pedido] -> Int -> String
 listaPedidos [] indice = "\n\nNenhum Pedido Cadastrado."
 listaPedidos [a] indice =  show(indice) ++ ". " ++ pedidoToString a  ++ "\n"
-listaPedidos (y:ys) indice =  show(indice) ++ ". " ++ pedidoToString y  ++ "\n" ++ (listaPedidos ys (indice+1))
+listaPedidos (y:ys) indice =  show(indice) ++ ". " ++ pedidoToString y ++ (listaPedidos ys (indice+1))

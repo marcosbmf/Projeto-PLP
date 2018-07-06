@@ -234,6 +234,7 @@ menuRestaurante [a] = do clearScreen
                                                                                   putStrLn $ "Lista de pedidos de " ++ Text.unpack(nomeRst a) ++ ":\n"
                                                                                   pedidos <- getPedidosRestaurante a
                                                                                   putStrLn $ listaPedidos pedidos 1
+                                                                                  pressEnter
                                                                                   menuRestaurante [a]
                                                                                
                                                                           else if op == "4" then main

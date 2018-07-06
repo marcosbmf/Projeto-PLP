@@ -105,5 +105,5 @@ cltLoginCliente loginUser senhaUser clientes = cltLoginCliente (loginUser) (senh
 
 getPedidosCliente :: Cliente -> IO([Pedido])
 getPedidosCliente clt = do pedidos <- getPedidos
-                           return [y | y <- pedidos, show(cliente y) == show (nome clt)]
+                           return [y | y <- pedidos, Text.unpack(clienteId y) == Text.unpack(nome clt)]
 
