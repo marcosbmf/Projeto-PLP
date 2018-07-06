@@ -149,20 +149,8 @@ loginRestaurante = do
 
 cadastrarRestaurante::IO()
 cadastrarRestaurante = do
+    clearScreen
     putStrLn "----- CADASTRAR RESTAURANTE -----"
-    putStrLn "Nome do restaurante: "
-    loginRestCadastro <- getLine
-    putStrLn "CNPJ (este sera seu login!!!): "
-    cpnjCadastro <- getLine
-    putStrLn "Telefone: "
-    telefoneRestCadastro <- getLine
-    putStrLn "Estilo de cozinha: "
-    cozinhaCadastro <- getLine
-    putStrLn "Aberto a partir de "
-    horarioAbre <- getLine
-    putStrLn "Fecha as: "
-    horarioFecha <- getLine
-    putStrLn "Senha: "
-    senhaRestCadastro <- getLine
-    putStrLn "CADASTROU MENINOOOO"
+    cadastraRestaurante
+    pressEnter
     main

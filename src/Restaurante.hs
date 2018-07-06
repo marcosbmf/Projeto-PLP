@@ -32,19 +32,31 @@ import qualified Data.Text as Text
 
 {- Cadastra um restaurante e o salva na lista de restaurantes. -} 
 cadastraRestaurante :: IO()
-cadastraRestaurante = do putStr "Nome: "
+cadastraRestaurante = do putStrLn "Nome: "
                          nm <- getTextLine
-                         putStr "CNPJ: "
+                         putStrLn "CNPJ: "
                          cn <- getTextLine
-                         putStr "Senha: "
+                         putStrLn "Senha: "
                          sn <- getTextLine
-                         putStr "Tipo de cozinha: "
+                         putStrLn "Tipo de cozinha: "
                          cz <- getTextLine
-                         putStr "Telefone: "
+                         putStrLn "Telefone: "
                          tel <- getTextLine
-                         putStr "Horário de funcionamento: "
+                         putStrLn "Horário de funcionamento: "
                          hr <- getTextLine
-                         saveRestaurants $ Restaurante nm cn sn cz tel hr
+                         let restaurante = Restaurante nm cn sn cz tel hr
+                         rsts <- getRestaurantes
+                         if (verificaCadastroRestaurante restaurante rsts)
+                            then do saveRestaurants $ restaurante
+                                    putStrLn ("\n\nCadastro realizado com sucesso!\n")
+                                    return()
+                            else do putStrLn ("\n\nErro no cadastro, CNPJ já cadastrado!")
+                                    return()
+
+verificaCadastroRestaurante :: Restaurante -> [Restaurante] -> Bool
+verificaCadastroRestaurante rst [] = True
+verificaCadastroRestaurante rst [a] = False
+verificaCadastroRestaurante rst rsts = verificaCadastroRestaurante rst [y | y <- rsts, Text.unpack(cnpjRst y) == Text.unpack(cnpjRst rst)]
 
 {- Cadastra um item em um restaurante -}
 cadastraItem :: Restaurante -> IO()

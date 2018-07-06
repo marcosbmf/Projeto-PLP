@@ -62,9 +62,9 @@ Caso exista, retorna False, que significa que o cadastro é inválido.
 Caso não exista, o cadastro é válido, retorna True.
 -}
 verificaCadastro :: Cliente -> [Cliente] -> Bool
-verificaCadastro cliente [] = True
-verificaCadastro cliente [a] = False
-verificaCadastro cliente clientes = verificaCadastro cliente [y | y <- clientes, show(login y) == show(login cliente)]
+verificaCadastro clt [] = True
+verificaCadastro clt [a] = False
+verificaCadastro clt clientes = verificaCadastro clt ([y | y <- clientes, Text.unpack(login y) == Text.unpack(login clt)])
 
 {-
       Função auxiliar para o cadastro dos clientes.
@@ -101,7 +101,7 @@ cadastraCliente = do clientes <- getClientes
 cltLoginCliente :: String -> String -> [Cliente] -> [Cliente]
 cltLoginCliente loginUser senhaUser [] = []
 cltLoginCliente loginUser senhaUser [a] = [a]
-cltLoginCliente loginUser senhaUser clientes = cltLoginCliente (loginUser) (senhaUser) [y | y <- clientes, show (login y) == (loginUser), show (senha y) == (senhaUser)]
+cltLoginCliente loginUser senhaUser clientes = cltLoginCliente (loginUser) (senhaUser) [y | y <- clientes, Text.unpack(login y) == (loginUser), Text.unpack(senha y) == (senhaUser)]
 
 getPedidosCliente :: Cliente -> IO([Pedido])
 getPedidosCliente clt = do pedidos <- getPedidos
