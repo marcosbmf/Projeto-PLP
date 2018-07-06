@@ -225,14 +225,18 @@ menuRestaurante [a] = do clearScreen
                                                                 exibeCardapio a
                                                                 putStrLn "> "
                                                                 i <- getLine
+                                                                menu <- getMenu a
+                                                                if (L.length menu) < (read i) || (read i) < (L.length menu) then do putStrLn "Índice inválido."
+                                                                                                                            else do deletaItem (read i) a
                                                                 deletaItem (read i) a
                                                                 menuRestaurante [a]
                                                         else if op == "3" then do clearScreen
                                                                                   putStrLn $ "Lista de pedidos de " ++ Text.unpack(nomeRst a) ++ ":\n"
                                                                                   pedidos <- getPedidosRestaurante a
                                                                                   putStrLn $ listaPedidos pedidos 1
+                                                                                  menuRestaurante [a]
                                                                                
-                                                                          else if op == "4" then menuRestaurante [a]
+                                                                          else if op == "4" then main
                                                                                             else do putStrLn "Comando inválido!"
                                                                                                     pressEnter
                                                                                                     menuRestaurante[a]

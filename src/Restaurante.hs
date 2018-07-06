@@ -54,11 +54,11 @@ verificaCadastroRestaurante rst rsts = verificaCadastroRestaurante rst [y | y <-
 
 {- Cadastra um item em um restaurante -}
 cadastraItem :: Restaurante -> IO()
-cadastraItem rst = do putStr "Nome: "
+cadastraItem rst = do putStrLn "Nome: "
                       nm <- getTextLine
-                      putStr "Descrição: "
+                      putStrLn "Descrição: "
                       ds <- getTextLine
-                      putStr "Preço: R$ "
+                      putStrLn "Preço em R$: "
                       tmp <- getLine
                       let pc = read tmp
                           novo = Item nm ds pc
