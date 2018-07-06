@@ -7,7 +7,10 @@
    @author Gustavo
 -}
 module Restaurante
-( 
+(
+    rstToString,
+    cadastraRestaurante,
+    cadastraItem
 ) where
 
 -- Estruturas

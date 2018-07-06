@@ -22,7 +22,7 @@ import qualified Data.Text as Text
 
 
 criaPedido :: Cliente -> Restaurante -> [Item] -> Pedido
-criaPedido clt rst items = Pedido (Text.pack(listaItems items)) (nomeRst rst) (Text.pack(rstToString rst)) (nome clt) (Text.pack(cltToString clt)) (getPrecoTotal items)
+criaPedido clt rst items = Pedido (Text.pack(listaItems items 1)) (nomeRst rst) (rstToString rst) (nome clt) (Text.pack(cltToString clt)) (getPrecoTotal items)
 
 {-
   Verifica se já existe um pedido daquele cliente para o restaurante.

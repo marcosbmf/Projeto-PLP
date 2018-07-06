@@ -7,7 +7,6 @@
 module Item
 ( info
 , toString
-, novoItem
 , listaItems
 ) where
 
@@ -44,19 +43,7 @@ toString x = name ++ dsc ++ price
                    price = "Preco: R$ " ++ show (itemPreco x) ++ "\n"
 
 
-novoItem :: IO (Item)
-novoItem = do putStrLn("Insira o nome do item:")
-              nome <- getLine
-              putStrLn("Insira a descrição do item:")
-              descricao <- getLine
-              putStrLn("Insira o preço do item em R$:")
-              preco <- getLine
-              return (Item (Text.pack(nome)) (Text.pack(descricao)) (read preco))
-
-
-
-
 listaItems :: [Item] -> Int -> String
 listaItems [] x = ""
 listaItems [a] indice = show(indice) ++ " - " ++ info a ++ "\n"
-listaItems (x:xs) indice = show(indice) ++ " - " ++ info x  ++ "\n" ++ listaItems xs
+listaItems (x:xs) indice = show(indice) ++ " - " ++ info x  ++ "\n" ++ listaItems xs (indice+1)
