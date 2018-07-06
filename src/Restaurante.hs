@@ -10,6 +10,13 @@ module Restaurante
 ( 
 ) where
 
+-- Estruturas
+import Estruturas
+
+-- Utilidades
+import Util
+import Arquivos
+
 --Generics e CSV
 import GHC.Generics
 import Data.Csv
@@ -18,38 +25,45 @@ import Data.Csv
 import Data.Text
 import qualified Data.Text as Text
 
+{- Cadastra um restaurante e o salva na lista de restaurantes. -} 
+cadastraRestaurante :: IO()
+cadastraRestaurante = do putStr "Nome: "
+                         nm <- getTextLine
+                         putStr "CNPJ: "
+                         cn <- getTextLine
+                         putStr "Senha: "
+                         sn <- getTextLine
+                         putStr "Tipo de cozinha: "
+                         cz <- getTextLine
+                         putStr "Telefone: "
+                         tel <- getTextLine
+                         putStr "Horário de funcionamento: "
+                         hr <- getTextLine
+                         saveRestaurants $ Restaurante nm cn sn cz tel hr
 
+{- Cadastra um item em um restaurante -}
+cadastraItem :: Restaurante -> IO()
+cadastraItem rst = do putStr "Nome: "
+                      nm <- getTextLine
+                      putStr "Descrição: "
+                      ds <- getTextLine
+                      putStr "Preço: R$ "
+                      tmp <- getLine
+                      let pc = read tmp
+                          novo = Item nm ds pc
+                      saveItems novo rst
 
-{-
-{- Adiciona item ao menu de um restaurante.
-   
-   it: Item a ser adicionado
-   (Restaurante n c s l menu p h t): Restaurante a ser modificado.
-   Retorna o mesmo restaurante com o menu atualizado
+{- Representação textual de um restaurante
+
+   ex.:
+        Seu Olavo
+        Tipo de cozinha: fast-food
+        Telefone: 95555-1234
+        Aberto entre 07h30 - 19h00
 -}
-vaiProMenu :: Item -> Restaurante -> Restaurante
-it `vaiProMenu` (Restaurante n c s l menu p h t) | toString it `elem` menu = Restaurante n c s l menu p h t
-                                                 | otherwise = Restaurante n c s l (menu ++ [toString it]) p h t
-
-{- Retira um item do menu de um restaurante.
-
-   Retorna o mesmo restaurante com o menu atualizado
-   
-   it: Item a ser removido
-   (Restaurante n c s l menu p h t): Restaurante a ser modificado. 
--}
-removeDoMenu :: Item -> Restaurante -> Restaurante
-removeDoMenu it (Restaurante n c s l menu p h t) = Restaurante n c s l (delete (toString it) menu) p h t
-
-{- Insere um pedido na lista de pedidos do Restaurante
-   
-   Retorna o mesmo restaurante com a lista de pedidos atualizada
-   
-   ped: Pedido a ser adicionado
-   (Restaurante n c s l menu p h t): Restaurante a ser modificado.
--}
-recebePedido :: Restaurante -> Item -> Restaurante
-(Restaurante n c s l m p h t) `recebePedido` ped | toString ped `elem` menu = = Restaurante n c s l m (p ++ [toString ped]) h t
-                                                 | otherwise = (Restaurante n c s l m p h t)
-
--}
+rstToString :: Restaurante -> Text
+rstToString x = Text.pack(nm ++ cz ++ tel ++ hr)
+                where nm = show (nomeRst x) ++ "\n"
+                      cz = "Tipo de cozinha: " ++ show (culinariaRst x) ++ "\n"
+                      tel = "Telefone: " ++ show (telefoneRst x) ++ "\n"
+                      hr =  "Aberto entre " ++ show (horario x) ++ "\n"
