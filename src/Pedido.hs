@@ -24,7 +24,7 @@ import qualified Data.Text as Text
 
 
 criaPedido :: Cliente -> Restaurante -> [Item] -> Pedido
-criaPedido clt rst items = Pedido (Text.pack(listaItems items 1)) (nomeRst rst) (rstToString rst) (nome clt) (Text.pack(cltToString clt)) (getPrecoTotal items)
+criaPedido clt rst items = Pedido (Text.pack(listaItems items 1)) (nomeRst rst) (Text.pack(rstToString rst)) (nome clt) (Text.pack(cltToString clt)) (getPrecoTotal items)
 
 getPrecoTotal :: [Item] -> Float
 getPrecoTotal [] = 0
@@ -32,6 +32,7 @@ getPrecoTotal (x:xs) = (itemPreco x) + getPrecoTotal xs
 
 pedidoToString :: Pedido -> String
 pedidoToString x = "\n" ++ Text.unpack(estabelecimentoId x) ++ " - " ++ Text.unpack(clienteId x) ++ " - R$" ++ show (preco x)
+
 
 listaPedidos :: [Pedido] -> Int -> String
 listaPedido [] _= ""

@@ -78,12 +78,12 @@ cadastraItem rst = do putStr "Nome: "
         Telefone: 95555-1234
         Aberto entre 07h30 - 19h00
 -}
-rstToString :: Restaurante -> Text
-rstToString x = Text.pack(nm ++ cz ++ tel ++ hr)
-                where nm = show (nomeRst x) ++ "\n"
-                      cz = "Tipo de cozinha: " ++ show (culinariaRst x) ++ "\n"
-                      tel = "Telefone: " ++ show (telefoneRst x) ++ "\n"
-                      hr =  "Aberto entre " ++ show (horario x) ++ "\n"
+rstToString :: Restaurante -> String
+rstToString x = nm ++ cz ++ tel ++ hr
+                where nm = Text.unpack(nomeRst x) ++ "\n"
+                      cz = "Tipo de cozinha: " ++ Text.unpack(culinariaRst x) ++ "\n"
+                      tel = "Telefone: " ++ Text.unpack(telefoneRst x) ++ "\n"
+                      hr =  "Aberto entre " ++ Text.unpack(horario x) ++ "\n"
 
 {- Representação textual de um cardápio de um restaurante
    
@@ -97,7 +97,7 @@ rstToString x = Text.pack(nm ++ cz ++ tel ++ hr)
 -}
 exibeCardapio :: Restaurante -> IO()
 exibeCardapio rst = do menu <- getMenu rst
-                       putStrLn ("Cardápio de " ++ show (nomeRst rst) ++ "\n---\n" ++ listaItems menu 0 ++ "---")
+                       putStrLn ("Cardápio de " ++ Text.unpack(nomeRst rst) ++ "\n---\n" ++ listaItems menu 0 ++ "---")
 
 listaRestaurantes :: [Restaurante] -> Int -> String
 listaRestaurantes [] _ = "\n\n\nNenhum restaurante cadastrado!\n\n\n"
