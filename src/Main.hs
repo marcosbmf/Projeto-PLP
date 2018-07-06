@@ -191,15 +191,46 @@ verPedidosCliente clt = do
 ---------------------------------------------------------------------
 ---------------------------------------------------------------------
 
-
 loginRestaurante::IO()
-loginRestaurante = do
-    putStrLn "----- LOGIN RESTAURANTE -----"
-    putStrLn "CNPJ: "
-    -- VERIFICA CPNJ CADASTRADO
-    cnpjLogin <- getLine
-    putStrLn "Senha: "
-    -- VERIFICA SENHA CORRETA
-    senhaLogin <- getLine
-    putStrLn "Ola restaurante tal" -- CONCATENA A STRING
-    -- AI ENTAO VAI PRA O MENU DO RESTAURANTE
+loginRestaurante = do clearScreen
+                      putStrLn "----- LOGIN RESTAURANTE -----"
+                      putStrLn "CNPJ: "
+                      cnpjLogin <- getLine
+                      putStrLn "Senha: "
+                      senhaLogin <- getLine
+                      restaurantes <- getRestaurantes
+                      let rst = rstLoginRestaurante cnpjLogin senhaLogin restaurantes
+                      menuRestaurante rst
+
+menuRestaurante :: [Restaurante] -> IO ()
+menuRestaurante [] = do putStr("\nLogin inválido!")
+                        pressEnter
+                        main
+
+menuRestaurante [a] = do clearScreen
+                         putStrLn("--------- Bem-vindo, " ++ Text.unpack(nomeRst a) ++ ". ----------\n")
+                         putStrLn "MENU"
+                         putStrLn "(1) Adicionar prato ao seu cardápio"
+                         putStrLn "(2) Remover prato do seu cardápio"
+                         putStrLn "(3) Ver pedidos feitos por clientes"
+                         putStrLn "(4) Sair"
+                         putStrLn "\n> "
+                         op <- getLine
+                         if op == "1" then do clearScreen
+                                              putStrLn $ "Adicionar item ao cardápio de " ++ Text.unpack(nomeRst a) ++ ":\n"
+                                              cadastraItem a
+                                              menuRestaurante [a]
+                                      else if op == "2" then do clearScreen
+                                                                putStrLn $ "Remover item do cardápio de " ++ Text.unpack(nomeRst a) ++ ":\n" 
+                                                                exibeCardapio a
+                                                                putStrLn "> "
+                                                                i <- getLine
+                                                                deletaItem (read i) a
+                                                                menuRestaurante [a]
+                                                        else if op == "3" then do clearScreen
+                                                                                  putStrLn $ "Lista de pedidos de " ++ Text.unpack(nomeRst a) ++ ":\n"
+                                                                                  pedidos <- getPedidosRestaurante a
+                                                                                  putStrLn $ listaPedidos pedidos 1
+                                                                               
+                                                                          else if op == "4" then putStrLn "TODO"
+                                                                                            else putStrLn "TODO"

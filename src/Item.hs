@@ -7,7 +7,7 @@
 module Item
 ( info
 , toString
-, listaItems
+, listaItems 
 ) where
 
 import Estruturas

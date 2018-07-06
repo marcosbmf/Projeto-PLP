@@ -5,16 +5,7 @@
  
    @author Marcos Barros
 -}
-module Arquivos (
-    getRestaurantes,
-    getMenu,
-    saveRestaurants,
-    saveItems,
-    saveClientes,
-    getClientes,
-    savePedidos,
-    getPedidos
-) where
+module Arquivos where
 
 -- base
 import Control.Exception (IOException)

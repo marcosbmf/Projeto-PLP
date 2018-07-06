@@ -6,13 +6,7 @@
    
    @author Gustavo
 -}
-module Restaurante
-(
-    rstToString,
-    cadastraRestaurante,
-    cadastraItem,
-    listaRestaurantes
-) where
+module Restaurante where
 
 -- Estruturas
 import Estruturas
