@@ -94,9 +94,15 @@ instance DefaultOrdered Cliente
    situacao: situação do pedido
 -}
 data Pedido = Pedido { itens :: Text
+                      -- Nome do restaurante.
+                     , estabelecimentoId :: Text
+                     -- ToString do restaurante
                      , estabelecimento :: Text
+                     -- Nome do cliente
+                     , clienteId :: Text
+                     -- toString do cliente
                      , cliente :: Text
-                     , situacao :: Text
+                     , preco :: Float
                      } deriving (Show, Generic)
 
 instance FromNamedRecord Pedido

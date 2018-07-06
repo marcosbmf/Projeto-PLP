@@ -8,6 +8,7 @@ module Item
 ( info
 , toString
 , novoItem
+, listaItems
 ) where
 
 import Estruturas
@@ -52,3 +53,5 @@ novoItem = do putStrLn("Insira o nome do item:")
               preco <- getLine
               return (Item (Text.pack(nome)) (Text.pack(descricao)) (read preco))
 
+listaItems :: [Item] -> String
+listaItems items = ""

@@ -11,7 +11,9 @@ module Arquivos (
     saveRestaurants,
     saveItems,
     saveClientes,
-    getClientes
+    getClientes,
+    savePedidos,
+    getPedidos
 ) where
 
 -- base

@@ -3,7 +3,7 @@
    @author Gustavo, Marcos Barros
 -}
 module Cliente
-( toString
+( cltToString
 , novoCliente
 , loginCliente
 , cadastraCliente
@@ -25,8 +25,8 @@ import qualified Data.Text as Text
         CPF: 451.467.610-19
         Login: curry
 -}
-toString :: Cliente -> String
-toString clt = name ++ address ++ ssn ++ lgin
+cltToString :: Cliente -> String
+cltToString clt = name ++ address ++ ssn ++ lgin
                where name = "Nome: " ++ show (nome clt) ++ "\n"
                      address = "Endereço: " ++ show (endereco clt) ++ "\n"
                      ssn = "CPF: " ++ show (cpf clt) ++ "\n"
@@ -81,14 +81,13 @@ cadastraClienteAux clientes = do cliente <- novoCliente
 {-
       Função para cadastro de clientes. Usa cadastraCLienteAux.
 
-      clientes = o array de clientes atual.
-
       Retorna o array de clientes atualizado ou o anterior caso o cadastro tenha falhado.
 -}
 cadastraCliente :: IO()
 cadastraCliente = do clientes <- getClientes
                      cadastro <- cadastraClienteAux clientes
                      if cadastro then putStrLn("\nCadastro realizado com sucesso!\n") else putStrLn("\nErro no cadastro. Login já existe.\n")
+
 {-
       Recebe uma tentativa de login representada pelas strings de loginUser e senhaUser e o array atual de clientes.
 
@@ -96,7 +95,12 @@ cadastraCliente = do clientes <- getClientes
       Left: mensagem de erro, login não teve sucesso.
       Right: Cliente com login e senha repassados, login teve sucesso.
 -}
-loginCliente :: String -> String -> [Cliente] -> Either String Cliente
-loginCliente loginUser senhaUser [] = Left "Login e senha inválidos."
-loginCliente loginUser senhaUser [a] = Right a
+loginCliente :: String -> String -> [Cliente] -> [Cliente]
+loginCliente loginUser senhaUser [] = []
+loginCliente loginUser senhaUser [a] = [a]
 loginCliente loginUser senhaUser clientes = loginCliente (loginUser) (senhaUser) [y | y <- clientes, show (login y) == (loginUser), show (senha y) == (senhaUser)]
+
+getPedidosCliente :: Cliente -> IO([Pedido])
+getPedidosCliente clt = do pedidos <- getPedidos
+                           return [y | y <- pedidos, show(cliente y) == show (nome clt)]
+
