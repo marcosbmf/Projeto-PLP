@@ -1,5 +1,11 @@
 :-initialization(main).
 
+:- use_module(cliente).
+:- use_module(restaurante).
+:- use_module(items).
+:- use_module(pedido).
+:- use_module(util).
+
 
 main:-
 	tty_clear,
@@ -31,24 +37,7 @@ menuCadastrarCliente:-
 	write("---------------------------------------------"),nl,nl,
 	write("| CADASTRAR NOVO CLIENTE"),nl,
 	write("---------------------------------------------"),nl,nl,
-	write("Digite seu nome: "),nl,
-	read_line_to_codes(user_input, NOME),nl,
-	write("Digite seu CPF: "),nl,
-	read_line_to_codes(user_input, CPF),nl,
-	write("Digite seu numero de telefone: "),nl,
-	read_line_to_codes(user_input, TELEFONE),nl,
-	write("Seu endereco: "),nl,
-	read_line_to_codes(user_input, ENDERECO),nl,
-	write("Escolha um nome de usuario: "),nl,
-	%% %% %% %% %% %% %% %% %% %% %% 
-	%% VERIFICA SE USUARIO JA EXISTE
-	%% %% %% %% %% %% %% %% %% %% %% 
-	read_line_to_codes(user_input, USER),nl,
-	write("Escolha uma senha: "),nl,
-	read_line_to_codes(user_input, PASSWORD),nl,
-	%% %% %% %% %% %% 
-	%% NESSA PARTE CRIA O OBJECTO E ARMAZENA DE ALGUMA FORMA
-	%% %% %% %% %% %% 
+	cliente:newCliente.
 	main.
 
 menuLoginCliente:-
@@ -61,11 +50,11 @@ menuLoginCliente:-
 	read_line_to_codes(user_input, USER),nl,
 	write("Senha: "),nl,
 	read_line_to_codes(user_input, PASSWORD),nl,
-	%% %% %% %% %% %% 
-	%% AGORA TEM QUE VERIFICAR SE O USUARIO EXISTE E SE 
+	%% %% %% %% %% %%
+	%% AGORA TEM QUE VERIFICAR SE O USUARIO EXISTE E SE
 	%% A SENHA ESTA CORRECTA
 	%% E ENTAO FAZER O LOGIN
-	%% %% %% %% %% %% 
+	%% %% %% %% %% %%
 	menuClienteLogado.
 
 menuCadastrarRestaurante:-
@@ -76,9 +65,9 @@ menuCadastrarRestaurante:-
 	write("---------------------------------------------"),nl,nl,
 	write("Digite seu CNPJ (Este sera seu login): "),nl,nl,
 	read_line_to_codes(user_input, CNPJ),nl,
-	%% %% %% %% %% %% %% %% %% %% %% 
+	%% %% %% %% %% %% %% %% %% %% %%
 	%% VERIFICA SE CNPJ JA EXISTE
-	%% %% %% %% %% %% %% %% %% %% %% 
+	%% %% %% %% %% %% %% %% %% %% %%
 	write("Digite seu telefone: "),nl,
 	read_line_to_codes(user_input, TELEFONE),nl,
 	write("Estilo de cozinha: "),nl,
@@ -89,9 +78,9 @@ menuCadastrarRestaurante:-
 	read_line_to_codes(user_input, FECHA),nl,
 	write("Escolha uma senha: "),nl,
 	read_line_to_codes(user_input, PASSWORD),nl,
-	%% %% %% %% %% %% 
+	%% %% %% %% %% %%
 	%% NESSA PARTE CRIA O OBJECTO E ARMAZENA DE ALGUMA FORMA
-	%% %% %% %% %% %% 
+	%% %% %% %% %% %%
 	main.
 
 
@@ -158,7 +147,7 @@ realizarPedido:-
 	write("| CARDAPIOS"),nl,
 	write("---------------------------------------------"),nl,
 	%%%%%%%%%%%%%
-	%%% INFORMACOES DO RESTAURANTE SAO MOSTRADAS 
+	%%% INFORMACOES DO RESTAURANTE SAO MOSTRADAS
 	%%%%%%%%%%%%%
 	write("1 - COXINHA"),nl,
 	write("2 - PASTEL"),nl,
@@ -177,7 +166,7 @@ finalizarPedido:-
 	write("| CARDAPIOS"),nl,
 	write("---------------------------------------------"),nl,
 	%%%%%%%%%%%%%
-	%%% INFORMACOES DO RESTAURANTE SAO MOSTRADAS 
+	%%% INFORMACOES DO RESTAURANTE SAO MOSTRADAS
 	%%%%%%%%%%%%%
 	write("1 - COXINHA"),nl,
 	write("2 - PASTEL"),nl,
@@ -218,9 +207,9 @@ menuCadastrarRestaurante:-
 	write("---------------------------------------------"),nl,nl,
 	write("Digite seu CNPJ (Este sera seu login): "),nl,nl,
 	read_line_to_codes(user_input, CNPJ),nl,
-	%% %% %% %% %% %% %% %% %% %% %% 
+	%% %% %% %% %% %% %% %% %% %% %%
 	%% VERIFICA SE CNPJ JA EXISTE
-	%% %% %% %% %% %% %% %% %% %% %% 
+	%% %% %% %% %% %% %% %% %% %% %%
 	write("Digite seu telefone: "),nl,
 	read_line_to_codes(user_input, TELEFONE),nl,
 	write("Estilo de cozinha: "),nl,
@@ -231,9 +220,9 @@ menuCadastrarRestaurante:-
 	read_line_to_codes(user_input, FECHA),nl,
 	write("Escolha uma senha: "),nl,
 	read_line_to_codes(user_input, PASSWORD),nl,
-	%% %% %% %% %% %% 
+	%% %% %% %% %% %%
 	%% NESSA PARTE CRIA O OBJECTO E ARMAZENA DE ALGUMA FORMA
-	%% %% %% %% %% %% 
+	%% %% %% %% %% %%
 	main.
 
 menuLoginRestaurante:-
@@ -274,7 +263,7 @@ adicionarPrato:-
 	write("---------------------------------------------"),nl,
 	write("---------------------------------------------"),nl,nl,
 	write("| ADICIONAR PRATO"),nl,
-	write("---------------------------------------------"),nl,nl,	
+	write("---------------------------------------------"),nl,nl,
 	write("Digite o nome do prato: "),nl,
 	read_line_to_codes(user_input, NOMEPRATO),nl,
 	write("Escreva uma descricao para o prato: "),nl,
@@ -293,7 +282,7 @@ removerPrato:-
 	write("---------------------------------------------"),nl,
 	write("---------------------------------------------"),nl,nl,
 	write("| REMOVER PRATO"),nl,
-	write("---------------------------------------------"),nl,nl,	
+	write("---------------------------------------------"),nl,nl,
 	write("Lista de pratos de restaurante tal"),nl,nl,
 	write("1 - COXINHA"),nl,
 	write("2 - PASTEL"),nl,nl,nl,nl,
@@ -308,12 +297,9 @@ verPedidosClientes:-
 	write("---------------------------------------------"),nl,
 	write("---------------------------------------------"),nl,nl,
 	write("| VER PEDIDOS DOS CLIENTES"),nl,
-	write("---------------------------------------------"),nl,nl,	
+	write("---------------------------------------------"),nl,nl,
 	write("Meus pedidos:"),nl,nl,
 	write("1 - COXINHA - FULANO DE TALLSSSS"),nl,nl,
 	write("Digite o número do pedido que deseja acessar ou 0 para voltar ao menu:"),nl,
 	read_line_to_codes(user_input, NUM),nl,
 	restauranteLogado.
-
-
-

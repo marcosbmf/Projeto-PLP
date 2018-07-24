@@ -1,6 +1,5 @@
 :- module(restaurante, []).
 
-
 /*
     restaurante(Nome, TipoCozinha, HorarioFuncionamento, CNPJ, Senha)
 */
