@@ -19,24 +19,24 @@ validLogin(Login) :-
 login(Login, Senha) :-
     cliente(_,_,_,Login, Senha).
 
-clienteToString(Login, Resultado) :-
-    clienteGetName(Login, Name),
-    clienteGetCPF(Login, CPF),
-    clienteGetEndereco(Login, Endereco),
+toString(Login, Resultado) :-
+    getName(Login, Name),
+    getCPF(Login, CPF),
+    getEndereco(Login, Endereco),
     util:concatenate_string("Nome: ", Name, X),
     util:concatenate_string("Endereço: ", Endereco, Y),
     util:concatenate_string("CPF: ", CPF, Z),
     format(atom(R), "~w\n~w\n~w\n", [X, Y, Z]),
     Resultado = R.
 
-clienteGetName(Login, StrName) :-
+getName(Login, StrName) :-
     cliente(Name, _, _, Login, _),
     name(StrName, Name).
 
-clienteGetCPF(Login, StrCPF) :-
+getCPF(Login, StrCPF) :-
     cliente(_, _, CPF, Login, _),
     name(StrCPF, CPF).
 
-clienteGetEndereco(Login, StrEndereco) :-
+getEndereco(Login, StrEndereco) :-
     cliente(_, Endereco, _, Login, _),
     name(StrEndereco, Endereco).
