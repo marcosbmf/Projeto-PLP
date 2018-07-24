@@ -1,10 +1,14 @@
 :- module(cliente, []).
 :- use_module(util).
 
+% Cliente(Nome, Endereco, CNPJ, Login, Senha).
 :- dynamic(cliente/5).
 
-cliente("Marcos Barros", "Rua Joao Luis Pereira", "097650704", marcos, marcos).
+cliente("Marcos Barros", "Rua Joao Luis Pereira", "097650704", [50], marcos).
 
+%
+% Cria um cliente se o Login não existir ainda.
+%
 newCliente :-
     write('Insira o seu nome: '), nl, read_line_to_codes(user_input, Name),
     write('Insira o seu endereço: '), nl, read_line_to_codes(user_input, Endereco),

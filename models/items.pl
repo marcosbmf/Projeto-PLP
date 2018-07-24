@@ -2,14 +2,14 @@
 :- use_module(restaurante).
 :- use_module(util).
 
-/*
-    item(Nome, Descrição, Preço, CNPJRestaurante, Identificador).
-*/
+%
+%    item(Nome, Descrição, Preço, CNPJRestaurante, Identificador).
+%
 :- dynamic(item/5).
 
 %
 % Cadastra item no menu de um restaurante. Cada item possui nome, descrição,
-% preço e um identificador.
+% preço e um identificador. Cadastra apenas se o identificador for único para o CNPJ.
 %
 cadastraItem(CNPJ, Senha) :-
     restaurante:restauranteLogin(CNPJ, Senha) ->
@@ -17,7 +17,15 @@ cadastraItem(CNPJ, Senha) :-
     write("Insira a descrição do item: \n"), read_line_to_codes(user_input, Descricao),
     write("Insira o preço do item: \n"), read_line_to_codes(user_input, Preco),
     write("Insira um identificado para o item: \n"), read_line_to_codes(user_input, Identificador),
+    verificaIdentificadorUnico(Identificador, CNPJ) ->
     assert(item(Nome, Descricao, Preco, CNPJ, Identificador)).
+
+
+%
+%  Verifica se o identificador do item é único para o CNPJ.
+%
+verificaIdentificadorUnico(Identificador, CNPJ) :-
+    not(item(_,_,_,CNPJ,Identificador)).
 
 %
 % Salva em Retorno a descrição textual de um item a partir de
@@ -29,6 +37,14 @@ toString(CNPJ, Identificador, Retorno) :-
     getPreco(CNPJ, Identificador, Preco),
     format(atom(Resultado), "Nome: ~w\nDescrição: ~w\nPreço: ~w\n", [Nome, Descricao, Preco]),
     Retorno = Resultado.
+
+%ToString para ser usado em lista. Id - Nome - Preço: R$XX,XX.
+toStringListagem(CNPJ, Identificador, Retorno) :-
+  getNome(CNPJ, Identificador, Nome),
+  getPreco(CNPJ, Identificador, Preco),
+  getIdentificador(CNPJ, Identificador, Id),
+  format(atom(Resultado), "~w - ~w Preço: R$~w\n", [Id, Nome, Preco]),
+  Retorno = Resultado.
 
 %
 % Salva em Retorno o nome de um item a partir de seu conjunto CNPJ
@@ -54,9 +70,17 @@ getPreco(CNPJ, Identificador, Retorno) :-
     item(_, _, Preco, CNPJ, Identificador),
     name(Retorno, Preco).
 
- /*
+% Retorna Identificador
+getIdentificador(CNPJ, Identificador, StrId) :-
+    name(Retorno, StrId).
 
+%
+% Remove um item a partir do CNPJ e Identificador.
+%
+removeItem(CNPJ, Identificador) :-
+    retract(item(_,_,_,CNPJ,Identificador)).
+
+ /*
  	listaItemToString(CNPJ, String)
  	listaItems(CNPJ, Lista)
- 	removeItem(CNPJ, X,)
- */
+  */
