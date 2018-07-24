@@ -21,3 +21,7 @@ verificaCNPJ(CNPJ) :-
 
 restauranteLogin(CNPJ, Senha) :-
     restaurante(_,_,_,CNPJ,Senha).
+
+restauranteToString(CNPJ) :-
+    restaurante(Nome, TipoCozinha, HorarioFuncionamento, CNPJ, _),
+    format("~w - ~w\nHorario de Funcionamento: ~w\n", [Nome, TipoCozinha, HorarioFuncionamento]).

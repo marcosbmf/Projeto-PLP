@@ -12,4 +12,4 @@ cadastraItem(CNPJ, Senha) :-
     write("Insira a descrição do item: \n"), read(Descricao),
     write("Insira o preço do item: \n"), read(Preco),
     assert(item(Name, Descricao, Preco, CNPJ)).
-    
+

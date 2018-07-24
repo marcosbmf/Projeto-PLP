@@ -18,6 +18,6 @@ validLogin(Login) :-
 login(Login, Senha) :-
     cliente(_,_,_,Login, Senha).
 
-clienteToString(Login, Senha) :-
-    cliente(Name, Endereco, CPF, Login, Senha), 
+clienteToString(Login) :-
+    cliente(Name, Endereco, CPF, Login, _), 
     format("Nome: ~w\nEndereço: ~w\nCPF: ~w\n", [Name, Endereco, CPF]).
