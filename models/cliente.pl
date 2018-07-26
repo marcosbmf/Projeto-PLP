@@ -15,7 +15,7 @@ newCliente :-
     write('Insira o seu CPF: '), nl, read_line_to_codes(user_input, CPF),
     write('Insira o seu login: '), nl, read_line_to_codes(user_input, Login),
     write('Insira a sua senha: '), nl, read_line_to_codes(user_input, Senha),
-    validLogin(Login) -> assert(cliente(Name, Endereco, CPF, Login, Senha)); write("\nFalha no cadastro: Login já está sendo utilizado, tente novamente.\n").
+    validLogin(Login) -> assert(cliente(Name, Endereco, CPF, Login, Senha)), true; false.
 
 validLogin(Login) :-
     not(cliente(_,_,_,Login,_)).

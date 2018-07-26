@@ -9,7 +9,6 @@
 
 main:-
 	tty_clear,
-	write(Clientes),
 	write("---------------------------------------------"),nl,
 	write("---------------------------------------------"),nl,nl,
 	write("Bem vindo ao Sistema de Delivery"),nl,
@@ -37,17 +36,18 @@ imprimirElementos([H|T]) :-
 	imprimirElementos(T).
 	
 
-
+%FUNCIONANDO!
 menuCadastrarCliente:-
 	tty_clear,
 	write("---------------------------------------------"),nl,
 	write("---------------------------------------------"),nl,nl,
 	write("| CADASTRAR NOVO CLIENTE"),nl,
 	write("---------------------------------------------"),nl,nl,
-	cliente:newCliente(R),
-	main.
+	cliente:newCliente -> write("\n\nCadastro realizado com sucesso!\nPressione enter para continuar!"), util:press_enter, main;
+	write("\nFalha no cadastro: Login já está sendo utilizado, tente novamente.\nPressione Enter para continuar.\n"), util:press_enter, main.
 
-menuLoginCliente:-
+%FUNCIONANDO!
+menuLoginCliente :-
 	tty_clear,
 	write("---------------------------------------------"),nl,
 	write("---------------------------------------------"),nl,nl,
@@ -57,20 +57,16 @@ menuLoginCliente:-
 	read_line_to_codes(user_input, USER),nl,
 	write("Senha: "),nl,
 	read_line_to_codes(user_input, PASSWORD),nl,
-	%% %% %% %% %% %%
-	%% AGORA TEM QUE VERIFICAR SE O USUARIO EXISTE E SE
-	%% A SENHA ESTA CORRECTA
-	%% E ENTAO FAZER O LOGIN
-	%% %% %% %% %% %%
-	menuClienteLogado.
+	cliente:login(USER, PASSWORD) -> menuClienteLogado(USER);
+	write("\n\nLogin ou senha inválidos! Digite enter para continuar\n."), util:press_enter, main.
 
-menuClienteLogado:-
-	tty_clear,
+menuClienteLogado(USER):-
+	tty_clear, cliente:getName(USER, ClientName),
 	write("---------------------------------------------"),nl,
 	write("---------------------------------------------"),nl,nl,
 	write("| SISTEMA DE DELIVERY ONLINE"),nl,
 	write("---------------------------------------------"),nl,
-	write("| Bem vindo, FULANO DE TAL."),nl,nl,
+	format("| Bem vindo, ~w.", [ClientName]),nl,nl,
 	write("MENU: "),nl,
 	write("(1) Exibir todos os restaurantes"),nl,
 	write("(2) Ver Pedidos"),nl,
