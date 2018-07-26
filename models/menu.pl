@@ -9,6 +9,7 @@
 
 main:-
 	tty_clear,
+	write(Clientes),
 	write("---------------------------------------------"),nl,
 	write("---------------------------------------------"),nl,nl,
 	write("Bem vindo ao Sistema de Delivery"),nl,
@@ -29,6 +30,12 @@ main:-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%% PARTES DO CLIENTE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+imprimirElementos([]):- write("Kkk").
+imprimirElementos([H|T]) :-
+	write(H),
+	write("Llll"),
+	imprimirElementos(T).
+	
 
 
 menuCadastrarCliente:-
@@ -37,7 +44,7 @@ menuCadastrarCliente:-
 	write("---------------------------------------------"),nl,nl,
 	write("| CADASTRAR NOVO CLIENTE"),nl,
 	write("---------------------------------------------"),nl,nl,
-	cliente:newCliente.
+	cliente:newCliente(R),
 	main.
 
 menuLoginCliente:-
@@ -56,33 +63,6 @@ menuLoginCliente:-
 	%% E ENTAO FAZER O LOGIN
 	%% %% %% %% %% %%
 	menuClienteLogado.
-
-menuCadastrarRestaurante:-
-	tty_clear,
-	write("---------------------------------------------"),nl,
-	write("---------------------------------------------"),nl,nl,
-	write("| CADASTRAR NOVO RESTAURANTE"),nl,
-	write("---------------------------------------------"),nl,nl,
-	write("Digite seu CNPJ (Este sera seu login): "),nl,nl,
-	read_line_to_codes(user_input, CNPJ),nl,
-	%% %% %% %% %% %% %% %% %% %% %%
-	%% VERIFICA SE CNPJ JA EXISTE
-	%% %% %% %% %% %% %% %% %% %% %%
-	write("Digite seu telefone: "),nl,
-	read_line_to_codes(user_input, TELEFONE),nl,
-	write("Estilo de cozinha: "),nl,
-	read_line_to_codes(user_input, COZINHA),nl,
-	write("Horario que abre: "),nl,
-	read_line_to_codes(user_input, ABRE),nl,
-	write("Horario que fecha: "),nl,
-	read_line_to_codes(user_input, FECHA),nl,
-	write("Escolha uma senha: "),nl,
-	read_line_to_codes(user_input, PASSWORD),nl,
-	%% %% %% %% %% %%
-	%% NESSA PARTE CRIA O OBJECTO E ARMAZENA DE ALGUMA FORMA
-	%% %% %% %% %% %%
-	main.
-
 
 menuClienteLogado:-
 	tty_clear,
@@ -205,21 +185,22 @@ menuCadastrarRestaurante:-
 	write("---------------------------------------------"),nl,nl,
 	write("| CADASTRAR NOVO RESTAURANTE"),nl,
 	write("---------------------------------------------"),nl,nl,
-	write("Digite seu CNPJ (Este sera seu login): "),nl,nl,
-	read_line_to_codes(user_input, CNPJ),nl,
-	%% %% %% %% %% %% %% %% %% %% %%
-	%% VERIFICA SE CNPJ JA EXISTE
-	%% %% %% %% %% %% %% %% %% %% %%
-	write("Digite seu telefone: "),nl,
-	read_line_to_codes(user_input, TELEFONE),nl,
-	write("Estilo de cozinha: "),nl,
-	read_line_to_codes(user_input, COZINHA),nl,
-	write("Horario que abre: "),nl,
-	read_line_to_codes(user_input, ABRE),nl,
-	write("Horario que fecha: "),nl,
-	read_line_to_codes(user_input, FECHA),nl,
-	write("Escolha uma senha: "),nl,
-	read_line_to_codes(user_input, PASSWORD),nl,
+	restaurante:newRestaurante,
+	%% write("Digite seu CNPJ (Este sera seu login): "),nl,nl,
+	%% read_line_to_codes(user_input, CNPJ),nl,
+	%% %% %% %% %% %% %% %% %% %% %% %%
+	%% %% VERIFICA SE CNPJ JA EXISTE
+	%% %% %% %% %% %% %% %% %% %% %% %%
+	%% write("Digite seu telefone: "),nl,
+	%% read_line_to_codes(user_input, TELEFONE),nl,
+	%% write("Estilo de cozinha: "),nl,
+	%% read_line_to_codes(user_input, COZINHA),nl,
+	%% write("Horario que abre: "),nl,
+	%% read_line_to_codes(user_input, ABRE),nl,
+	%% write("Horario que fecha: "),nl,
+	%% read_line_to_codes(user_input, FECHA),nl,
+	%% write("Escolha uma senha: "),nl,
+	%% read_line_to_codes(user_input, PASSWORD),nl,
 	%% %% %% %% %% %%
 	%% NESSA PARTE CRIA O OBJECTO E ARMAZENA DE ALGUMA FORMA
 	%% %% %% %% %% %%
