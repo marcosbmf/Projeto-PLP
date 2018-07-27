@@ -15,7 +15,7 @@ cadastraItem(CNPJ) :-
     write("Insira o nome do item: \n"), read_line_to_codes(user_input, Nome),
     write("Insira a descrição do item: \n"), read_line_to_codes(user_input, Descricao),
     write("Insira o preço do item: \n"), read_line_to_codes(user_input, Preco),
-    write("Insira um identificado para o item: \n"), read_line_to_codes(user_input, Identificador),
+    write("Insira um identificador númerico para o item: \n"), read_line_to_codes(user_input, Identificador),
     verificaIdentificadorUnico(Identificador, CNPJ) ->
     assert(item(Nome, Descricao, Preco, CNPJ, Identificador)), true; false.
 

@@ -224,7 +224,7 @@ adicionarPrato(CNPJ) :-
 	write("| ADICIONAR PRATO"),nl,
 	write("---------------------------------------------"),nl,nl,
 	items:cadastraItem(CNPJ) -> write("\nItem cadastrado com sucesso!\nPressione enter para continuar!"), util:press_enter, restauranteLogado(CNPJ);
-	write("\nProblema no cadastramento do item!\nPressione enter para continuar!"), util:press_enter, restauranteLogado(CNPJ);
+	write("\nProblema no cadastramento do item, identificador numérico não é único!\nPressione enter para continuar!"), util:press_enter, restauranteLogado(CNPJ);
 
 removerPrato (CNPJ):-
 	tty_clear,
