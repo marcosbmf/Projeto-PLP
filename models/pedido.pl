@@ -21,34 +21,37 @@ newPedido(Login, CNPJ) :-
 % ID_PEDIDO - ID do pedido
 %
 interfacePedido(CNPJ, ID_PEDIDO) :-
-  write("\n(A)dicionar, (r)emover itens do pedido, ou (c)onfirmá-lo? \n\n"),
+  tty_clear,
+  write("(A)dicionar, (r)emover itens do pedido, ou (c)onfirmá-lo? \n\n"),
   read_line_to_codes(user_input, INPUT),
   ((name("A", INPUT); name("a", INPUT)) -> adicionarAoPedido(CNPJ, ID_PEDIDO);
-   (name("R", INPUT); name("r", INPUT)) -> removerDoPedido(CNPJ, ID_PEDIDO);
-   (name("C", INPUT); name("c", INPUT)) -> finalizar(CNPJ, ID_PEDIDO);
-   (write("Comando inválido.\n"), interfacePedido(CNPJ, ID_PEDIDO))).
+  (name("R", INPUT); name("r", INPUT)) -> removerDoPedido(CNPJ, ID_PEDIDO);
+  (name("C", INPUT); name("c", INPUT)) -> finalizar(CNPJ, ID_PEDIDO);
+  (write("Comando inválido.\n"), util:press_enter, interfacePedido(CNPJ, ID_PEDIDO))).
 
 %
 % Finaliza um pedido.
 %
 finalizar(CNPJ, ID_PEDIDO) :-
+  tty_clear,
   toString(ID_PEDIDO),nl,
-  write("Deseja finalizar o pedido? (S/n) \n\n"),
+  write("Deseja finalizar ou cancelar o pedido? (F/c) \n\n"),
   read_line_to_codes(user_input, INPUT),
-  ((name("S", INPUT); name("s", INPUT)) -> true;
-   (name("N", INPUT); name("n", INPUT)) -> false;
-   (write("Comando inválido\n"), finalizar(CNPJ, ID_PEDIDO))).
+  ((name("F", INPUT); name("f", INPUT)) -> true;
+  (name("C", INPUT); name("c", INPUT)) -> (retract(pedido(_, CNPJ, _, ID_PEDIDO)), writeln("Pedido cancelado com sucesso. "), util:press_enter);
+  (write("Comando inválido\n"), util:press_enter, finalizar(CNPJ, ID_PEDIDO))).
 
 %
 % Interface para adicionar item a um pedido.
 %
 adicionarAoPedido(CNPJ, ID_PEDIDO) :-
+  tty_clear,
   restaurante:getName(CNPJ, Nome),
-  format(atom(R), "Cardápio de ~w:", [Nome]),
+  format(atom(R), "Cardápio de ~w:\n", [Nome]),
   atom_string(R, Header),
   writeln(Header),
   items:getCardapio(CNPJ, Cardapio),
-  writeln(Cardapio),
+  writeln(Cardapio), nl,
   adicionarAoPedido_(CNPJ, ID_PEDIDO).
 
 adicionarAoPedido_(CNPJ, ID_PEDIDO) :-
@@ -56,30 +59,34 @@ adicionarAoPedido_(CNPJ, ID_PEDIDO) :-
   read_line_to_codes(user_input, INPUT), nl,
   (name("0", INPUT) -> interfacePedido(CNPJ, ID_PEDIDO);
   items:item(_, _, _, CNPJ, INPUT) -> adicionarConfirmacao(CNPJ, ID_PEDIDO, INPUT);
-  (writeln("Identificador de item inválido"), adicionarAoPedido_(CNPJ, ID_PEDIDO))).
+  (writeln("Identificador de item inválido"), util:press_enter, adicionarAoPedido(CNPJ, ID_PEDIDO))).
 
 %
 % Confirma se o cliente quer adicionar o item ao pedido.
 %
 adicionarConfirmacao(CNPJ, ID_PEDIDO, ID_ITEM) :-
-  items:getNome(CNPJ, ID_ITEM, Nome), items:getPreco(CNPJ, ID_ITEM, Preco),
-  format(atom(R), "Deseja adicionar ~w por ~w? (S/n) \n\n", [Nome, Preco]),
+  tty_clear,
+  items:getNome(CNPJ, ID_ITEM, Nome),
+  format(atom(R), "Deseja adicionar ~w? (S/n)", [Nome]),
   atom_string(R, Header),
   writeln(Header),
+  items:toString(CNPJ, ID_ITEM, DESC),
+  nl, writeln(DESC), nl,
   read_line_to_codes(user_input, INPUT), nl,
   ((name("S", INPUT); name("s", INPUT)) -> (pedido(LOGIN, CNPJ, LISTA, ID_PEDIDO),
                                     append(LISTA, [ID_ITEM], NOVA_LISTA),
                                     retract(pedido(LOGIN, CNPJ, LISTA, ID_PEDIDO)),
                                     assert(pedido(LOGIN, CNPJ, NOVA_LISTA, ID_PEDIDO))),
                                     interfacePedido(CNPJ, ID_PEDIDO));
-   (name("N", INPUT); name("n", INPUT)) -> interfacePedido(CNPJ, ID_PEDIDO);
-   (write("Comando inválido\n\n"), adicionarConfirmacao(CNPJ, ID_PEDIDO, ID_ITEM)).
+   (name("N", INPUT); name("n", INPUT)) -> (write("Adição cancelada. "), util:press_enter, interfacePedido(CNPJ, ID_PEDIDO));
+   (write("Comando inválido\n\n"), util:press_enter, adicionarConfirmacao(CNPJ, ID_PEDIDO, ID_ITEM)).
 
 
 %
 % Remove item do pedido.
 %
 removerDoPedido(CNPJ, ID_PEDIDO) :-
+  tty_clear,
   toString(ID_PEDIDO), nl,
   removerDoPedido_(CNPJ, ID_PEDIDO).
 
@@ -88,25 +95,28 @@ removerDoPedido_(CNPJ, ID_PEDIDO) :-
   read_line_to_codes(user_input, INPUT), nl,
   (name("0", INPUT) -> interfacePedido(CNPJ, ID_PEDIDO);
   items:item(_, _, _, CNPJ, INPUT) -> removerConfirmacao(CNPJ, ID_PEDIDO, INPUT);
-  (writeln("Item inválido.\n\n"), removerDoPedido_(CNPJ, ID_PEDIDO))).
+  writeln("Item inválido.\n\n"), util:press_enter, removerDoPedido(CNPJ, ID_PEDIDO)).
 
 
 %
 % Confirma a remoção do pedido.
 %
 removerConfirmacao(CNPJ, ID_PEDIDO, ID_ITEM) :-
+  tty_clear,
   items:getNome(CNPJ, ID_ITEM, Nome),
-  format(atom(R), "Deseja remover ~w do pedido? (S/n) \n\n", [Nome]),
+  format(atom(R), "Deseja remover ~w do pedido? (S/n)", [Nome]),
   atom_string(R, Header),
   writeln(Header),
+  items:toString(CNPJ, ID_ITEM, DESC),
+  nl, writeln(DESC), nl,
   read_line_to_codes(user_input, INPUT), nl,
   ((name("S", INPUT); name("s", INPUT)) -> (pedido(LOGIN, CNPJ, LISTA, ID_PEDIDO),
                                             util:deletaUm(ID_ITEM, LISTA, [], NOVA_LISTA)),
                                             retract(pedido(_, CNPJ, _, ID_PEDIDO)),
                                             assert(pedido(LOGIN, CNPJ, NOVA_LISTA, ID_PEDIDO)),
                                             interfacePedido(CNPJ, ID_PEDIDO));
-  ((name("N", INPUT); name("n", INPUT)) -> interfacePedido(CNPJ, ID_PEDIDO));
-  (write("Comando inválido\n\n"), removerConfirmacao(CNPJ, ID_PEDIDO, ID_ITEM)).
+  ((name("N", INPUT); name("n", INPUT)) -> (write("Remoção cancelada."), util:press_enter, interfacePedido(CNPJ, ID_PEDIDO));
+  (write("Comando inválido\n\n"), removerConfirmacao(CNPJ, ID_PEDIDO, ID_ITEM))).
 
 %Gera um identificador unico.
 getRandomNumber(CNPJ, Result) :-
