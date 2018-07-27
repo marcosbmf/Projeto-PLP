@@ -175,7 +175,7 @@ verPedidos(USER):-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-
+%Funcionando
 menuCadastrarRestaurante:-
 	tty_clear,
 	write("---------------------------------------------"),nl,
@@ -185,6 +185,7 @@ menuCadastrarRestaurante:-
 	restaurante:newRestaurante -> write("\nCadastro realizado com sucesso! Pressione enter para voltar ao menu!\n"), util:press_enter, main; 
 	write("\nFalha no cadastro: CNPJ já está sendo utilizado, tente novamente.\nPressione enter para voltar ao menu!\n"), util:press_enter, main.
 
+%Funcionando.
 menuLoginRestaurante:-
 	tty_clear,
 	write("---------------------------------------------"),nl,
@@ -198,6 +199,7 @@ menuLoginRestaurante:-
 	restaurante:login(CNPJ, PASSWORD) -> restauranteLogado(CNPJ); 
 	write("\nFalha no login, usuario ou senha inválidos!\nPressione enter para voltar ao menu!\n"), util:press_enter, main.
 
+%Funcionando, faltam funções.
 restauranteLogado(CNPJ) :-
 	tty_clear,
 	restaurante:getName(CNPJ, RestName),
@@ -217,29 +219,33 @@ restauranteLogado(CNPJ) :-
 	OP =:= "2" -> removerPrato(CNPJ);
 	OP =:= "3" -> verPedidosClientes(CNPJ)).
 
+%Funcionando
 adicionarPrato(CNPJ) :-
 	tty_clear,
 	write("---------------------------------------------"),nl,
 	write("---------------------------------------------"),nl,nl,
 	write("| ADICIONAR PRATO"),nl,
 	write("---------------------------------------------"),nl,nl,
-	items:cadastraItem(CNPJ) -> write("\nItem cadastrado com sucesso!\nPressione enter para continuar!"), util:press_enter, restauranteLogado(CNPJ);
-	write("\nProblema no cadastramento do item, identificador numérico não é único!\nPressione enter para continuar!"), util:press_enter, restauranteLogado(CNPJ);
+	items:cadastraItem(CNPJ) -> 
+	write("\nItem cadastrado com sucesso!\nPressione enter para continuar!\n"), util:press_enter, restauranteLogado(CNPJ);
+	write("\nProblema no cadastramento do item, identificador numérico não é único!\nPressione enter para continuar!\n"), util:press_enter, restauranteLogado(CNPJ).
 
-removerPrato (CNPJ):-
+%FUNCIONANDO
+removerPrato(CNPJ) :-
 	tty_clear,
+	restaurante:getName(CNPJ, RestName),
+	items:getCardapio(CNPJ, Cardapio),
 	write("---------------------------------------------"),nl,
 	write("---------------------------------------------"),nl,nl,
 	write("| REMOVER PRATO"),nl,
 	write("---------------------------------------------"),nl,nl,
-	write("Lista de pratos de restaurante tal"),nl,nl,
-	write("1 - COXINHA"),nl,
-	write("2 - PASTEL"),nl,nl,nl,nl,
+	format("Lista de pratos do restaurante ~w", [RestName]),nl,nl,
+	write(Cardapio),nl,nl,
 	write("Digite o numero do prato que voce deseja deletar, ou 0 para cancelar:"),nl,
 	read_line_to_codes(user_input, NUM),nl,
-	(NUM =:= "0" -> restauranteLogado).
-	%%%%%%%%%%%%% FALTA TERMINAR
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	NUM =:= "0" -> restauranteLogado(CNPJ);
+	items:removeItem(CNPJ, NUM) -> write("Remoção realizada com sucesso! Digite enter para continuar!\n\n"), util:press_enter, removerPrato(CNPJ);
+	write("Opção ou identificador inválido! Digite enter para continuar!\n\n"), util:press_enter, removerPrato(CNPJ).
 
 verPedidosClientes (CNPJ):-
 	tty_clear,

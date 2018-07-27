@@ -16,9 +16,7 @@ cadastraItem(CNPJ) :-
     write("Insira a descrição do item: \n"), read_line_to_codes(user_input, Descricao),
     write("Insira o preço do item: \n"), read_line_to_codes(user_input, Preco),
     write("Insira um identificador númerico para o item: \n"), read_line_to_codes(user_input, Identificador),
-    verificaIdentificadorUnico(Identificador, CNPJ) ->
-    assert(item(Nome, Descricao, Preco, CNPJ, Identificador)), true; false.
-
+    verificaIdentificadorUnico(Identificador, CNPJ) -> assert(item(Nome, Descricao, Preco, CNPJ, Identificador)), true; false.
 
 %
 %  Verifica se o identificador do item é único para o CNPJ.
@@ -77,7 +75,11 @@ getIdentificador(CNPJ, Identificador, StrId) :-
 % Remove um item a partir do CNPJ e Identificador.
 %
 removeItem(CNPJ, Identificador) :-
-    retract(item(_,_,_,CNPJ,Identificador)).
+    item(_,_,_,CNPJ,Identificador) -> retract(item(_,_,_,CNPJ,Identificador)), true; false.
+
+%Retorna string com cardápio do restaurante.
+getCardapio(CNPJ, Cardapio) :-
+    Cardapio = "Cardapio".
 
  /*
  	listaItemToString(CNPJ, String)
