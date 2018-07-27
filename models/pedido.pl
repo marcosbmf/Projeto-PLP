@@ -101,8 +101,8 @@ removerConfirmacao(CNPJ, ID_PEDIDO, ID_ITEM) :-
   writeln(Header),
   read_line_to_codes(user_input, INPUT), nl,
   ((name("S", INPUT); name("s", INPUT)) -> (pedido(LOGIN, CNPJ, LISTA, ID_PEDIDO),
-                                            util:deletaUm(ID_PEDIDO, LISTA, [], NOVA_LISTA)),
-                                            retract(pedido(LOGIN, CNPJ, LISTA, ID_PEDIDO)),
+                                            util:deletaUm(ID_ITEM, LISTA, [], NOVA_LISTA)),
+                                            retract(pedido(_, CNPJ, _, ID_PEDIDO)),
                                             assert(pedido(LOGIN, CNPJ, NOVA_LISTA, ID_PEDIDO)),
                                             interfacePedido(CNPJ, ID_PEDIDO));
   ((name("N", INPUT); name("n", INPUT)) -> interfacePedido(CNPJ, ID_PEDIDO));
@@ -143,7 +143,7 @@ toString(ID) :-
 
 toStringListagem(ID, Retorno) :-
   pedido(_,RST,_,ID), restaurante:getName(RST, RestName),
-  format(atom(R), "Pedido n~w. Restaurante: ~w\n", [ID, RestName]),
+  format(atom(R), "Pedido nº ~w. Restaurante: ~w", [ID, RestName]),
   Retorno = R.
 
 %

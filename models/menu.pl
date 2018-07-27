@@ -24,7 +24,7 @@ main:-
 	 name("2", OP) -> menuLoginRestaurante;
 	 name("3", OP) -> menuCadastrarCliente;
 	 name("4", OP) -> menuCadastrarRestaurante;
-	 name("5", OP) -> halt(0); main).
+	 name("5", OP) -> true; main).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%% PARTES DO CLIENTE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -34,7 +34,7 @@ imprimirElementos([H|T]) :-
 	write(H),
 	write("Llll"),
 	imprimirElementos(T).
-	
+
 
 %FUNCIONANDO!
 menuCadastrarCliente:-
@@ -130,13 +130,12 @@ verPedidos(USER):-
 	write("---------------------------------------------"),nl,nl,
 	write("| SISTEMA DE DELIVERY ONLINE"),nl,
 	write("---------------------------------------------"),nl,
-	write("Meus pedidos:"),nl,
-	%%pedido:getPedidosCliente(USER, Pedidos), write(Pedidos),nl,nl,
+	write("Meus pedidos:"),nl,nl,
+	pedido:getPedidosCliente(USER, Pedidos), write(Pedidos),nl,nl,
 	write("Digite o numero do pedido que deseja acessar ou 0 para voltar ao menu:"),nl,
-	read_line_to_codes(user_input, NUM),
+	read_line_to_codes(user_input, NUM), name(ID_PEDIDO, NUM),
 	(name("0", NUM) -> menuClienteLogado(USER);
-	%%Falta toString do pedido.
-	 pedido:pedido(USER,_,_,NUM) -> tty_clear, util:press_enter, verPedidos(USER);
+	 pedido:pedido(USER,_,_,ID_PEDIDO) -> tty_clear, pedido:toString(ID_PEDIDO), util:press_enter, verPedidos(USER);
 	 write("Opção inválida\n\n"), util:press_enter, verPedidos(USER)).
 
 
@@ -152,7 +151,7 @@ menuCadastrarRestaurante:-
 	write("---------------------------------------------"),nl,nl,
 	write("| CADASTRAR NOVO RESTAURANTE"),nl,
 	write("---------------------------------------------"),nl,nl,
-	restaurante:newRestaurante -> write("\nCadastro realizado com sucesso! "), util:press_enter, main; 
+	restaurante:newRestaurante -> write("\nCadastro realizado com sucesso! "), util:press_enter, main;
 	write("\nFalha no cadastro: CNPJ já está sendo utilizado, tente novamente.\n"), util:press_enter, main.
 
 %Funcionando.
@@ -166,7 +165,7 @@ menuLoginRestaurante:-
 	read_line_to_codes(user_input, CNPJ),nl,
 	write("Senha: "),nl,
 	read_line_to_codes(user_input, PASSWORD),nl,
-	restaurante:login(CNPJ, PASSWORD) -> restauranteLogado(CNPJ); 
+	restaurante:login(CNPJ, PASSWORD) -> restauranteLogado(CNPJ);
 	write("\nFalha no login, usuario ou senha inválidos! "), util:press_enter, main.
 
 %Funcionando, faltam funções.
@@ -187,7 +186,7 @@ restauranteLogado(CNPJ) :-
 	(name("4", OP) -> main;
 	 name("1", OP) -> adicionarPrato(CNPJ);
 	 name("2", OP) -> removerPrato(CNPJ);
-	 name("3", OP) -> verPedidosClientes(CNPJ)).
+	 name("3", OP) -> verPedidosRest(CNPJ)).
 
 %Funcionando
 adicionarPrato(CNPJ) :-
@@ -215,18 +214,16 @@ removerPrato(CNPJ) :-
 	items:confirmaRemocaoItem(CNPJ, NUM) -> removerPrato(CNPJ);
 	write("Opção ou identificador inválido! "), util:press_enter, removerPrato(CNPJ)).
 
-verPedidosClientes(CNPJ):-
+verPedidosRest(CNPJ):-
 		tty_clear,
 		write("---------------------------------------------"),nl,
 		write("---------------------------------------------"),nl,nl,
 		write("| Pedidos de clientes"),nl,
 		write("---------------------------------------------"),nl,
-		write("Meus pedidos:"),nl,
-		%%pedido:getPedidosRest(CNPJ, Pedidos), write(Pedidos),nl,nl,
+		write("Meus pedidos:"),nl,nl,
+		pedido:getPedidosRestaurante(CNPJ, Pedidos), write(Pedidos),nl,nl,
 		write("Digite o numero do pedido que deseja acessar ou 0 para voltar ao menu:"),nl,
 		read_line_to_codes(user_input, NUM),
-		(name("0", NUM) -> restauranteLogado(CNPJ);
-		%%Falta toString do pedido.
-		 pedido:pedido(_,CNPJ,_,NUM) -> tty_clear, util:press_enter, verPedidosClientes(CNPJ);
-		 write("Opção inválida\n\n"), util:press_enter, verPedidosClientes(CNPJ)).
-	
+		(name("0", NUM) -> restauranteLogado(CNPJ);name(ID_PEDIDO, NUM),
+		 pedido:pedido(_,CNPJ,_,ID_PEDIDO) -> tty_clear, pedido:toString(ID_PEDIDO), util:press_enter, verPedidosRest(CNPJ);
+		 write("Opção inválida\n\n"), util:press_enter, verPedidosRest(CNPJ)).
