@@ -65,7 +65,7 @@ toStringListagem(CNPJ, Resultado) :-
   getTipoCozinha(CNPJ, TipoCozinha),
   getHorario(CNPJ, HorarioFuncionamento),
   getCNPJ(CNPJ, CNPJStr),
-  format(atom(R), "~w. ~w, Aberto entre: ~w, Culinária: ~w\n", [CNPJStr, Nome, HorarioFuncionamento, TipoCozinha]),
+  format(atom(R), "~w. ~w, Aberto entre: ~w, Culinária: ~w", [CNPJStr, Nome, HorarioFuncionamento, TipoCozinha]),
   Resultado = R.
 
 %

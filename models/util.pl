@@ -5,3 +5,12 @@ concatenate_string(String1, String2, Resultado) :-
 
 press_enter :-
 	write("Pressione enter para continuar!\n"), read_line_to_codes(user_input, ENTER), true.
+
+concatena([], FIM, FIM).
+concatena([E|T], Result, FIM) :-
+    concatena(T, [E|Result], FIM).
+
+%% chamada util:deletaUm(ElementoDeletado, ListaAtual, [], ListaFinal)
+deletaUm(Del, [Elem|Tail], Result, FIM) :-
+	\+ Elem \= Del -> concatena(Tail, Result, FIM);
+	deletaUm(Del, Tail, [Elem|Result], FIM).
