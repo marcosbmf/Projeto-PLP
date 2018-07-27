@@ -240,10 +240,10 @@ removerPrato(CNPJ) :-
 	format("Lista de pratos do restaurante ~w", [RestName]),nl,nl,
 	write(Cardapio),nl,nl,
 	write("Digite o numero do prato que voce deseja deletar, ou 0 para cancelar:"),nl,
-	read_line_to_codes(user_input, NUM),nl,
-	NUM =:= "0" -> restauranteLogado(CNPJ);
+	read_line_to_codes(user_input, NUM), name(Opcao, NUM),
+	(Opcao =:= "0" -> restauranteLogado(CNPJ);
 	items:confirmaRemocaoItem(CNPJ, NUM) -> removerPrato(CNPJ);
-	write("Opção ou identificador inválido! "), util:press_enter, removerPrato(CNPJ).
+	write("Opção ou identificador inválido! "), util:press_enter, removerPrato(CNPJ)).
 
 verPedidosClientes(CNPJ) :-
 	tty_clear,

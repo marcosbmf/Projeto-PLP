@@ -56,7 +56,7 @@ toStringListagem(CNPJ, Identificador, Retorno) :-
   getNome(CNPJ, Identificador, Nome),
   getPreco(CNPJ, Identificador, Preco),
   getIdentificador(CNPJ, Identificador, Id),
-  format(atom(Resultado), "~w. ~w - R$~w\n", [Id, Nome, Preco]),
+  format(atom(Resultado), "~w. ~w - R$~w", [Id, Nome, Preco]),
   Retorno = Resultado.
 
 %
@@ -113,7 +113,7 @@ confirmaRemocaoItem(CNPJ, Identificador) :-
 
 %Retorna string com cardápio do restaurante.
 getCardapio(CNPJ, Cardapio) :-
-    findall(Item, toString(CNPJ, X, Item), Lista),
+    findall(Item, toStringListagem(CNPJ, X, Item), Lista),
     atomic_list_concat(Lista, '\n', Atom),
     atom_string(Atom, Cardapio).
 
