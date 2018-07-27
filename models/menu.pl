@@ -119,48 +119,10 @@ verCardapioRest(USER, CNPJ) :-
 	write("---------------------------------------------"),nl,
 	items:getCardapio(CNPJ, Cardapio), write(Cardapio),
     write("Digite 1 para realizar um pedido ou 0 para voltar ao menu: \n"),
-    read_line_to_codes(user_input, OP), name(Opcao, OP),
+    read_line_to_codes(user_input, OP),
     (name("0", OP) -> verCardapio(USER);
 	 name("1", OP) -> true; %FUNÇÃO DE GUSTAVO.
      write("Opção inválida!\n"), util:press_enter, verCardapioRest(USER, CNPJ)).
-
-
-realizarPedido(USER, RSTCNPJ) :-
-	tty_clear,
-	write("---------------------------------------------"),nl,
-	write("---------------------------------------------"),nl,nl,
-	write("| CARDAPIOS"),nl,
-	write("---------------------------------------------"),nl,
-	%%%%%%%%%%%%%
-	%%% INFORMACOES DO RESTAURANTE SAO MOSTRADAS
-	%%%%%%%%%%%%%
-	write("1 - COXINHA"),nl,
-	write("2 - PASTEL"),nl,
-	write("3 - HAMBURGEUR"),nl,nl,
-	write("Selecione uma opcao:"),nl,
-	write("(1) Realizar Pedido"),nl,
-	write("(2) Voltar a lista de restaurantes"),nl,nl,
-	read_line_to_codes(user_input, OP), name(Opcao, OP),
-	(Opcao = "2" -> exibirRestaurantes;
-	 Opcao = "1" ->	finalizarPedido;
-	 realizarPedido(USER, RSTCNPJ)).
-
-finalizarPedido(USER, RSTCNPJ):-
-	tty_clear,
-	write("---------------------------------------------"),nl,
-	write("---------------------------------------------"),nl,nl,
-	write("| CARDAPIOS"),nl,
-	write("---------------------------------------------"),nl,
-	%%%%%%%%%%%%%
-	%%% INFORMACOES DO RESTAURANTE SAO MOSTRADAS
-	%%%%%%%%%%%%%
-	write("1 - COXINHA"),nl,
-	write("2 - PASTEL"),nl,
-	write("3 - HAMBURGEUR"),nl,nl,
-	write("Digite o numero do item a ser adicionado ao pedido, ou 0 para confirmar o pedido."),nl,
-	read_line_to_codes(user_input, OP),nl,
-	main.
-	%%%%%%% AQUI FALTA FAZER %%%%%%%%
 
 verPedidos(USER):-
 	tty_clear,
@@ -169,14 +131,13 @@ verPedidos(USER):-
 	write("| SISTEMA DE DELIVERY ONLINE"),nl,
 	write("---------------------------------------------"),nl,
 	write("Meus pedidos:"),nl,
-	write("1 - COXINHA - SEU OLAVO DE CARVALHO"),nl,
-	write("2 - PASTEL - PASTELARIA DOIS IRMAOS"),nl,
-	write("Meus pedidos:"),nl,
+	%%pedido:getPedidosCliente(USER, Pedidos), write(Pedidos),nl,nl,
 	write("Digite o numero do pedido que deseja acessar ou 0 para voltar ao menu:"),nl,
-	read_line_to_codes(user_input, NUM),nl,
-	main.
-	%%%%%%%%%% AQUI TBM FALTA
-
+	read_line_to_codes(user_input, NUM),
+	(name("0", NUM) -> menuClienteLogado(USER);
+	%%Falta toString do pedido.
+	 pedido:pedido(USER,_,_,NUM) -> tty_clear, util:press_enter, verPedidos(USER);
+	 write("Opção inválida\n\n"), util:press_enter, verPedidos(USER)).
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -254,14 +215,18 @@ removerPrato(CNPJ) :-
 	items:confirmaRemocaoItem(CNPJ, NUM) -> removerPrato(CNPJ);
 	write("Opção ou identificador inválido! "), util:press_enter, removerPrato(CNPJ)).
 
-verPedidosClientes(CNPJ) :-
-	tty_clear,
-	write("---------------------------------------------"),nl,
-	write("---------------------------------------------"),nl,nl,
-	write("| VER PEDIDOS DOS CLIENTES"),nl,
-	write("---------------------------------------------"),nl,nl,
-	write("Meus pedidos:"),nl,nl,
-	write("1 - COXINHA - FULANO DE TALLSSSS"),nl,nl,
-	write("Digite o número do pedido que deseja acessar ou 0 para voltar ao menu:"),nl,
-	read_line_to_codes(user_input, NUM),nl,
-	restauranteLogado(CNPJ).
+verPedidosClientes(CNPJ):-
+		tty_clear,
+		write("---------------------------------------------"),nl,
+		write("---------------------------------------------"),nl,nl,
+		write("| Pedidos de clientes"),nl,
+		write("---------------------------------------------"),nl,
+		write("Meus pedidos:"),nl,
+		%%pedido:getPedidosRest(CNPJ, Pedidos), write(Pedidos),nl,nl,
+		write("Digite o numero do pedido que deseja acessar ou 0 para voltar ao menu:"),nl,
+		read_line_to_codes(user_input, NUM),
+		(name("0", NUM) -> restauranteLogado(CNPJ);
+		%%Falta toString do pedido.
+		 pedido:pedido(_,CNPJ,_,NUM) -> tty_clear, util:press_enter, verPedidosClientes(CNPJ);
+		 write("Opção inválida\n\n"), util:press_enter, verPedidosClientes(CNPJ)).
+	
