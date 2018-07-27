@@ -242,7 +242,7 @@ removerPrato(CNPJ) :-
 	write("Digite o numero do prato que voce deseja deletar, ou 0 para cancelar:"),nl,
 	read_line_to_codes(user_input, NUM),nl,
 	NUM =:= "0" -> restauranteLogado(CNPJ);
-	items:removeItem(CNPJ, NUM) -> write("Remoção realizada com sucesso! "), util:press_enter, removerPrato(CNPJ);
+	items:confirmaRemocaoItem(CNPJ, NUM) -> removerPrato(CNPJ);
 	write("Opção ou identificador inválido! "), util:press_enter, removerPrato(CNPJ).
 
 verPedidosClientes(CNPJ) :-

@@ -91,7 +91,24 @@ getIdentificador(CNPJ, Identificador, StrId) :-
 % Remove um item a partir do CNPJ e Identificador.
 %
 removeItem(CNPJ, Identificador) :-
-    item(_,_,_,CNPJ,Identificador) -> retract(item(_,_,_,CNPJ,Identificador)), true; false.
+    item(_,_,_,CNPJ,Identificador) -> retract(item(_,_,_,CNPJ,Identificador)), true; 
+    false.
+
+%Confirma a remoção de um item.
+confirmaRemocaoItem(CNPJ, Identificador) :-
+    item(_,_,_,CNPJ,Identificador) -> (
+    write("---------------------------------------------"),nl,
+    write("---------------------------------------------"),nl,nl,
+    write("| REMOVER PRATO"),nl,
+    write("---------------------------------------------"),nl,nl,
+    write("Deseja confirmar a remoção do seguinte item: \n\n"),
+    toString(CNPJ, Identificador, Desc), write(Desc), nl,nl,
+    write("Digite 1 para continuar ou 0 para cancelar.\n"), read_line_to_codes(user_input, OP),
+    (OP =:= "0" -> write("\nRemoção de item cancelado com sucesso!\n"), util:press_enter, true;
+     OP =:= "1" -> removeItem(CNPJ, Identificador), write("\nItem removido com sucesso!\n"), util:press_enter, true;
+     write("Opção inválida! "), util:press_enter, confirmaRemocaoItem(CNPJ, Identificador))); false.
+    
+
 
 %Retorna string com cardápio do restaurante.
 getCardapio(CNPJ, Cardapio) :-
