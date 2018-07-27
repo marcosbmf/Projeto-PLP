@@ -43,8 +43,8 @@ menuCadastrarCliente:-
 	write("---------------------------------------------"),nl,nl,
 	write("| CADASTRAR NOVO CLIENTE"),nl,
 	write("---------------------------------------------"),nl,nl,
-	cliente:newCliente -> write("\n\nCadastro realizado com sucesso!\nPressione enter para continuar!"), util:press_enter, main;
-	write("\nFalha no cadastro: Login já está sendo utilizado, tente novamente.\nPressione Enter para continuar.\n"), util:press_enter, main.
+	cliente:newCliente -> write("\n\nCadastro realizado com sucesso!\n"), util:press_enter, main;
+	write("\nFalha no cadastro: Login já está sendo utilizado, tente novamente.\n"), util:press_enter, main.
 
 %FUNCIONANDO!
 menuLoginCliente :-
@@ -58,7 +58,7 @@ menuLoginCliente :-
 	write("Senha: "),nl,
 	read_line_to_codes(user_input, PASSWORD),nl,
 	cliente:login(USER, PASSWORD) -> menuClienteLogado(USER);
-	write("\n\nLogin ou senha inválidos! Digite enter para continuar\n."), util:press_enter, main.
+	write("\n\nLogin ou senha inválidos!\n"), util:press_enter, main.
 
 %FUNCIONANDO
 menuClienteLogado(USER):-
@@ -182,8 +182,8 @@ menuCadastrarRestaurante:-
 	write("---------------------------------------------"),nl,nl,
 	write("| CADASTRAR NOVO RESTAURANTE"),nl,
 	write("---------------------------------------------"),nl,nl,
-	restaurante:newRestaurante -> write("\nCadastro realizado com sucesso! Pressione enter para voltar ao menu!\n"), util:press_enter, main; 
-	write("\nFalha no cadastro: CNPJ já está sendo utilizado, tente novamente.\nPressione enter para voltar ao menu!\n"), util:press_enter, main.
+	restaurante:newRestaurante -> write("\nCadastro realizado com sucesso! "), util:press_enter, main; 
+	write("\nFalha no cadastro: CNPJ já está sendo utilizado, tente novamente.\n"), util:press_enter, main.
 
 %Funcionando.
 menuLoginRestaurante:-
@@ -197,7 +197,7 @@ menuLoginRestaurante:-
 	write("Senha: "),nl,
 	read_line_to_codes(user_input, PASSWORD),nl,
 	restaurante:login(CNPJ, PASSWORD) -> restauranteLogado(CNPJ); 
-	write("\nFalha no login, usuario ou senha inválidos!\nPressione enter para voltar ao menu!\n"), util:press_enter, main.
+	write("\nFalha no login, usuario ou senha inválidos! "), util:press_enter, main.
 
 %Funcionando, faltam funções.
 restauranteLogado(CNPJ) :-
@@ -226,9 +226,7 @@ adicionarPrato(CNPJ) :-
 	write("---------------------------------------------"),nl,nl,
 	write("| ADICIONAR PRATO"),nl,
 	write("---------------------------------------------"),nl,nl,
-	items:cadastraItem(CNPJ) -> 
-	write("\nItem cadastrado com sucesso!\nPressione enter para continuar!\n"), util:press_enter, restauranteLogado(CNPJ);
-	write("\nProblema no cadastramento do item, identificador numérico não é único!\nPressione enter para continuar!\n"), util:press_enter, restauranteLogado(CNPJ).
+	items:cadastraItem(CNPJ) -> restauranteLogado(CNPJ).
 
 %FUNCIONANDO
 removerPrato(CNPJ) :-
@@ -244,10 +242,10 @@ removerPrato(CNPJ) :-
 	write("Digite o numero do prato que voce deseja deletar, ou 0 para cancelar:"),nl,
 	read_line_to_codes(user_input, NUM),nl,
 	NUM =:= "0" -> restauranteLogado(CNPJ);
-	items:removeItem(CNPJ, NUM) -> write("Remoção realizada com sucesso! Digite enter para continuar!\n\n"), util:press_enter, removerPrato(CNPJ);
-	write("Opção ou identificador inválido! Digite enter para continuar!\n\n"), util:press_enter, removerPrato(CNPJ).
+	items:removeItem(CNPJ, NUM) -> write("Remoção realizada com sucesso! "), util:press_enter, removerPrato(CNPJ);
+	write("Opção ou identificador inválido! "), util:press_enter, removerPrato(CNPJ).
 
-verPedidosClientes (CNPJ):-
+verPedidosClientes(CNPJ) :-
 	tty_clear,
 	write("---------------------------------------------"),nl,
 	write("---------------------------------------------"),nl,nl,
@@ -257,4 +255,4 @@ verPedidosClientes (CNPJ):-
 	write("1 - COXINHA - FULANO DE TALLSSSS"),nl,nl,
 	write("Digite o número do pedido que deseja acessar ou 0 para voltar ao menu:"),nl,
 	read_line_to_codes(user_input, NUM),nl,
-	restauranteLogado.
+	restauranteLogado(CNPJ).
