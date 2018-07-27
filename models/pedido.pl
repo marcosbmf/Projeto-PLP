@@ -140,3 +140,21 @@ toString(ID) :-
     restaurante:toString(REST, CNPJRestaurante),
     format("-- Pedido --\n\nCliente: ~w\nRestaurante: ~w\n\nItens:\n\n", [ClientePedido, CNPJRestaurante]),
     getListaItems(ID),nl,nl.
+
+toStringListagem(ID, Retorno) :-
+  pedido(_,RST,_,ID), restaurante:getName(RST, RestName),
+  format(atom(R), "Pedido n~w. Restaurante: ~w\n", [ID, RestName]),
+  Retorno = R.
+
+%
+% Retorna uma string com a lista de restaurantes cadastrados.
+%
+getPedidosCliente(User, Retorno) :-
+  findall(Pedido, (pedido(User, _,_,X), toStringListagem(X, Pedido)), Lista),
+  atomic_list_concat(Lista, '\n', Atom),
+  atom_string(Atom, Retorno).
+
+getPedidosRestaurante(CNPJ, Retorno) :-
+    findall(Pedido, (pedido(_,CNPJ,_,X), toStringListagem(X, Pedido)), Lista),
+    atomic_list_concat(Lista, '\n', Atom),
+    atom_string(Atom, Retorno).
