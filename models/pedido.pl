@@ -32,11 +32,11 @@ interfacePedido(CNPJ, ID_PEDIDO) :-
 % Finaliza um pedido.
 %
 finalizar(CNPJ, ID_PEDIDO) :-
-  toString(ID_PEDIDO),
-  writeln(PED_STR), nl,
+  toString(ID_PEDIDO),nl,
   write("Deseja finalizar o pedido? (S/n) \n\n"),
-  ((name("S", INPUT); name("s", INPUT)) -> true,
-   (name("N", INPUT), name("n", INPUT)) -> false;
+  read_line_to_codes(user_input, INPUT),
+  ((name("S", INPUT); name("s", INPUT)) -> true;
+   (name("N", INPUT); name("n", INPUT)) -> false;
    (write("Comando inválido\n"), finalizar(CNPJ, ID_PEDIDO))).
 
 %
