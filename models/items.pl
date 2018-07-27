@@ -78,9 +78,11 @@ getIdentificador(CNPJ, Identificador, Retorno) :-
 removeItem(CNPJ, Identificador) :-
     item(_,_,_,CNPJ,Identificador) -> retract(item(_,_,_,CNPJ,Identificador)), true; false.
 
-%Retorna string com cardápio do restaurante.
+%
+% Retorna string com cardápio do restaurante.
+%
 getCardapio(CNPJ, Cardapio) :-
-    findall(Item, toString(CNPJ, X, Item), Lista),
+    findall(Item, toStringListagem(CNPJ, X, Item), Lista),
     atomic_list_concat(Lista, '\n', Atom),
     atom_string(Atom, Cardapio).
 
