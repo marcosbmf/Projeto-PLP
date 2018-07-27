@@ -85,8 +85,8 @@ exibirRestaurantes(USER):-
 	write("---------------------------------------------"),nl,nl,
 	write("| SISTEMA DE DELIVERY ONLINE"),nl,
 	write("---------------------------------------------"),nl,
-	write("Restaurantes cadastrados no sistema: "),nl,
-	restaurante:getRestaurantes(Restaurantes), write(Restaurantes),
+	write("Restaurantes cadastrados no sistema: "),nl,nl,
+	restaurante:getRestaurantes(Restaurantes), write(Restaurantes),nl,nl,
 	write("Selecione uma opcao: "),nl,
 	write("(1) Ver Cardapio"),nl,
 	write("(2) Voltar ao menu"),nl,nl,
@@ -116,12 +116,12 @@ verCardapioRest(USER, CNPJ) :-
 	write("---------------------------------------------"),nl,
 	write("---------------------------------------------"),nl,nl,
 	format("| Cardápio do restaurante ~w", [RSTName]),nl,
-	write("---------------------------------------------"),nl,
-	items:getCardapio(CNPJ, Cardapio), write(Cardapio),
+	write("---------------------------------------------"),nl,nl,
+	items:getCardapio(CNPJ, Cardapio), write(Cardapio),nl,nl,
     write("Digite 1 para realizar um pedido ou 0 para voltar ao menu: \n"),
     read_line_to_codes(user_input, OP),
     (name("0", OP) -> verCardapio(USER);
-	 name("1", OP) -> true; %FUNÇÃO DE GUSTAVO.
+	 name("1", OP) -> pedido:newPedido(USER, CNPJ), menuClienteLogado(USER);
      write("Opção inválida!\n"), util:press_enter, verCardapioRest(USER, CNPJ)).
 
 verPedidos(USER):-
