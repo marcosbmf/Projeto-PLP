@@ -19,12 +19,13 @@ main:-
 	write("(3) Cadastrar-se (Cliente)"),nl,
 	write("(4) Cadastrar-se (Restaurante)"),nl,
 	write("(5) Sair())"),nl,nl,nl,
-	read_line_to_codes(user_input, OP),nl,
-	(OP =:= "1" -> menuLoginCliente;
-	OP =:= "2" -> menuLoginRestaurante;
-	OP =:= "3" -> menuCadastrarCliente;
-	OP =:= "4" -> menuCadastrarRestaurante;
-	OP =:= "5" -> halt(0)).
+	read_line_to_codes(user_input, OP), name(Opcao, OP),
+	(Opcao = "1" -> menuLoginCliente;
+	 Opcao = "2" -> menuLoginRestaurante;
+	 Opcao = "3" -> menuCadastrarCliente;
+	 Opcao = "4" -> menuCadastrarRestaurante;
+	 Opcao = "5" -> halt(0);
+	 main).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%% PARTES DO CLIENTE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -72,10 +73,10 @@ menuClienteLogado(USER):-
 	write("(1) Exibir todos os restaurantes"),nl,
 	write("(2) Ver Pedidos"),nl,
 	write("(3) Sair"),nl,nl,
-	read_line_to_codes(user_input, OP),nl,
-	(OP =:= "1" -> exibirRestaurantes(USER);
-	OP =:= "2" -> verPedidos(USER);
-	OP =:= "3" -> main).
+	read_line_to_codes(user_input, OP), name(Opcao, OP),
+	(Opcao = "1" -> exibirRestaurantes(USER);
+	Opcao = "2" -> verPedidos(USER);
+	Opcao = "3" -> main).
 
 exibirRestaurantes(USER):-
 	tty_clear,
@@ -94,9 +95,9 @@ exibirRestaurantes(USER):-
 	write("Selecione uma opcao: "),nl,
 	write("(1) Ver Cardapio"),nl,
 	write("(2) Voltar ao menu"),nl,nl,
-	read_line_to_codes(user_input, OP),nl,
-	(OP =:= "1" -> verCardapio;
-	OP =:= "2" -> menuClienteLogado).
+	read_line_to_codes(user_input, OP), name(Opcao, OP),
+	(Opcao = "1" -> verCardapio;
+	 Opcao = "2" -> menuClienteLogado).
 
 verCardapio(USER, RSTCNPJ):-
 	tty_clear,
@@ -132,9 +133,10 @@ realizarPedido(USER, RSTCNPJ):-
 	write("Selecione uma opcao:"),nl,
 	write("(1) Realizar Pedido"),nl,
 	write("(2) Voltar a lista de restaurantes"),nl,nl,
-	read_line_to_codes(user_input, OP),nl,
-	(OP =:= "2" -> exibirRestaurantes;
-	 OP =:= "1" ->	finalizarPedido).
+	read_line_to_codes(user_input, OP), name(Opcao, OP),
+	(Opcao = "2" -> exibirRestaurantes;
+	 Opcao = "1" ->	finalizarPedido;
+	 realizarPedido(USER, RSTCNPJ)).
 
 finalizarPedido(USER, RSTCNPJ):-
 	tty_clear,
@@ -213,11 +215,11 @@ restauranteLogado(CNPJ) :-
 	write("(2) Remover Prato do seu cardapio"),nl,
 	write("(3) Ver Pedidos Feitos por Clientes"),nl,
 	write("(4) Sair"),nl,nl,
-	read_line_to_codes(user_input, OP),nl,
-	(OP =:= "4" -> main;
-	OP =:= "1" -> adicionarPrato(CNPJ);
-	OP =:= "2" -> removerPrato(CNPJ);
-	OP =:= "3" -> verPedidosClientes(CNPJ)).
+	read_line_to_codes(user_input, OP), name(Opcao, OP),
+	(Opcao = "4" -> main;
+	 Opcao = "1" -> adicionarPrato(CNPJ);
+	 Opcao = "2" -> removerPrato(CNPJ);
+	 Opcao = "3" -> verPedidosClientes(CNPJ)).
 
 %Funcionando
 adicionarPrato(CNPJ) :-
@@ -241,7 +243,7 @@ removerPrato(CNPJ) :-
 	write(Cardapio),nl,nl,
 	write("Digite o numero do prato que voce deseja deletar, ou 0 para cancelar:"),nl,
 	read_line_to_codes(user_input, NUM), name(Opcao, NUM),
-	(Opcao =:= "0" -> restauranteLogado(CNPJ);
+	(Opcao = "0" -> restauranteLogado(CNPJ);
 	items:confirmaRemocaoItem(CNPJ, NUM) -> removerPrato(CNPJ);
 	write("Opção ou identificador inválido! "), util:press_enter, removerPrato(CNPJ)).
 
