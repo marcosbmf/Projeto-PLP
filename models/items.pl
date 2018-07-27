@@ -111,7 +111,9 @@ confirmaRemocaoItem(CNPJ, Identificador) :-
     
 
 
-%Retorna string com cardápio do restaurante.
+%
+% Retorna string com cardápio do restaurante.
+%
 getCardapio(CNPJ, Cardapio) :-
     findall(Item, toStringListagem(CNPJ, X, Item), Lista),
     atomic_list_concat(Lista, '\n', Atom),

@@ -64,5 +64,13 @@ toStringListagem(CNPJ, Resultado) :-
   getName(CNPJ, Nome),
   getTipoCozinha(CNPJ, TipoCozinha),
   getHorario(CNPJ, HorarioFuncionamento),
-  format(atom(R), "~w, Horario de Funcionamento: ~w, Tipo de Cozinha: ~w\n", [Nome, HorarioFuncionamento, TipoCozinha]),
+  format(atom(R), "~w, Aberto entre: ~w, Culinária: ~w\n", [Nome, HorarioFuncionamento, TipoCozinha]),
   Resultado = R.
+
+%
+% Retorna uma string com a lista de restaurantes cadastrados.
+%
+getRestaurantes(Retorno) :-
+    findall(Restaurante, toStringListagem(X, Restaurante), Lista),
+    atomic_list_concat(Lista, '\n', Atom),
+    atom_string(Atom, Retorno).
