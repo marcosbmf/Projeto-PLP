@@ -139,12 +139,23 @@ toString(ID) :-
     cliente:toString(USER, ClientePedido),
     restaurante:toString(REST, CNPJRestaurante),
     format("-- Pedido --\n\nCliente: ~w\nRestaurante: ~w\n\nItens:\n\n", [ClientePedido, CNPJRestaurante]),
-    getListaItems(ID),nl,nl.
+    getListaItems(ID),nl,nl,
+    getPrecoTotal(ID, TOTAL),
+    format("Valor total: R$ ~w\n\n", [TOTAL]).
 
 toStringListagem(ID, Retorno) :-
   pedido(_,RST,_,ID), restaurante:getName(RST, RestName),
   format(atom(R), "Pedido nº ~w. Restaurante: ~w", [ID, RestName]),
   Retorno = R.
+
+
+getPrecoTotal(ID_PEDIDO, TOTAL) :-
+    pedido(_, CNPJ, LISTA_ITENS, ID_PEDIDO),
+    findall(Preco, (member(Y, LISTA_ITENS), items:getPreco(CNPJ, Y, Preco)), LISTA_PRECOS),
+    sum_list(LISTA_PRECOS, TOTAL).
+
+% findall(Preco, (pedido:pedido([49], [49], X, ID), member(Y, X), getPreco([49], Y, Preco)), Lista).
+%Pedido(loginCliente, CNPJRestaurante, ListaItems, ID(RANDOM))
 
 %
 % Retorna uma string com a lista de restaurantes cadastrados.
