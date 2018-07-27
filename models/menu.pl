@@ -60,6 +60,7 @@ menuLoginCliente :-
 	cliente:login(USER, PASSWORD) -> menuClienteLogado(USER);
 	write("\n\nLogin ou senha inválidos! Digite enter para continuar\n."), util:press_enter, main.
 
+%FUNCIONANDO
 menuClienteLogado(USER):-
 	tty_clear, cliente:getName(USER, ClientName),
 	write("---------------------------------------------"),nl,
@@ -72,11 +73,11 @@ menuClienteLogado(USER):-
 	write("(2) Ver Pedidos"),nl,
 	write("(3) Sair"),nl,nl,
 	read_line_to_codes(user_input, OP),nl,
-	(OP =:= "1" -> exibirRestaurantes;
-	OP =:= "2" -> verPedidos;
+	(OP =:= "1" -> exibirRestaurantes(USER);
+	OP =:= "2" -> verPedidos(USER);
 	OP =:= "3" -> main).
 
-exibirRestaurantes:-
+exibirRestaurantes(USER):-
 	tty_clear,
 	write("---------------------------------------------"),nl,
 	write("---------------------------------------------"),nl,nl,
@@ -97,7 +98,7 @@ exibirRestaurantes:-
 	(OP =:= "1" -> verCardapio;
 	OP =:= "2" -> menuClienteLogado).
 
-verCardapio:-
+verCardapio(USER, RSTCNPJ):-
 	tty_clear,
 	write("---------------------------------------------"),nl,
 	write("---------------------------------------------"),nl,nl,
@@ -116,7 +117,7 @@ verCardapio:-
 	%%%%%%%%%%%%% NESSA PARTE VEM UM METODO QUE EXIBE ALGUM RESTAURANTE
 	%%%%%%%%%%%%% AINDA PRECISA SER BEM IMPLEMENTADO
 
-realizarPedido:-
+realizarPedido(USER, RSTCNPJ):-
 	tty_clear,
 	write("---------------------------------------------"),nl,
 	write("---------------------------------------------"),nl,nl,
@@ -130,12 +131,12 @@ realizarPedido:-
 	write("3 - HAMBURGEUR"),nl,nl,
 	write("Selecione uma opcao:"),nl,
 	write("(1) Realizar Pedido"),nl,
-	write("(2) Voltar a lista de restaurantes"),nl,nl
+	write("(2) Voltar a lista de restaurantes"),nl,nl,
 	read_line_to_codes(user_input, OP),nl,
 	(OP =:= "2" -> exibirRestaurantes;
 	 OP =:= "1" ->	finalizarPedido).
 
-finalizarPedido:-
+finalizarPedido(USER, RSTCNPJ):-
 	tty_clear,
 	write("---------------------------------------------"),nl,
 	write("---------------------------------------------"),nl,nl,
@@ -152,7 +153,7 @@ finalizarPedido:-
 	main.
 	%%%%%%% AQUI FALTA FAZER %%%%%%%%
 
-verPedidos:-
+verPedidos(USER):-
 	tty_clear,
 	write("---------------------------------------------"),nl,
 	write("---------------------------------------------"),nl,nl,
@@ -181,26 +182,8 @@ menuCadastrarRestaurante:-
 	write("---------------------------------------------"),nl,nl,
 	write("| CADASTRAR NOVO RESTAURANTE"),nl,
 	write("---------------------------------------------"),nl,nl,
-	restaurante:newRestaurante,
-	%% write("Digite seu CNPJ (Este sera seu login): "),nl,nl,
-	%% read_line_to_codes(user_input, CNPJ),nl,
-	%% %% %% %% %% %% %% %% %% %% %% %%
-	%% %% VERIFICA SE CNPJ JA EXISTE
-	%% %% %% %% %% %% %% %% %% %% %% %%
-	%% write("Digite seu telefone: "),nl,
-	%% read_line_to_codes(user_input, TELEFONE),nl,
-	%% write("Estilo de cozinha: "),nl,
-	%% read_line_to_codes(user_input, COZINHA),nl,
-	%% write("Horario que abre: "),nl,
-	%% read_line_to_codes(user_input, ABRE),nl,
-	%% write("Horario que fecha: "),nl,
-	%% read_line_to_codes(user_input, FECHA),nl,
-	%% write("Escolha uma senha: "),nl,
-	%% read_line_to_codes(user_input, PASSWORD),nl,
-	%% %% %% %% %% %%
-	%% NESSA PARTE CRIA O OBJECTO E ARMAZENA DE ALGUMA FORMA
-	%% %% %% %% %% %%
-	main.
+	restaurante:newRestaurante -> write("\nCadastro realizado com sucesso! Pressione enter para voltar ao menu!\n"), util:press_enter, main; 
+	write("\nFalha no cadastro: CNPJ já está sendo utilizado, tente novamente.\nPressione enter para voltar ao menu!\n"), util:press_enter, main.
 
 menuLoginRestaurante:-
 	tty_clear,
@@ -209,21 +192,20 @@ menuLoginRestaurante:-
 	write("| LOGIN RESTAURANTE"),nl,
 	write("---------------------------------------------"),nl,nl,
 	write("Digite seu CNPJ: "),nl,
-	read_line_to_codes(user_input, CPPJlogin),nl,
+	read_line_to_codes(user_input, CNPJ),nl,
 	write("Senha: "),nl,
-	read_line_to_codes(user_input, PASSWORDlogin),nl,
-	%%%%
-	%%%%%%%%%%%%%%%%%%%%% CHECA SE LOGIN EXISTE E SENHA ESTA CORRECTA
-	%%%%
-	restauranteLogado.
+	read_line_to_codes(user_input, PASSWORD),nl,
+	restaurante:login(CNPJ, PASSWORD) -> restauranteLogado(CNPJ); 
+	write("\nFalha no login, usuario ou senha inválidos!\nPressione enter para voltar ao menu!\n"), util:press_enter, main.
 
-restauranteLogado:-
+restauranteLogado(CNPJ) :-
 	tty_clear,
+	restaurante:getName(CNPJ, RestName),
 	write("---------------------------------------------"),nl,
 	write("---------------------------------------------"),nl,nl,
 	write("| SISTEMA DE DELIVERY ONLINE"),nl,
 	write("---------------------------------------------"),nl,nl,
-	write("Bem vindo, restaurante TAL."),nl,nl,nl,
+	format("Bem vindo, ~w.", [RestName]),nl,nl,nl,
 	write("OPCOES PARA RESTAURANTE:"),nl,
 	write("(1) Adicionar Prato ao seu cardapio"),nl,
 	write("(2) Remover Prato do seu cardapio"),nl,
@@ -231,30 +213,20 @@ restauranteLogado:-
 	write("(4) Sair"),nl,nl,
 	read_line_to_codes(user_input, OP),nl,
 	(OP =:= "4" -> main;
-	OP =:= "1" -> adicionarPrato;
-	OP =:= "2" -> removerPrato;
-	OP =:= "3" -> verPedidosClientes).
+	OP =:= "1" -> adicionarPrato(CNPJ);
+	OP =:= "2" -> removerPrato(CNPJ);
+	OP =:= "3" -> verPedidosClientes(CNPJ)).
 
-adicionarPrato:-
+adicionarPrato(CNPJ) :-
 	tty_clear,
 	write("---------------------------------------------"),nl,
 	write("---------------------------------------------"),nl,nl,
 	write("| ADICIONAR PRATO"),nl,
 	write("---------------------------------------------"),nl,nl,
-	write("Digite o nome do prato: "),nl,
-	read_line_to_codes(user_input, NOMEPRATO),nl,
-	write("Escreva uma descricao para o prato: "),nl,
-	read_line_to_codes(user_input, DESCRICAO),nl,
-	write("Escolha um preco: "),nl,
-	read_line_to_codes(user_input, PRECO),nl,
-	write(NOMEPRATO), write(" - R$"), write(PRECO),nl,nl,
-	write("Digite 1 para confirmar ou 0 para cancelar: "),nl,
-	read_line_to_codes(user_input, OP),nl,
-	(OP =:= "0" -> restauranteLogado).
-	%%%%%%%%%ESTA PARTE FALTA IMPLEMENTAR PARA ADICIONAR OS DADOS
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	items:cadastraItem(CNPJ) -> write("\nItem cadastrado com sucesso!\nPressione enter para continuar!"), util:press_enter, restauranteLogado(CNPJ);
+	write("\nProblema no cadastramento do item!\nPressione enter para continuar!"), util:press_enter, restauranteLogado(CNPJ);
 
-removerPrato:-
+removerPrato (CNPJ):-
 	tty_clear,
 	write("---------------------------------------------"),nl,
 	write("---------------------------------------------"),nl,nl,
@@ -269,7 +241,7 @@ removerPrato:-
 	%%%%%%%%%%%%% FALTA TERMINAR
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-verPedidosClientes:-
+verPedidosClientes (CNPJ):-
 	tty_clear,
 	write("---------------------------------------------"),nl,
 	write("---------------------------------------------"),nl,nl,

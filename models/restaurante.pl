@@ -16,7 +16,7 @@ newRestaurante :-
     write("Insira o horario de funcionamento: \n"), read_line_to_codes(user_input, HorarioFuncionamento),
     write("Insira o CNPJ do estabelecimento: (Este será seu login)\n"), read_line_to_codes(user_input, CNPJ),
     write("Insira uma senha: \n"), read_line_to_codes(user_input, Senha),
-    verificaCNPJ(CNPJ) -> assert(restaurante(Nome, TipoCozinha, HorarioFuncionamento, CNPJ, Senha)); write("\nFalha no cadastro: CNPJ já está sendo utilizado, tente novamente.\n").
+    verificaCNPJ(CNPJ) -> assert(restaurante(Nome, TipoCozinha, HorarioFuncionamento, CNPJ, Senha)), true; false.
 
 %
 % Verifica se o CNPJ não está cadastrado no sistema.

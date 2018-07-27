@@ -11,14 +11,13 @@
 % Cadastra item no menu de um restaurante. Cada item possui nome, descrição,
 % preço e um identificador. Cadastra apenas se o identificador for único para o CNPJ.
 %
-cadastraItem(CNPJ, Senha) :-
-    restaurante:restauranteLogin(CNPJ, Senha) ->
+cadastraItem(CNPJ) :-
     write("Insira o nome do item: \n"), read_line_to_codes(user_input, Nome),
     write("Insira a descrição do item: \n"), read_line_to_codes(user_input, Descricao),
     write("Insira o preço do item: \n"), read_line_to_codes(user_input, Preco),
     write("Insira um identificado para o item: \n"), read_line_to_codes(user_input, Identificador),
     verificaIdentificadorUnico(Identificador, CNPJ) ->
-    assert(item(Nome, Descricao, Preco, CNPJ, Identificador)).
+    assert(item(Nome, Descricao, Preco, CNPJ, Identificador)), true; false.
 
 
 %
