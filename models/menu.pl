@@ -19,13 +19,12 @@ main:-
 	write("(3) Cadastrar-se (Cliente)"),nl,
 	write("(4) Cadastrar-se (Restaurante)"),nl,
 	write("(5) Sair())"),nl,nl,nl,
-	read_line_to_codes(user_input, OP), name(Opcao, OP),
-	(Opcao = "1" -> menuLoginCliente;
-	 Opcao = "2" -> menuLoginRestaurante;
-	 Opcao = "3" -> menuCadastrarCliente;
-	 Opcao = "4" -> menuCadastrarRestaurante;
-	 Opcao = "5" -> halt(0);
-	 main).
+	read_line_to_codes(user_input, OP),
+	(name("1", OP) -> menuLoginCliente;
+	 name("2", OP) -> menuLoginRestaurante;
+	 name("3", OP) -> menuCadastrarCliente;
+	 name("4", OP) -> menuCadastrarRestaurante;
+	 name("5", OP) -> halt(0); main).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%% PARTES DO CLIENTE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -73,52 +72,59 @@ menuClienteLogado(USER):-
 	write("(1) Exibir todos os restaurantes"),nl,
 	write("(2) Ver Pedidos"),nl,
 	write("(3) Sair"),nl,nl,
-	read_line_to_codes(user_input, OP), name(Opcao, OP),
-	(Opcao = "1" -> exibirRestaurantes(USER);
-	Opcao = "2" -> verPedidos(USER);
-	Opcao = "3" -> main).
+	read_line_to_codes(user_input, OP),
+	(name("1", OP) -> exibirRestaurantes(USER);
+	 name("2", OP) -> verPedidos(USER);
+	 name("3", OP) -> main;
+	 menuClienteLogado(USER)).
 
+%Funcionando
 exibirRestaurantes(USER):-
 	tty_clear,
 	write("---------------------------------------------"),nl,
 	write("---------------------------------------------"),nl,nl,
 	write("| SISTEMA DE DELIVERY ONLINE"),nl,
 	write("---------------------------------------------"),nl,
-	%%%%%%%%%%%%%%%%%%%%
-	%% AGORA SAO EXIBIDOS OS RESTAURANTES
-	%%%%%%%%%%%%%%%%%%%%
 	write("Restaurantes cadastrados no sistema: "),nl,
-	write("Restaurante 1"),nl,
-	write("Restaurante 2"),nl,
-	write("Restaurante 3"),nl,
-	write("Restaurante 4"),nl,nl,nl,
+	restaurante:getRestaurantes(Restaurantes), write(Restaurantes),
 	write("Selecione uma opcao: "),nl,
 	write("(1) Ver Cardapio"),nl,
 	write("(2) Voltar ao menu"),nl,nl,
-	read_line_to_codes(user_input, OP), name(Opcao, OP),
-	(Opcao = "1" -> verCardapio;
-	 Opcao = "2" -> menuClienteLogado).
+	read_line_to_codes(user_input, OP),
+	(name("1", OP) -> verCardapio(USER);
+	 name("2", OP) -> menuClienteLogado(USER);
+	 write("\nOpção inválida!"), util:press_enter, exibirRestaurantes(USER)).
 
-verCardapio(USER, RSTCNPJ):-
+%Funcionando.
+verCardapio(USER):-
 	tty_clear,
 	write("---------------------------------------------"),nl,
 	write("---------------------------------------------"),nl,nl,
 	write("| SISTEMA DE DELIVERY ONLINE"),nl,
 	write("---------------------------------------------"),nl,
-	%%%%%%%%%%%%%%%%%%%%
-	%% AGORA SAO EXIBIDOS OS RESTAURANTES
-	%%%%%%%%%%%%%%%%%%%%
 	write("Restaurantes cadastrados no sistema: "),nl,
-	write("Restaurante 1"),nl,
-	write("Restaurante 2"),nl,
-	write("Restaurante 3"),nl,
-	write("Restaurante 4"),nl,nl,nl,
-	write("Escolha um restaurante: "),nl,
-	read_line_to_codes(user_input, REST),nl.
-	%%%%%%%%%%%%% NESSA PARTE VEM UM METODO QUE EXIBE ALGUM RESTAURANTE
-	%%%%%%%%%%%%% AINDA PRECISA SER BEM IMPLEMENTADO
+	restaurante:getRestaurantes(Restaurantes), write(Restaurantes),nl,nl,
+	write("Digite 0 para voltar ao menu ou o número de um restaurante: \n"),
+	read_line_to_codes(user_input, REST),
+	(name("0", REST) -> menuClienteLogado(USER);
+	 restaurante:restaurante(_,_,_,REST,_) -> verCardapioRest(USER, REST);
+	 write("Opção inválida!\n"), util:press_enter, verCardapio(USER)).
 
-realizarPedido(USER, RSTCNPJ):-
+verCardapioRest(USER, CNPJ) :-
+	tty_clear, restaurante:getName(CNPJ, RSTName),
+	write("---------------------------------------------"),nl,
+	write("---------------------------------------------"),nl,nl,
+	format("| Cardápio do restaurante ~w", [RSTName]),nl,
+	write("---------------------------------------------"),nl,
+	items:getCardapio(CNPJ, Cardapio), write(Cardapio),
+    write("Digite 1 para realizar um pedido ou 0 para voltar ao menu: \n"),
+    read_line_to_codes(user_input, OP), name(Opcao, OP),
+    (name("0", OP) -> verCardapio(USER);
+	 name("1", OP) -> true;
+     write("Opção inválida!\n"), util:press_enter, verCardapioRest(USER, CNPJ)).
+
+
+realizarPedido(USER, RSTCNPJ) :-
 	tty_clear,
 	write("---------------------------------------------"),nl,
 	write("---------------------------------------------"),nl,nl,
@@ -215,11 +221,11 @@ restauranteLogado(CNPJ) :-
 	write("(2) Remover Prato do seu cardapio"),nl,
 	write("(3) Ver Pedidos Feitos por Clientes"),nl,
 	write("(4) Sair"),nl,nl,
-	read_line_to_codes(user_input, OP), name(Opcao, OP),
-	(Opcao = "4" -> main;
-	 Opcao = "1" -> adicionarPrato(CNPJ);
-	 Opcao = "2" -> removerPrato(CNPJ);
-	 Opcao = "3" -> verPedidosClientes(CNPJ)).
+	read_line_to_codes(user_input, OP),
+	(name("4", OP) -> main;
+	 name("1", OP) -> adicionarPrato(CNPJ);
+	 name("2", OP) -> removerPrato(CNPJ);
+	 name("3", OP) -> verPedidosClientes(CNPJ)).
 
 %Funcionando
 adicionarPrato(CNPJ) :-
@@ -242,8 +248,8 @@ removerPrato(CNPJ) :-
 	format("Lista de pratos do restaurante ~w", [RestName]),nl,nl,
 	write(Cardapio),nl,nl,
 	write("Digite o numero do prato que voce deseja deletar, ou 0 para cancelar:"),nl,
-	read_line_to_codes(user_input, NUM), name(Opcao, NUM),
-	(Opcao = "0" -> restauranteLogado(CNPJ);
+	read_line_to_codes(user_input, NUM),
+	(name("0", NUM) -> restauranteLogado(CNPJ);
 	items:confirmaRemocaoItem(CNPJ, NUM) -> removerPrato(CNPJ);
 	write("Opção ou identificador inválido! "), util:press_enter, removerPrato(CNPJ)).
 

@@ -27,9 +27,9 @@ confirmaCadastroItem(CNPJ, Identificador) :-
     write("---------------------------------------------"),nl,nl,
     write("Deseja confirmar a adição do seguinte item: \n\n"),
     toString(CNPJ, Identificador, Desc), write(Desc), nl,nl,
-    write("Digite 1 para continuar ou 0 para cancelar.\n"), read_line_to_codes(user_input, OP), name(Opcao, OP),
-    (Opcao = "0" -> removeItem(CNPJ, Identificador), write("\nCadastro de item cancelado com sucesso!\n"), util:press_enter, true;
-     Opcao = "1" -> write("\nItem cadastrado com sucesso!\n"), util:press_enter, true;
+    write("Digite 1 para continuar ou 0 para cancelar.\n"), read_line_to_codes(user_input, OP),
+    (name("0", OP) -> removeItem(CNPJ, Identificador), write("\nCadastro de item cancelado com sucesso!\n"), util:press_enter, true;
+     name("1", OP) -> write("\nItem cadastrado com sucesso!\n"), util:press_enter, true;
      write("Opção inválida! "), util:press_enter, confirmaCadastroItem(CNPJ, Identificador)).
 
 
@@ -104,9 +104,9 @@ confirmaRemocaoItem(CNPJ, Identificador) :-
     write("---------------------------------------------"),nl,nl,
     write("Deseja confirmar a remoção do seguinte item: \n\n"),
     toString(CNPJ, Identificador, Desc), write(Desc), nl,nl,
-    write("Digite 1 para continuar ou 0 para cancelar.\n"), read_line_to_codes(user_input, OP), name(Opcao, OP),
-    (Opcao = "0" -> write("\nRemoção de item cancelado com sucesso!\n"), util:press_enter, true;
-     Opcao = "1" -> removeItem(CNPJ, Identificador), write("\nItem removido com sucesso!\n"), util:press_enter, true;
+    write("Digite 1 para continuar ou 0 para cancelar.\n"), read_line_to_codes(user_input, OP),
+    (name("0", OP) -> write("\nRemoção de item cancelado com sucesso!\n"), util:press_enter, true;
+     name("1", OP) -> removeItem(CNPJ, Identificador), write("\nItem removido com sucesso!\n"), util:press_enter, true;
      write("Opção inválida! "), util:press_enter, confirmaRemocaoItem(CNPJ, Identificador))); false.
     
 
